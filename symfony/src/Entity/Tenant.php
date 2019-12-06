@@ -11,18 +11,6 @@ use App\Entity\Person;
 class Tenant extends Person
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    /**
     * @ORM\ManyToOne(targetEntity="App\Entity\Person")
     * @ORM\JoinColumn()
     */
@@ -39,6 +27,7 @@ class Tenant extends Person
     * @ORM\JoinColumn()
     */
     private $garant;
+
 
     public function getFather(): ?Person
     {

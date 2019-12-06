@@ -49,19 +49,9 @@ class Record
     private $releaseDate;
 
     /**
-     * @ORM\Column(type="blob")
-     */
-    private $warrantyDeposit;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $additionalInformation;
-
-    /**
-     * @ORM\Column(type="blob")
-     */
-    private $checkWarrantyDeposit;
 
     /**
     * @ORM\ManyToOne(targetEntity="App\Entity\Tenant")
@@ -152,18 +142,6 @@ class Record
         return $this;
     }
 
-    public function getWarrantyDeposit()
-    {
-        return $this->warrantyDeposit;
-    }
-
-    public function setWarrantyDeposit($warrantyDeposit): self
-    {
-        $this->warrantyDeposit = $warrantyDeposit;
-
-        return $this;
-    }
-
     public function getAdditionalInformation(): ?string
     {
         return $this->additionalInformation;
@@ -172,18 +150,6 @@ class Record
     public function setAdditionalInformation(?string $additionalInformation): self
     {
         $this->additionalInformation = $additionalInformation;
-
-        return $this;
-    }
-
-    public function getCheckWarrantyDeposit()
-    {
-        return $this->checkWarrantyDeposit;
-    }
-
-    public function setCheckWarrantyDeposit($checkWarrantyDeposit): self
-    {
-        $this->checkWarrantyDeposit = $checkWarrantyDeposit;
 
         return $this;
     }

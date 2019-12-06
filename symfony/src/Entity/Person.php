@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Address;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PersonRepository")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({"person" = "Person", "tenant" = "Tenant"})
  */
 class Person
 {
@@ -21,14 +24,14 @@ class Person
      * @ORM\Column(type="string", length=50)
      */
     private $name;
-
+    
     /**
      * @ORM\Column(type="string", length=50)
      */
     private $firstName;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=5)
      */
     private $gender;
 
@@ -48,9 +51,8 @@ class Person
     private $email;
 
     /**
-    * @ORM\ManyToOne(targetEntity="App\Entity\Address")
-    * @ORM\JoinColumn(nullable=false)
-    */
+     * @ORM\Column(type="string", length=200)
+     */
     private $address;
 
     /**
@@ -98,18 +100,6 @@ class Person
     public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    public function getGender(): ?bool
-    {
-        return $this->gender;
-    }
-
-    public function setGender(bool $gender): self
-    {
-        $this->gender = $gender;
 
         return $this;
     }
@@ -198,15 +188,28 @@ class Person
         return $this;
     }
 
-    public function getAddress(): ?Address
+    public function getAddress(): ?string
     {
         return $this->address;
     }
 
-    public function setAddress(?Address $address): self
+    public function setAddress(?string $address): self
     {
         $this->address = $address;
 
         return $this;
     }
+
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    public function setGender(string $gender): self
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
 }
