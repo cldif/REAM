@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use mikehaertl\pdftk\Pdf;
+
+
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,13 +49,25 @@ class LocalController extends AbstractController
 	        $entityManager->flush();
 
 	    	$localPath = $this->getParameter('app.localPath');
+	    	$templatePath = $this->getParameter('app.templatePath');
+	    	$localFolder = $localPath.$local->getId();
 
 	        //local creation and move the files in it
-	        mkdir($localPath.$local->getId(), 0777);
+	        mkdir($localFolder, 0777);
 	        $files = $form['files']->getData();
 	        foreach ($files as $file) {
-        		$file->move($localPath.$local->getId(), $file->getClientOriginalName());
+        		$file->move($localFolder, $file->getClientOriginalName());
 	        }
+
+	        //Creation of the local document with the template
+	        $pdf = new Pdf($templatePath.'localTest.pdf');
+			$pdf->fillForm([
+			        'nom'=>'mon nom',
+			        'prenom' => 'mon prenom',
+			        "meuble" => "No",
+			    ])
+			    ->needAppearances()
+			    ->saveAs($localFolder.'/localInscription.pdf');
 
 	        return $this->redirectToRoute('getLocal', array("id" => $local->getId()));
 	    }

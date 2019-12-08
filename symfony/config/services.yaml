@@ -6,6 +6,7 @@
 parameters:
     app.localPath: 'Documents/Locals/Local'
     app.recordPath: 'Documents/Records/Record'
+    app.templatePath: 'Documents/Templates/'
 
 services:
     # default configuration for services in *this* file
