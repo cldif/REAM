@@ -32,7 +32,7 @@ ln -s /PARENT_PATH_OF_THE_PROJECT/REAM/symfony/public /var/www/REAM
 This link is used in order to avoid working in the /var/www/ folder. Nevertheless, you will have to tell it to the Apache server. To do that, you can edit the config file which is usually located there : /etc/apache2/sites-available/000-default.conf
 
 Then, you will need to install all of the PHP dependencies of the project using the composer packet manager.
-Run the following command in the project folder:
+Run the following command in the symfony folder:
 
 ```
 composer install
@@ -53,7 +53,7 @@ FLUSH PRIVILEGES;
 exit;
 ```
 
-The database of the project must be also created, enter the following command in the project folder:
+The database of the project must be also created, enter the following command in the symfony folder:
 
 ```
 php bin/console doctrine:database:create
@@ -72,7 +72,7 @@ a2enconf adminer.conf
 ### Updating locally the database
 
 When changes are made to the structure of the REAM database, these changes can be taken into account and applied.
-The following command shows all the pending operations:
+The following command, executed in the symfony folder, shows all the pending operations:
 
 ```
 php bin/console doctrine:schema:update --dump-sql
@@ -82,6 +82,18 @@ Here is what you can type to update the database's schema:
 
 ```
 php bin/console doctrine:schema:update --force
+```
+
+The command just above must be executed when the project is first installed.
+
+### Lauching the Web server and the MySQL service
+
+The REAM software requires the following services to be launched in order to work correctly.
+To do that, you can enter the following commands:
+
+```
+service apache2 start
+service mysql start
 ```
 
 ## Deployment
