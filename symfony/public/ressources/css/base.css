@@ -78,8 +78,3 @@
 main {
   color: white;
 }
-
-.flexbox {
-  display: flex;
-  justify-content: space-between;
-}
