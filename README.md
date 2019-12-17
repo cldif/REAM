@@ -2,6 +2,11 @@
 
 Real Estate Asset Manager 🧾
 
+[![Repo Size](https://img.shields.io/github/repo-size/Clem9963/REAM)](https://github.com/Clem9963/REAM/pulse)
+[![Last Commit](https://img.shields.io/github/last-commit/Clem9963/REAM)](https://github.com/Clem9963/REAM/commits/master)
+[![Issues](https://img.shields.io/github/issues/Clem9963/REAM)](https://github.com/Clem9963/REAM/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/Clem9963/REAM)](https://github.com/Clem9963/REAM/pulls)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for testing purposes.
