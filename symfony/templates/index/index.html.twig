@@ -2,7 +2,7 @@
 
 {% block css %}
 	<!-- Custom styles -->
-	<link href="ressources/css/index/index.css" rel="stylesheet"/>
+	<link href="{{ asset('ressources/css/index/index.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block page_title %}
@@ -15,8 +15,8 @@
 
 		<div class="card m-5" style="width: 22rem;">
 			<div class="view overlay">
-				<img src="http://everythinggirlslove.com/wp-content/uploads/2016/06/keys-1-edited-696x805.jpg" class="img-fluid" alt="">
-				<a href="#">
+				<img src="{{ asset('ressources/img/keys.jpg') }}" class="img-fluid" alt="">
+				<a href="{{ path('addTenant') }}">
 					<div class="mask rgba-white-slight"></div>
 				</a>
 			</div>
@@ -24,13 +24,13 @@
 			<div class="card-body">
 				<h4 class="card-title">Ajout d'un locataire</h4>
 				<p class="card-text">Lien direct pour un ajout rapide de locataire</p>
-				<a href="#" class="btn btn-primary">C'est parti !</a>
+				<a href="{{ path('addTenant') }}" class="btn btn-primary">C'est parti !</a>
 			</div>
 		</div>
 
 		<div class="card m-5" style="width: 22rem;">
 			<div class="view overlay">
-				<img src="ressources/img/contract-signing.jpg" class="img-fluid" alt="">
+				<img src="{{ asset('ressources/img/contract-signing.jpg') }}" class="img-fluid" alt="">
 				<a href="#">
 					<div class="mask rgba-white-slight"></div>
 				</a>
@@ -45,7 +45,7 @@
 
 		<div class="card m-5" style="width: 22rem;">
 			<div class="view overlay">
-				<img src="ressources/img/real-estate.jpg" class="img-fluid" alt="">
+				<img src="{{ asset('ressources/img/real-estate.jpg') }}" class="img-fluid" alt="">
 				<a href="#">
 					<div class="mask rgba-white-slight"></div>
 				</a>
@@ -60,7 +60,7 @@
 
 		<div class="card m-5" style="width: 22rem;">
 			<div class="view overlay">
-				<img src="ressources/img/paying.jpg" class="img-fluid" alt="">
+				<img src="{{ asset('ressources/img/paying.jpg') }}" class="img-fluid" alt="">
 				<a href="#">
 					<div class="mask rgba-white-slight"></div>
 				</a>
