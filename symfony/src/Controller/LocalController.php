@@ -21,10 +21,25 @@ class LocalController extends AbstractController
     /**
      * @Route("/", name="localIndex")
      */
-    public function index()
+    public function index(\Swift_Mailer $mailer)
     {
     	$repository = $this->getDoctrine()->getRepository(Local::class);
     	$locals= $repository->findAll();
+
+
+		/*$message = (new \Swift_Message('Hello Email, this is a test'))
+	        ->setFrom('test@wallofnames.com')
+	        ->setTo('sylvain.bessonneau@outlook.fr')
+	        ->setBody(
+	            $this->renderView(
+	                // templates/emails/registration.html.twig
+	                'emails/test.html.twig',
+	                ['name' => "tatatattadelfnkj"]
+	            ),
+	            'text/html'
+	        );
+
+    	$mailer->send($message);*/
 
         return $this->render('local/index.html.twig', [
             'locals' => $locals,
