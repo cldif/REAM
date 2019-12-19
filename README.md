@@ -58,6 +58,8 @@ FLUSH PRIVILEGES;
 exit;
 ```
 
+> **Disclaimer** :  The username and password just above can be guessed extremely easily! They are used here for testing purposes and should not be used in deployment environments.
+
 The database of the project must be also created, enter the following command in the symfony folder:
 
 ```
