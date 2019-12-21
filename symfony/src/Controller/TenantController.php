@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -82,11 +83,25 @@ class TenantController extends AbstractController
     }
 
     /**
-	* @Route("/{id}", name="modifyTenant", methods={"DELETE"}, requirements={"id" = "\d+"})
+	* @Route("/{id}", name="deleteTenant", methods={"DELETE"}, requirements={"id" = "\d+"})
 	*/
     public function delete($id)
     {
-        return $this->render('tenant/getTenant.html.twig', 
-        	["id" => $id]);
+        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository(Tenant::class);
+        $tenant = $repository->find($id);
+    
+        if($tenant)
+        {
+            $entityManager->remove($tenant);
+            $entityManager->flush();
+            $data = ['deleted' => "OK"];
+        }
+        else
+        {
+            $data = ['deleted' => "ERROR : Entity not found"];
+        }
+ 
+        return new JsonResponse($data);
     }
 }

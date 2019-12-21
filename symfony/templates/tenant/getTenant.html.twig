@@ -2,23 +2,33 @@
 
 {% block title %}Hello TenantController!{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block main %}
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
 
-<div class="example-wrapper">
-	Page du locataire : 
-	id : {{ tenant.id }}<br>
-	fatherid : {{tenant.father.id }}
-	nom : {{ tenant.name }}<br>
-	prenom : {{ tenant.firstname }}<br>
-	email : {{ tenant.email }}<br>
-	phone : {{ tenant.phone }}<br>
-	portable phone : {{ tenant.mobilePhone }}<br>
-	adress : {{ tenant.address }}<br>
-	email : {{ tenant.email }}<br>
+	<div class="example-wrapper">
 
-</div>
+		Page du locataire : 
+		id : {{ tenant.id }}<br>
+		fatherid : {{tenant.father.id }}
+		nom : {{ tenant.name }}<br>
+		prenom : {{ tenant.firstname }}<br>
+		email : {{ tenant.email }}<br>
+		phone : {{ tenant.phone }}<br>
+		portable phone : {{ tenant.mobilePhone }}<br>
+		adress : {{ tenant.address }}<br>
+		email : {{ tenant.email }}<br>
+
+	</div>
+
 {% endblock %}

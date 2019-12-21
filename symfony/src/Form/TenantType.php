@@ -28,7 +28,7 @@ class TenantType extends AbstractType
                     'label'    => 'Ajouter le père',
                     'required' => false
                 ])
-            ->add('mother', PersonType::class, [
+            /*->add('mother', PersonType::class, [
                     'label'    => 'Ajouter la mère',
                     'required' => false
                 ])
@@ -42,7 +42,7 @@ class TenantType extends AbstractType
             ->add('garant', PersonType::class, [
                     'label'    => 'Ajouter un garant',
                     'required' => true
-                ])
+                ])*/
             ->add('save', SubmitType::class)
         ;
     }

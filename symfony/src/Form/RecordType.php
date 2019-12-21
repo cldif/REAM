@@ -2,7 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\Local;
 use App\Entity\Record;
+use App\Entity\Tenant;
+
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -35,8 +40,14 @@ class RecordType extends AbstractType
                 'mapped' => false,
                 'multiple' => true,
             ])
-            //->add('tenant')
-            //->add('local')
+            ->add('tenant', EntityType::class, [
+                'class' => Tenant::class,
+                'choice_label' => 'name',
+            ])
+            ->add('local', EntityType::class, [
+                'class' => Local::class,
+                'choice_label' => 'name',
+            ])
             ->add('save', SubmitType::class)
         ;
     }
