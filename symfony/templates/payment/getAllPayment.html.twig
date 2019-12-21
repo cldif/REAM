@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RecordController!{% endblock %}
+{% block title %}Hello paymentController!{% endblock %}
 
 {% block main %}
 <style>
@@ -9,16 +9,16 @@
 </style>
 
 <div class="example-wrapper">
-    {% for record in records %}
+	Page des paiements pour le dossier dont l'id est : {{ idRecord }}<br>
+    {% for payment in payments %}
         <tr>
 	        <td>
-	        	<a href="{{ path('getRecord', {'id': record.id}) }}">
-	        		{{ record.tenant.id }} <=> {{ record.local.id }}
+	        	<a href="{{ path('getPayment', {'id': payment.id}) }}">
+	        		{{ payment.id }}
 	        	</a>
 	        	<br>
 	        </td>
         </tr>
     {% endfor %}
-
 </div>
 {% endblock %}

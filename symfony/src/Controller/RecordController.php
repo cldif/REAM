@@ -15,7 +15,7 @@ use App\Form\RecordType;
 class RecordController extends AbstractController
 {
     /**
-     * @Route("/", name="recordIndex")
+     * @Route("/", name="recordIndex", methods={"GET"})
      */
     public function index()
     {
@@ -82,5 +82,48 @@ class RecordController extends AbstractController
 	    $files = array_diff(scandir($recordPath.$record->getId()), array('..', '.'));
 
         return $this->render('record/getrecord.html.twig', array("record"  => $record, "files" => $files));
+    }
+
+        /**
+     * @Route("/{id}/modify", name="modifyRecord", methods={"GET", "POST"})
+     */
+    public function modify(Request $request, Record $record)
+    {
+        $form = $this->createForm(RecordType::class, $record);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('getRecord', array("id" => $record->getId()));
+        }
+
+        return $this->render('record/formAddRecord.html.twig', array(
+          'form' => $form->createView(),
+        ));
+    }
+
+    /**
+	* @Route("/{id}", name="deleteRecord", methods={"DELETE"}, requirements={"id" = "\d+"})
+	*/
+    public function delete($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository(Record::class);
+        $record = $repository->find($id);
+    
+        if($record)
+        {
+            $entityManager->remove($record);
+            $entityManager->flush();
+            $data = ['deleted' => "OK"];
+        }
+        else
+        {
+            $data = ['deleted' => "ERROR : Entity not found"];
+        }
+ 
+        return new JsonResponse($data);
     }
 }

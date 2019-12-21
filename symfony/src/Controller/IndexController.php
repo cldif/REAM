@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class IndexController extends AbstractController
 {
     /**
-     * @Route("/", name="websiteIndex")
+     * @Route("/", name="websiteIndex" , methods={"GET"})
      */
     public function index()
     {

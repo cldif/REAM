@@ -19,7 +19,7 @@ use App\Form\LocalType;
 class LocalController extends AbstractController
 {
     /**
-     * @Route("/", name="localIndex")
+     * @Route("/", name="localIndex" , methods={"GET"})
      */
     public function index(\Swift_Mailer $mailer)
     {
@@ -113,5 +113,48 @@ class LocalController extends AbstractController
 	    $files = array_diff(scandir($localPath.$local->getId()), array('..', '.'));
 
         return $this->render('local/getLocal.html.twig', array("local"  => $local, "files" => $files));
+    }
+
+    /**
+     * @Route("/{id}/modify", name="modifyLocal", methods={"GET", "POST"})
+     */
+    public function modify(Request $request, Local $local)
+    {
+        $form = $this->createForm(LocalType::class, $local);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('getLocal', array("id" => $local->getId()));
+        }
+
+        return $this->render('local/formAddLocal.html.twig', array(
+          'form' => $form->createView(),
+        ));
+    }
+
+    /**
+	* @Route("/{id}", name="deleteLocal", methods={"DELETE"}, requirements={"id" = "\d+"})
+	*/
+    public function delete($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $this->getDoctrine()->getRepository(Local::class);
+        $local = $repository->find($id);
+    
+        if($local)
+        {
+            $entityManager->remove($local);
+            $entityManager->flush();
+            $data = ['deleted' => "OK"];
+        }
+        else
+        {
+            $data = ['deleted' => "ERROR : Entity not found"];
+        }
+ 
+        return new JsonResponse($data);
     }
 }

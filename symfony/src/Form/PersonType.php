@@ -33,7 +33,9 @@ class PersonType extends AbstractType
                     'widget' => 'choice',
                 ])
             ->add('birthPlace')
-            ->add('identityCard', FileType::class)
+            ->add('identityCard', FileType::class,
+                ["data_class" => null,]
+            )
             ->add('profession')
         ;
     }

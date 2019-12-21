@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DocumentController extends AbstractController
 {
     /**
-     * @Route("/document", name="document")
+     * @Route("/document", name="document" , methods={"GET"})
      */
     public function index()
     {

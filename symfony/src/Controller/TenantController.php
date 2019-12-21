@@ -16,7 +16,7 @@ use App\Form\TenantType;
 class TenantController extends AbstractController
 {
     /**
-     * @Route("/", name="tenantIndex")
+     * @Route("/", name="tenantIndex" , methods={"GET"})
      */
     public function index()
     {
@@ -73,13 +73,23 @@ class TenantController extends AbstractController
     }
 
     /**
-	* @Route("/{id}", name="modifyTenant", methods={"POST"}, requirements={"id" = "\d+"})
-	*/
-    public function modify($id, Request $request)
+     * @Route("/{id}/modify", name="modifyTenant", methods={"GET", "POST"})
+     */
+    public function modify(Request $request, Tenant $tenant)
     {
+        $form = $this->createForm(TenantType::class, $tenant);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        return $this->render('tenant/getTenant.html.twig', array("tenant"  => $tenant));
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('getTenant', array("id" => $tenant->getId()));
+        }
+
+        return $this->render('tenant/formAddTenant.html.twig', array(
+          'form' => $form->createView(),
+        ));
     }
 
     /**
