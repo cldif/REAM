@@ -1,27 +1,134 @@
 {% extends 'base.html.twig' %}
 
+{% block css %}
+	<!-- Custom styles -->
+	<link href="{{ asset('ressources/css/tenant/formAddTenant.css') }}" rel="stylesheet"/>
+{% endblock %}
+
 {% block page_title %}
-	<p>Formulaire d'ajout d'un locataire</p>
+	<p>Formulaire d'ajout d'un locataire 🚪</p>
 {% endblock %}
 
 {% block main %}
-	<style>
-		.example-wrapper {
-			margin: 1em auto;
-			max-width: 800px;
-			width: 95%;
-			font: 18px / 1.5 sans-serif;
-		}
-		.example-wrapper code {
-			background: #F5F5F5;
-			padding: 2px 6px;
-		}
-	</style>
 
-	<div class="example-wrapper">
+	<div class="form-wrapper">
+		{{ form_start(form) }}
+		{{ form_errors(form) }}
 
-		{{ form(form) }}
+		<fieldset class="tenant">
+			<legend>Locataire</legend>
+			<div class="md-form">
+				{{ form_label(form.name, 'Nom') }}
+				{{ form_widget(form.name) }}
+			</div>
 
-		</div>
+			<div class="md-form">
+				{{ form_label(form.firstName, 'Prénom') }}
+				{{ form_widget(form.firstName) }}
+			</div>
 
+			<div class="default-form">
+				{{ form_label(form.gender, 'Sexe') }}
+				{{ form_widget(form.gender) }}
+			</div>
+
+			<div class="md-form">
+				{{ form_label(form.phone, 'Téléphone fixe') }}
+				{{ form_widget(form.phone) }}
+			</div>
+
+			<div class="md-form">
+				{{ form_label(form.mobilePhone, 'Téléphone mobile') }}
+				{{ form_widget(form.mobilePhone) }}
+			</div>
+
+			<div class="md-form">
+				{{ form_label(form.email, 'E-Mail') }}
+				{{ form_widget(form.email) }}
+			</div>
+
+			<div class="md-form">
+				{{ form_label(form.address, 'Adresse postale') }}
+				{{ form_widget(form.address) }}
+			</div>
+
+			<div class="default-form">
+				{{ form_label(form.dateOfBirth, 'Date de naissance') }}
+				{{ form_widget(form.dateOfBirth) }}
+			</div>
+
+			<div class="md-form">
+				{{ form_label(form.birthPlace, 'Lieu de naissance') }}
+				{{ form_widget(form.birthPlace) }}
+			</div>
+
+			<div class="default-form">
+				{{ form_label(form.identityCard, "Carte d'identité") }}
+				{{ form_widget(form.identityCard) }}
+			</div>
+
+		</fieldset>
+
+		<section class="including-forms">
+			<div class="choice-header">
+				<div class="default-form">
+					{{ form_label(form.parent, 'Choix du parent') }}
+					{{ form_widget(form.parent) }}
+				</div>
+			</div>
+
+			<div class="other-forms">
+				<fieldset class="father-form">
+					<div class="transition-div">
+						<legend>Père</legend>
+						<div class="md-form">
+							{{ form_label(form.father.firstName, 'Prénom') }}
+							{{ form_widget(form.father.firstName) }}
+						</div>
+					</div>
+
+					<div class="default-form">
+						{{ form_label(form.father.identityCard, "Carte d'identité") }}
+						{{ form_widget(form.father.identityCard) }}
+					</div>
+				</fieldset>
+
+				<fieldset class="mother-form">
+					<div class="transition-div">
+						<legend>Mère</legend>
+						<div class="md-form">
+							{{ form_label(form.mother.firstName, 'Prénom') }}
+							{{ form_widget(form.mother.firstName) }}
+						</div>
+					</div>
+
+					<div class="default-form">
+						{{ form_label(form.mother.identityCard, "Carte d'identité") }}
+						{{ form_widget(form.mother.identityCard) }}
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<legend>Caution</legend>
+					<div class="md-form">
+						{{ form_label(form.garant.firstName, 'Prénom') }}
+						{{ form_widget(form.garant.firstName) }}
+					</div>
+
+					<div class="default-form">
+						{{ form_label(form.garant.identityCard, "Carte d'identité") }}
+						{{ form_widget(form.garant.identityCard) }}
+					</div>
+				</fieldset>
+			</div>
+		</section>
+
+	</div>
+
+{% endblock %}
+
+
+{% block js %}
+	<!-- Custom JS scripts -->
+	<script type="text/javascript" src="{{ asset('ressources/js/tenant/formAddTenant.js') }}"></script>
 {% endblock %}

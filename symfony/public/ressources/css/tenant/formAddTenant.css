@@ -1,0 +1,43 @@
+.form-wrapper {
+  margin: 1em auto;
+  width: 95%;
+  font: 18px / 1.5 sans-serif;
+}
+.form-wrapper code {
+  background: #f5f5f5;
+  padding: 2px 6px;
+}
+
+form,
+.other-forms {
+  display: flex;
+  justify-content: space-between;
+}
+
+.choice-header {
+  margin-bottom: 18px;
+}
+
+.other-forms fieldset {
+  display: none;
+}
+
+fieldset,
+.choice-header {
+  margin-right: 18px;
+  margin-left: 18px;
+}
+
+.md-form .form-control {
+  color: #e0e0e0 !important; /* Override MDB */
+}
+
+label,
+.default-form legend {
+  font-size: 0.8rem;
+  color: #757575;
+}
+
+select {
+  display: block !important; /* Override MDB */
+}
