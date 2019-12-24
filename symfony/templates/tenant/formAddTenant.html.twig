@@ -13,7 +13,7 @@
 
 	<div class="form-wrapper">
 		{{ form_start(form) }}
-		{{ form_errors(form) }}
+		{# {{ form_errors(form) }} #}
 
 		<fieldset class="tenant">
 			<legend>Locataire</legend>
@@ -67,6 +67,10 @@
 				{{ form_widget(form.identityCard) }}
 			</div>
 
+			<div class="md-form">
+				{{ form_widget(form.save, { 'label': 'Enregistrer' }) }}
+			</div>
+
 		</fieldset>
 
 		<section class="including-forms">
@@ -80,16 +84,58 @@
 			<div class="other-forms">
 				<fieldset class="father-form">
 					<div class="transition-div">
+
 						<legend>Père</legend>
+						<div class="md-form">
+							{{ form_label(form.father.name, 'Nom') }}
+							{{ form_widget(form.father.name) }}
+						</div>
+
 						<div class="md-form">
 							{{ form_label(form.father.firstName, 'Prénom') }}
 							{{ form_widget(form.father.firstName) }}
 						</div>
-					</div>
 
-					<div class="default-form">
-						{{ form_label(form.father.identityCard, "Carte d'identité") }}
-						{{ form_widget(form.father.identityCard) }}
+						<div class="md-form">
+							{{ form_label(form.father.phone, 'Téléphone fixe') }}
+							{{ form_widget(form.father.phone) }}
+						</div>
+
+						<div class="md-form">
+							{{ form_label(form.father.mobilePhone, 'Téléphone mobile') }}
+							{{ form_widget(form.father.mobilePhone) }}
+						</div>
+
+						<div class="md-form">
+							{{ form_label(form.father.email, 'E-Mail') }}
+							{{ form_widget(form.father.email) }}
+						</div>
+
+						<div class="md-form">
+							{{ form_label(form.father.address, 'Adresse postale') }}
+							{{ form_widget(form.father.address) }}
+						</div>
+
+						<div class="default-form">
+							{{ form_label(form.father.dateOfBirth, 'Date de naissance') }}
+							{{ form_widget(form.father.dateOfBirth) }}
+						</div>
+
+						<div class="md-form">
+							{{ form_label(form.father.birthPlace, 'Lieu de naissance') }}
+							{{ form_widget(form.father.birthPlace) }}
+						</div>
+
+						<div class="default-form">
+							{{ form_label(form.father.identityCard, "Carte d'identité") }}
+							{{ form_widget(form.father.identityCard) }}
+						</div>
+
+						<div class="md-form">
+							{{ form_label(form.father.profession, 'Profession') }}
+							{{ form_widget(form.father.profession) }}
+						</div>
+
 					</div>
 				</fieldset>
 
@@ -97,27 +143,55 @@
 					<div class="transition-div">
 						<legend>Mère</legend>
 						<div class="md-form">
+							{{ form_label(form.mother.name, 'Nom') }}
+							{{ form_widget(form.mother.name) }}
+						</div>
+
+						<div class="md-form">
 							{{ form_label(form.mother.firstName, 'Prénom') }}
 							{{ form_widget(form.mother.firstName) }}
 						</div>
-					</div>
 
-					<div class="default-form">
-						{{ form_label(form.mother.identityCard, "Carte d'identité") }}
-						{{ form_widget(form.mother.identityCard) }}
-					</div>
-				</fieldset>
+						<div class="md-form">
+							{{ form_label(form.mother.phone, 'Téléphone fixe') }}
+							{{ form_widget(form.mother.phone) }}
+						</div>
 
-				<fieldset>
-					<legend>Caution</legend>
-					<div class="md-form">
-						{{ form_label(form.garant.firstName, 'Prénom') }}
-						{{ form_widget(form.garant.firstName) }}
-					</div>
+						<div class="md-form">
+							{{ form_label(form.mother.mobilePhone, 'Téléphone mobile') }}
+							{{ form_widget(form.mother.mobilePhone) }}
+						</div>
 
-					<div class="default-form">
-						{{ form_label(form.garant.identityCard, "Carte d'identité") }}
-						{{ form_widget(form.garant.identityCard) }}
+						<div class="md-form">
+							{{ form_label(form.mother.email, 'E-Mail') }}
+							{{ form_widget(form.mother.email) }}
+						</div>
+
+						<div class="md-form">
+							{{ form_label(form.mother.address, 'Adresse postale') }}
+							{{ form_widget(form.mother.address) }}
+						</div>
+
+						<div class="default-form">
+							{{ form_label(form.mother.dateOfBirth, 'Date de naissance') }}
+							{{ form_widget(form.mother.dateOfBirth) }}
+						</div>
+
+						<div class="md-form">
+							{{ form_label(form.mother.birthPlace, 'Lieu de naissance') }}
+							{{ form_widget(form.mother.birthPlace) }}
+						</div>
+
+						<div class="default-form">
+							{{ form_label(form.mother.identityCard, "Carte d'identité") }}
+							{{ form_widget(form.mother.identityCard) }}
+						</div>
+
+						<div class="md-form">
+							{{ form_label(form.mother.profession, 'Profession') }}
+							{{ form_widget(form.mother.profession) }}
+						</div>
+
 					</div>
 				</fieldset>
 			</div>
@@ -125,8 +199,9 @@
 
 	</div>
 
-{% endblock %}
+	{# TODO remove the garant in the form. He should be filled out in a record {{ form_end(form) }} #}
 
+{% endblock %}
 
 {% block js %}
 	<!-- Custom JS scripts -->
