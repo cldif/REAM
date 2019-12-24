@@ -1,33 +1,117 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TenantController!
+{% block css %}
+	<!-- MDB Addons -->
+	<link
+	href="{{ asset('mdb/css/addons/datatables.min.css') }}" rel="stylesheet">
+
+	<!-- Custom styles -->
+	<link href="{{ asset('ressources/css/tenant/index.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block page_title %}
+	<p>Liste des locataires</p>
 {% endblock %}
 
 {% block main %}
-	<style>
-		.example-wrapper {
-			margin: 1em auto;
-			max-width: 800px;
-			width: 95%;
-			font: 18px / 1.5 sans-serif;
-		}
-		.example-wrapper code {
-			background: #F5F5F5;
-			padding: 2px 6px;
-		}
-	</style>
 
-	<div class="example-wrapper">
-		{% for tenant in tenants %}
-			<tr>
-				<td>
-					<a href="{{ path('getTenant', {'id': tenant.id}) }}">
-						{{ tenant.name }}
-					</a>
-					<br>
-				</td>
-			</tr>
-		{% endfor %}
+	<div
+		class="card card-cascade narrower">
+
+		<!--Card image-->
+		<div class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+
+			<div>
+				<button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+					<i class="fas fa-th-large mt-0"></i>
+				</button>
+				<button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+					<i class="fas fa-columns mt-0"></i>
+				</button>
+			</div>
+
+			<a href="" class="white-text mx-3">Locataires</a>
+
+			<div>
+				<button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+					<i class="fas fa-pencil-alt mt-0"></i>
+				</button>
+				<button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+					<i class="far fa-trash-alt mt-0"></i>
+				</button>
+				<button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+					<i class="fas fa-info-circle mt-0"></i>
+				</button>
+			</div>
+
+		</div>
+		<!--/Card image-->
+
+		<div class="px-4">
+
+			<div
+				class="table-wrapper">
+				<!--Table-->
+				<table id="dtBasicExample" class="table table-hover mb-0" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th class="th-sm">Nom
+							</th>
+							<th class="th-sm">Prénom
+							</th>
+							<th class="th-sm">Adresse
+							</th>
+							<th class="th-sm">E-Mail
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for tenant in tenants %}
+							<tr>
+								<td>
+									<a href="{{ path('getTenant', {'id': tenant.id}) }}">
+										{{ tenant.name }}
+									</a>
+									<a href="{{ path('getTenant', {'id': tenant.id}) }}">
+										{{ tenant.firstName }}
+									</a>
+									<a href="{{ path('getTenant', {'id': tenant.id}) }}">
+										{{ tenant.address }}
+									</a>
+									<a href="{{ path('getTenant', {'id': tenant.id}) }}">
+										{{ tenant.email }}
+									</a>
+									<br>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+					<tfoot>
+						<tr>
+							<th class="th-sm">Nom
+							</th>
+							<th class="th-sm">Prénom
+							</th>
+							<th class="th-sm">Adresse
+							</th>
+							<th class="th-sm">E-Mail
+							</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+
+		</div>
 
 	</div>
+
+{% endblock %}
+
+
+{% block js %}
+	<!-- MDB Addons -->
+	<script type="text/javascript" src="{{ asset('mdb/js/addons/datatables.min.js') }}"></script>
+
+	<!-- Custom JS scripts -->
+	<script type="text/javascript" src="{{ asset('ressources/js/tenant/index.js') }}"></script>
 {% endblock %}
