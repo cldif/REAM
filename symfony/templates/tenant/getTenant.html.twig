@@ -1,34 +1,112 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TenantController!{% endblock %}
+{% block css %}
+	<!-- Custom styles -->
+	<link href="{{ asset('ressources/css/tenant/getTenant.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block page_title %}
+	<p>Consulation de locataire</p>
+{% endblock %}
 
 {% block main %}
-	<style>
-		.example-wrapper {
-			margin: 1em auto;
-			max-width: 800px;
-			width: 95%;
-			font: 18px / 1.5 sans-serif;
-		}
-		.example-wrapper code {
-			background: #F5F5F5;
-			padding: 2px 6px;
-		}
-	</style>
+	<!-- Card -->
+	<div
+		class="card">
+		<!-- Card image -->
+		<div class="view overlay">
+			<img class="card-img-top" src="http://www.jemome.com/cdn/2010/02/light-purple-twitter-header_2453015.jpg" alt="Card image cap">
+			<a>
+				<div class="mask rgba-white-slight"></div>
+			</a>
+		</div>
 
-	<div class="example-wrapper">
+		<!-- Social buttons -->
+		<div class="card-share">
 
-		Page du locataire : 
-		id : {{ tenant.id }}<br>
-		fatherid : {{tenant.father.id }}
-		nom : {{ tenant.name }}<br>
-		prenom : {{ tenant.firstname }}<br>
-		email : {{ tenant.email }}<br>
-		phone : {{ tenant.phone }}<br>
-		portable phone : {{ tenant.mobilePhone }}<br>
-		adress : {{ tenant.address }}<br>
-		email : {{ tenant.email }}<br>
+			<div
+				class="social-reveal">
 
+				<!-- Modify -->
+				<a type="button" class="btn-floating btn-fb mt-0 mx-1">
+					<i class="fas fa-pencil-alt"></i>
+				</a>
+				<!-- Delete -->
+				<a type="button" class="btn-floating btn-fb mt-0 mx-1" data-toggle="modal" data-target="#centralModalDanger">
+					<i class="fas fa-trash-alt"></i>
+				</a>
+			</div>
+
+			<!-- Button action -->
+			<a class="btn-floating btn-action share-toggle indigo ml-auto mr-4 float-right">
+				<i class="fas fa-tools"></i>
+			</a>
+
+		</div>
+
+		<!-- Card content -->
+		<div
+			class="card-body">
+
+			<!-- Title -->
+			<h4 class="card-title">{{ tenant.firstname }}
+				{{ tenant.name }}</h4>
+			<hr>
+			<!-- Text -->
+			<p class="card-text">
+				<i class="fas fa-envelope-open"></i>
+				&nbsp;{{ tenant.email }}<br>
+
+				<i class="fas fa-phone"></i>
+				&nbsp;{{ tenant.phone }}<br>
+
+				&nbsp;<i class="fas fa-mobile"></i>
+				&nbsp;{{ tenant.mobilePhone }}<br>
+
+				<i class="fas fa-home"></i>
+				&nbsp;{{ tenant.address }}
+			</p>
+
+			<button class="btn btn-indigo btn-rounded btn-md">A venir</button>
+
+		</div>
 	</div>
+	<!-- Card -->
+
+	<!-- Central Modal Medium Danger -->
+	<div class="modal fade" id="centralModalDanger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div
+			class="modal-dialog modal-notify modal-danger" role="document">
+			<!--Content-->
+			<div
+				class="modal-content">
+				<!--Header-->
+				<div class="modal-header">
+					<p class="heading lead">Suppression de locataire</p>
+
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true" class="white-text">&times;</span>
+					</button>
+				</div>
+
+				<!--Body-->
+				<div class="modal-body">
+					<div class="text-center">
+						<i class="fas fa-exclamation-triangle fa-4x mb-3 animated rotateIn"></i>
+						<p>Attention, la suppression d'un locataire est définitive est supprimera tous les dossiers associés.<br>En poursuivant, vous acceptez et comprenez les risques.</p>
+					</div>
+				</div>
+
+				<!--Footer-->
+				<div class="modal-footer justify-content-center">
+					<a type="button" class="btn btn-danger">Confirmer la suppression
+					</a>
+					<a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Annuler l'opération</a>
+				</div>
+			</div>
+			<!--/.Content-->
+		</div>
+	</div>
+	<!-- Central Modal Medium Danger-->
 
 {% endblock %}
