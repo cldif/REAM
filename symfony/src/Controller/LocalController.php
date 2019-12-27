@@ -4,8 +4,6 @@ namespace App\Controller;
 
 use mikehaertl\pdftk\Pdf;
 
-
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -63,16 +61,11 @@ class LocalController extends AbstractController
 	        $entityManager->persist($local);
 	        $entityManager->flush();
 
-	    	$localPath = $this->getParameter('app.localPath');
 	    	$templatePath = $this->getParameter('app.templatePath');
+	    	$localPath = $this->getParameter('app.localPath');
 	    	$localFolder = $localPath.$local->getId();
 
-	        //local creation and move the files in it
-	        mkdir($localFolder, 0777);
-	        $files = $form['files']->getData();
-	        foreach ($files as $file) {
-        		$file->move($localFolder, $file->getClientOriginalName());
-	        }
+            saveFiles($form, $localFolder);
 
 	        //Creation of the local document with the template
 	        $pdf = new Pdf($templatePath.'localTest.pdf');
@@ -127,6 +120,12 @@ class LocalController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
+            $templatePath = $this->getParameter('app.templatePath');
+            $localPath = $this->getParameter('app.localPath');
+            $localFolder = $localPath.$local->getId();
+
+            saveFiles($form, $localFolder);
+
             return $this->redirectToRoute('getLocal', array("id" => $local->getId()));
         }
 
@@ -156,5 +155,15 @@ class LocalController extends AbstractController
         }
  
         return new JsonResponse($data);
+    }
+
+    public function saveFiles($form, $localFolder)
+    {
+        //local creation and move the files in it
+        mkdir($localFolder, 0777);
+        $files = $form['files']->getData();
+        foreach ($files as $file) {
+            $file->move($localFolder, $file->getClientOriginalName());
+        }
     }
 }

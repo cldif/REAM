@@ -84,26 +84,6 @@ class RecordController extends AbstractController
         return $this->render('record/getrecord.html.twig', array("record"  => $record, "files" => $files));
     }
 
-        /**
-     * @Route("/{id}/modify", name="modifyRecord", methods={"GET", "POST"})
-     */
-    public function modify(Request $request, Record $record)
-    {
-        $form = $this->createForm(RecordType::class, $record);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('getRecord', array("id" => $record->getId()));
-        }
-
-        return $this->render('record/formAddRecord.html.twig', array(
-          'form' => $form->createView(),
-        ));
-    }
-
     /**
 	* @Route("/{id}", name="deleteRecord", methods={"DELETE"}, requirements={"id" = "\d+"})
 	*/

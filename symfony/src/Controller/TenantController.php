@@ -34,6 +34,7 @@ class TenantController extends AbstractController
     public function add(Request $request)
     {
 	    $tenant = new Tenant();
+
 	    $form = $this->createForm(TenantType::class, $tenant);
 	    $form->handleRequest($request);
 
@@ -42,7 +43,34 @@ class TenantController extends AbstractController
 	        $tenant = $form->getData();
 
 	        $entityManager = $this->getDoctrine()->getManager();
-	        $entityManager->persist($tenant->getFather());
+
+            // On récupère le service validator
+            $validator = $this->get('validator');
+                
+            // On déclenche la validation sur notre object
+            $listErrors = $validator->validate($tenant->getFather());
+
+            if(count($listErrors) > 0) 
+            {
+                return new Response((string) $listErrors);
+            } 
+            else 
+            {
+                return new Response("L'annonce est valide !");
+            }
+
+            if($tenant->getFather() != NULL)
+            {
+                $tenant->getFather()->setGender("Homme");
+                $entityManager->persist($tenant->getFather());
+            }
+
+            if($tenant->getMother() != NULL)
+            {
+                $tenant->getMother()->setGender("Femme");
+                $entityManager->persist($tenant->getMother());
+            }
+
 	        $entityManager->persist($tenant);
 	        $entityManager->flush();
 

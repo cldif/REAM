@@ -23,6 +23,7 @@ class TenantType extends AbstractType
                 'choices'  => [
                     'Père' => 'Pere',
                     'Mère' => 'Mere',
+                    'Les deux' => 'Les deux',
                 ], 'mapped' => false])
             ->add('father', PersonType::class, [
                     'label'    => 'Ajouter le père',
@@ -31,17 +32,6 @@ class TenantType extends AbstractType
             ->add('mother', PersonType::class, [
                     'label'    => 'Ajouter la mère',
                     'required' => false
-                ])
-            ->add('garantChoix', ChoiceType::class, [
-            	'label' => "Choix du garant",
-                'choices'  => [
-                    'Père' => 'Pere',
-                    'Mère' => 'Mere',
-                    'Autre' => 'Autre'
-                ], 'mapped' => false])
-            ->add('garant', PersonType::class, [
-                    'label'    => 'Ajouter un garant',
-                    'required' => true
                 ])
             ->add('save', SubmitType::class)
         ;
