@@ -89,9 +89,14 @@ class TenantController extends AbstractController
             {
                 $entityManager->clear();
 
-                $errorsListe = array_merge($errorsFather, $errorsMother);
-                foreach ($errorsListe as $err) {
-                    $form->addError(new FormError($err->getMessage()));
+                if($errorFather != 0)
+                {
+                    $form->addError(new FormError("Père : ".$errorsFather[0]->getMessage()));
+                }
+                
+                if($errorMother != 0)
+                {
+                    $form->addError(new FormError("Mère : ".$errorsMother[0]->getMessage()));
                 }
             }
 	    }
@@ -101,7 +106,7 @@ class TenantController extends AbstractController
 	    ));
     }
 
-    /*
+    /**
 	* @Route("/{id}", name="getTenant", methods={"GET"}),
 	requirements={"id" = "\d+"}))
 	*/
