@@ -21,9 +21,7 @@ class PersonType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
-            ->add('firstName', TextType::class, [
-                'constraints' => [new Assert\Length(['min' => 3])],
-            ])
+            ->add('firstName', TextType::class)
             ->add('gender', ChoiceType::class, [
                 'choices'  => [
                     'Homme' => 'Homme',

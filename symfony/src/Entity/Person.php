@@ -22,51 +22,64 @@ class Person
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Veuillez entrer un nom")
      */
     private $name;
     
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Veuillez entrer un prénom")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=5)
+     * @Assert\Length(max=5)
+     * @Assert\NotBlank(message="Veuillez entrer un genre")
      */
     private $gender;
 
     /**
      * @ORM\Column(type="string", length=15)
+     * @Assert\NotBlank(message="Veuillez entrer un numéro de téléphone fixe")
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=15)
+     * @Assert\NotBlank(message="Veuillez entrer un numéro de téléphone portable")
      */
     private $mobilePhone;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Veuillez entrer un email")
+     * @Assert\Email()
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=200)
+     * @Assert\NotBlank(message="Veuillez entrer une adresse postale")
      */
     private $address;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank(message="Veuillez entrer une date de naissance")
+     * @Assert\Date()
      */
     private $dateOfBirth;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Veuillez entrer un lieu de naissance")
      */
     private $birthPlace;
 
     /**
      * @ORM\Column(type="blob", nullable=true)
+     * @Assert\File()
      */
     private $identityCard;
 

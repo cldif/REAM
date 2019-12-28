@@ -11,6 +11,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Local;
 use App\Form\LocalType;
 
+use App\Service\SaveFiles;
+
 /**
 * @Route("/local")
 */
@@ -65,7 +67,8 @@ class LocalController extends AbstractController
 	    	$localPath = $this->getParameter('app.localPath');
 	    	$localFolder = $localPath.$local->getId();
 
-            saveFiles($form, $localFolder);
+            mkdir($localFolder, 0777);
+            SaveFiles::saveFiles($form, $localFolder);
 
 	        //Creation of the local document with the template
 	        $pdf = new Pdf($templatePath.'localTest.pdf');
@@ -120,11 +123,10 @@ class LocalController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            $templatePath = $this->getParameter('app.templatePath');
             $localPath = $this->getParameter('app.localPath');
             $localFolder = $localPath.$local->getId();
 
-            saveFiles($form, $localFolder);
+            SaveFiles::saveFiles($form, $localFolder);
 
             return $this->redirectToRoute('getLocal', array("id" => $local->getId()));
         }
@@ -155,15 +157,5 @@ class LocalController extends AbstractController
         }
  
         return new JsonResponse($data);
-    }
-
-    public function saveFiles($form, $localFolder)
-    {
-        //local creation and move the files in it
-        mkdir($localFolder, 0777);
-        $files = $form['files']->getData();
-        foreach ($files as $file) {
-            $file->move($localFolder, $file->getClientOriginalName());
-        }
     }
 }

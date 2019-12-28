@@ -19,19 +19,21 @@ class TenantType extends AbstractType
         $builder
             ->remove('profession')
             ->add('parent', ChoiceType::class, [
-            	'label' => 'Parent',
-                'choices'  => [
-                    'Père' => 'Pere',
-                    'Mère' => 'Mere',
-                    'Les deux' => 'Les deux',
-                ], 'mapped' => false])
+                	'label' => 'Parent',
+                    'choices'  => [
+                        'Père' => 1,
+                        'Mère' => 2,
+                        'Les deux' => 3,
+                    ], 
+                    'mapped' => false,
+                ])
             ->add('father', PersonType::class, [
                     'label'    => 'Ajouter le père',
-                    'required' => false
+                    'required' => false,
                 ])
             ->add('mother', PersonType::class, [
                     'label'    => 'Ajouter la mère',
-                    'required' => false
+                    'required' => false,
                 ])
             ->add('save', SubmitType::class)
         ;

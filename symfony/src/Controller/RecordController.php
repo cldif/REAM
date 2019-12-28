@@ -45,13 +45,10 @@ class RecordController extends AbstractController
 	        $entityManager->flush();
 
 	    	$recordPath = $this->getParameter('app.recordPath');
+            $recordFolder = $recordPath.$record->getId();
 
-	        //record creation and move the files in it
 	        mkdir($recordPath.$record->getId(), 0777);
-	        $files = $form['files']->getData();
-	        foreach ($files as $file) {
-        		$file->move($recordPath.$record->getId(), $file->getClientOriginalName());
-	        }
+            SaveFiles::saveFiles($form, $recordFolder);
 
 	        return $this->redirectToRoute('getRecord', array("id" => $record->getId()));
 	    }

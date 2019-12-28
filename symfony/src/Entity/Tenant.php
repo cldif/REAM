@@ -11,19 +11,19 @@ use App\Entity\Person;
 class Tenant extends Person
 {
     /**
-    * @ORM\ManyToOne(targetEntity="App\Entity\Person")
+    * @ORM\ManyToOne(targetEntity="App\Entity\Person", cascade={"persist"})
     * @ORM\JoinColumn()
     */
     private $father;
 
     /**
-    * @ORM\ManyToOne(targetEntity="App\Entity\Person")
+    * @ORM\ManyToOne(targetEntity="App\Entity\Person", cascade={"persist"})
     * @ORM\JoinColumn()
     */
     private $mother;
 
     /**
-    * @ORM\ManyToOne(targetEntity="App\Entity\Person")
+    * @ORM\ManyToOne(targetEntity="App\Entity\Person", cascade={"persist"})
     * @ORM\JoinColumn()
     */
     private $garant;
