@@ -1,27 +1,62 @@
 const slideDuration = 500;
+let formsMinWidth;
 
-function initLegalRrepresentative() {
-  let selectedOption = $("#tenant_parent").val();
+function getFormsMinWidth() {
+  /* This function could surely be improved.
+  It's a very ugly solution, but it works. */
 
-  if (selectedOption == "2") {
-    $(".mother-form").slideToggle(slideDuration);
-  } else if (selectedOption == "1") {
-    $(".father-form").slideToggle(slideDuration);
-  }
+  $(".father-form").show();
+  res = $(".including-forms").width();
+  $(".father-form").hide();
+  return res;
 }
 
-$("#tenant_parent").on("change", function() {
-  if (this.value == "2") {
-    $(".mother-form")
-      .delay(slideDuration)
-      .slideToggle(slideDuration);
-    $(".father-form").slideToggle(slideDuration);
-  } else if (this.value == "1") {
-    $(".father-form")
-      .delay(slideDuration)
-      .slideToggle(slideDuration);
-    $(".mother-form").slideToggle(slideDuration);
+function initLegalRrepresentative() {
+  formsMinWidth = getFormsMinWidth();
+  updateLegalRepresentative();
+}
+
+let updateLegalRepresentative = () => {
+  let selectorValue = $("#tenant_parent").val();
+  console.log(`Tenant parent selector value : ${selectorValue}`);
+
+  if (selectorValue == "1") {
+    let collapse = $(".mother-form")
+      .slideUp(slideDuration)
+      .promise();
+    collapse
+      .then(() =>
+        $(".father-form")
+          .slideDown(slideDuration)
+          .promise()
+      )
+      .then(() => {
+        $(".including-forms").animate({ width: formsMinWidth });
+        $(".transition-div").animate({ width: "100%" });
+      });
   }
-});
+
+  if (selectorValue == "2") {
+    let collapse = $(".father-form")
+      .slideUp(slideDuration)
+      .promise();
+    collapse
+      .then(() =>
+        $(".mother-form")
+          .slideDown(slideDuration)
+          .promise()
+      )
+      .then(() => {
+        $(".including-forms").animate({ width: formsMinWidth });
+        $(".transition-div").animate({ width: "100%" });
+      });
+  } else if (selectorValue == "3") {
+    $(".including-forms").animate({ width: formsMinWidth * 2 });
+    $(".mother-form").slideDown(slideDuration);
+    $(".father-form").slideDown(slideDuration);
+  }
+};
+
+$("#tenant_parent").on("change", updateLegalRepresentative);
 
 initLegalRrepresentative();
