@@ -18,21 +18,26 @@ class Local
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="Veuillez entrer le nom du local")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=200)
+     * @Assert\NotBlank(message="Veuillez entrer l'adresse du local")
      */
     private $address;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="Veuillez entrer la surface")
+     * @Assert\Type(type="float")
      */
     private $surface;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\Type(type="bool")
      */
     private $furnish;
 

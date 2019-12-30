@@ -20,21 +20,28 @@ class Payment
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank(message="Veuillez entrer la date de paiment supposée")
+     * @Assert\Date()
      */
     private $supposedDate;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank(message="Veuillez entrer la date de paiment réelle")
+     * @Assert\Date()
      */
     private $paidDate;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Veuillez entrer le statut du paiement")
      */
     private $state;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="Veuillez entrer le montant")
+     * @Assert\Type(type="float")
      */
     private $amount;
 

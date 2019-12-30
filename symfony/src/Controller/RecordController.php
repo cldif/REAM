@@ -47,7 +47,7 @@ class RecordController extends AbstractController
 	    	$recordPath = $this->getParameter('app.recordPath');
             $recordFolder = $recordPath.$record->getId();
 
-	        mkdir($recordPath.$record->getId(), 0777);
+	        mkdir($recordFolder, 0777);
             SaveFiles::saveFiles($form, $recordFolder);
 
 	        return $this->redirectToRoute('getRecord', array("id" => $record->getId()));

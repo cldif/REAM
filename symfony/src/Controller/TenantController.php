@@ -132,8 +132,8 @@ class TenantController extends AbstractController
         $form = $this->createForm(TenantType::class, $tenant);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('getTenant', array("id" => $tenant->getId()));

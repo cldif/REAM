@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Tenant;
 use App\Entity\Local;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RecordRepository")
@@ -20,31 +21,41 @@ class Record
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank(message="Veuillez entrer une date d'entrée")
+     * @Assert\Date()
      */
     private $entryDate;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="Veuillez entrer le loyer")
+     * @Assert\Type(type="float")
      */
     private $rent;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="Veuillez entrer les charges")
+     * @Assert\Type(type="float")
      */
     private $fixedCharge;
 
     /**
      * @ORM\Column(type="string", length=50)
+	 * @Assert\NotBlank(message="Veuillez entrer la périodicité")
      */
     private $periodicity;
 
     /**
      * @ORM\Column(type="string", length=10)
+	 * @Assert\NotBlank(message="Veuillez entrer l'index de révision")
      */
     private $revisionIndex;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank(message="Veuillez entrer la date de départ")
+     * @Assert\Date()
      */
     private $releaseDate;
 
