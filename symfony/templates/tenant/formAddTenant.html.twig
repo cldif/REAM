@@ -13,7 +13,6 @@
 
 	<div class="form-wrapper">
 		{{ form_start(form) }}
-		{{ form_errors(form) }}
 
 		<fieldset class="tenant">
 			<legend>Locataire</legend>
@@ -74,12 +73,14 @@
 		</fieldset>
 
 		<section class="including-forms">
+			<legend>Parent(s)</legend>
 			<div class="choice-header">
 				<div class="default-form">
 					{{ form_label(form.parent, 'Choix du parent') }}
 					{{ form_widget(form.parent) }}
 				</div>
 			</div>
+			{{ form_errors(form) }}
 
 			<div class="other-forms">
 				<fieldset class="father-form">
@@ -196,7 +197,6 @@
 				</fieldset>
 			</div>
 		</section>
-
 	</div>
 
 	{# TODO remove the garant in the form. He should be filled out in a record {{ form_end(form) }} #}

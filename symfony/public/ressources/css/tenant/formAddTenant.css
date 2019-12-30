@@ -3,6 +3,7 @@
   width: 95%;
   font: 18px / 1.5 sans-serif;
 }
+
 .form-wrapper code {
   background: #f5f5f5;
   padding: 2px 6px;
@@ -22,8 +23,11 @@ form,
   display: none;
 }
 
-fieldset,
-.choice-header {
+.including-forms {
+  margin-left: 30px;
+}
+
+fieldset {
   margin-right: 18px;
   margin-left: 18px;
 }
