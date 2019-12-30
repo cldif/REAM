@@ -11,10 +11,12 @@ table.dataTable thead .sorting_desc_disabled:before {
   bottom: 0.5em;
 }
 
-.table {
+.table,
+.table a {
   color: #d0d0d0 !important;
 }
 
-.table-hover tbody tr:hover {
+.table-hover tbody tr:hover,
+.table a:hover {
   color: #ffffff !important;
 }
