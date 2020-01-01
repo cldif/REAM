@@ -93,14 +93,13 @@
 				<div class="modal-body">
 					<div class="text-center">
 						<i class="fas fa-exclamation-triangle fa-4x mb-3 animated rotateIn"></i>
-						<p>Attention, la suppression d'un locataire est définitive est supprimera tous les dossiers associés.<br>En poursuivant, vous acceptez et comprenez les risques.</p>
+						<p>Attention, la suppression d'un locataire est définitive et supprimera tous les dossiers associés.<br>En poursuivant, vous acceptez et comprenez les risques.</p>
 					</div>
 				</div>
 
 				<!--Footer-->
 				<div class="modal-footer justify-content-center">
-					<a type="button" class="btn btn-danger">Confirmer la suppression
-					</a>
+					<a id="delete-tenant-button" type="button" class="btn btn-danger">Confirmer la suppression</a>
 					<a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Annuler l'opération</a>
 				</div>
 			</div>
@@ -109,4 +108,13 @@
 	</div>
 	<!-- Central Modal Medium Danger-->
 
+{% endblock %}
+
+
+{% block js %}
+	<span id='js-passthrough-delete-tenant-url' style="display:none">{{ path('deleteTenant', {'id': tenant.id}) }}</span>
+	<span id='js-passthrough-index-url' style="display:none">{{ path('websiteIndex') }}</span>
+
+	<!-- Custom JS scripts -->
+	<script type="text/javascript" src="{{ asset('ressources/js/tenant/getTenant.js') }}"></script>
 {% endblock %}
