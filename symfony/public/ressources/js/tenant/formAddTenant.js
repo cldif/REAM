@@ -1,6 +1,14 @@
 const slideDuration = 500;
 let formsMinWidth;
 
+$("select").removeClass("form-control");
+$("select").addClass("mdb-select md-form");
+
+// Material Select Initialization
+$(document).ready(function() {
+  $(".mdb-select").materialSelect();
+});
+
 function getFormsMinWidth() {
   /* This function could surely be improved.
   It's a very ugly solution, but it works. */

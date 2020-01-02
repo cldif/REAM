@@ -24,7 +24,7 @@ form,
 }
 
 .including-forms {
-  margin-left: 30px;
+  margin-left: 45px;
 }
 
 fieldset {
@@ -32,16 +32,30 @@ fieldset {
   margin-left: 18px;
 }
 
-.md-form .form-control {
-  color: #e0e0e0 !important; /* Override MDB */
+.md-form .form-control,
+.caret {
+  color: #e0e0e0 !important;
 }
 
 label,
 .default-form legend {
   font-size: 0.8rem;
   color: #757575;
+  font-style: italic;
 }
 
-select {
-  display: block !important; /* Override MDB */
+.md-form {
+  margin-top: 0px !important;
+}
+
+.select-wrapper input.select-dropdown {
+  margin: 0 0 0;
+}
+
+.form-inline {
+  justify-content: space-between;
+}
+
+.select-wrapper.mdb-select.md-form {
+  width: 25%;
 }
