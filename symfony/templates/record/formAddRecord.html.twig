@@ -1,28 +1,77 @@
 {% extends 'base.html.twig' %}
 
-{% block page_title %}
-	<p>Formulaire d'ajout d'un dossier</p>
+{% block css %}
+	<!-- Custom styles -->
+	<link href="{{ asset('ressources/css/record/formAddRecord.css') }}" rel="stylesheet"/>
 {% endblock %}
 
+{% block page_title %}
+	<p>Formulaire d'ajout d'un contrat</p>
+{% endblock %}
 
 {% block main %}
-	<style>
-		.example-wrapper {
-			margin: 1em auto;
-			max-width: 800px;
-			width: 95%;
-			font: 18px / 1.5 sans-serif;
-		}
-		.example-wrapper code {
-			background: #F5F5F5;
-			padding: 2px 6px;
-		}
-	</style>
 
-	<div class="example-wrapper">
+	<div class="form-wrapper">
+		{{ form_start(form) }}
 
-		{{ form(form) }}
+		<legend>Contrat</legend>
 
+		<div class="default-form">
+			{{ form_label(form.entryDate, 'Date de début du contrat') }}
+			{{ form_widget(form.entryDate) }}
+		</div>
+
+		<div class="md-form">
+			{{ form_label(form.rent, 'Montant du loyer') }}
+			{{ form_widget(form.rent) }}
+		</div>
+
+		<div class="md-form">
+			{{ form_label(form.fixedCharge, 'Montant des charges fixes') }}
+			{{ form_widget(form.fixedCharge) }}
+		</div>
+
+		<div class="md-form">
+			{{ form_label(form.periodicity, 'Périodicité du loyer') }}
+			{{ form_widget(form.periodicity) }}
+		</div>
+
+		<div class="md-form">
+			{{ form_label(form.revisionIndex, 'Indice de révision') }}
+			{{ form_widget(form.revisionIndex) }}
+		</div>
+
+		<div class="default-form">
+			{{ form_label(form.releaseDate, 'Date de fin du contrat') }}
+			{{ form_widget(form.releaseDate) }}
+		</div>
+
+		<div class="md-form">
+			{{ form_label(form.additionalInformation, 'Informations additionnelles') }}
+			{{ form_widget(form.additionalInformation) }}
+		</div>
+
+		<div class="default-form">
+			{{ form_label(form.files, 'Fichiers') }}
+			{{ form_widget(form.files) }}
+		</div>
+
+		<div class="default-form">
+			{{ form_label(form.tenant, 'Locataire') }}
+			{{ form_widget(form.tenant) }}
+		</div>
+
+		<div class="default-form">
+			{{ form_label(form.local, 'Local') }}
+			{{ form_widget(form.local) }}
+		</div>
 	</div>
 
+	{# TODO remove the garant in the form. He should be filled out in a record {{ form_end(form) }} #}
+
+{% endblock %}
+
+{% block js %}
+	<!-- Custom JS scripts -->
+	<script type="text/javascript" src="{{ asset('ressources/js/record/formAddRecord.js') }}"></script>
 {% endblock %}
