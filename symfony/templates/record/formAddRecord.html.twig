@@ -2,6 +2,7 @@
 
 {% block css %}
 	<!-- Custom styles -->
+	<link href="{{ asset('ressources/css/formBase.css') }}" rel="stylesheet"/>
 	<link href="{{ asset('ressources/css/record/formAddRecord.css') }}" rel="stylesheet"/>
 {% endblock %}
 
@@ -65,6 +66,10 @@
 			{{ form_label(form.local, 'Local') }}
 			{{ form_widget(form.local) }}
 		</div>
+
+		<div class="md-form">
+			{{ form_widget(form.save, { 'label': 'Enregistrer' }) }}
+		</div>
 	</div>
 
 	{# TODO remove the garant in the form. He should be filled out in a record {{ form_end(form) }} #}
@@ -73,5 +78,5 @@
 
 {% block js %}
 	<!-- Custom JS scripts -->
-	<script type="text/javascript" src="{{ asset('ressources/js/record/formAddRecord.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('ressources/js/formBase.js') }}"></script>
 {% endblock %}
