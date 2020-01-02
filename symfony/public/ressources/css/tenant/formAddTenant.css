@@ -1,3 +1,4 @@
+/* Div wich includes all the forms of the page */
 .form-wrapper {
   margin: 1em auto;
   width: 95%;
@@ -9,34 +10,42 @@
   padding: 2px 6px;
 }
 
+/* Allow to display the form concerning the tenant and the
+forms concerning the parents as a flexbox */
 form,
 .other-forms {
   display: flex;
   justify-content: space-between;
 }
 
+/* Margin between the parent choice and the forms related to the parents */
 .choice-header {
   margin-bottom: 18px;
 }
 
+/* Does not, by default, display forms associated with parents. */
 .other-forms fieldset {
   display: none;
 }
 
+/* Margin between the tenant and the parents */
 .including-forms {
   margin-left: 45px;
 }
 
+/* Margin between the different forms */
 fieldset {
   margin-right: 18px;
   margin-left: 18px;
 }
 
+/* Text input color (Override MDB) */
 .md-form .form-control,
 .caret {
   color: #e0e0e0 !important;
 }
 
+/* Placeholders and legends */
 label,
 .default-form legend {
   font-size: 0.8rem;
@@ -44,18 +53,22 @@ label,
   font-style: italic;
 }
 
+/* Removal of the margin between the input field and the label (Override MDB)  */
 .md-form {
   margin-top: 0px !important;
 }
 
+/* Removal of the margin around the selects. */
 .select-wrapper input.select-dropdown {
   margin: 0 0 0;
 }
 
+/* Flexbox for the sets of selects */
 .form-inline {
   justify-content: space-between;
 }
 
+/* Fixed width for selects */
 .select-wrapper.mdb-select.md-form {
   width: 25%;
 }
