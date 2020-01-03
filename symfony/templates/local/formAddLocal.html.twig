@@ -1,17 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LocalController!{% endblock %}
+{% block css %}
+	<!-- Custom styles -->
+	<link href="{{ asset('ressources/css/formBase.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block page_title %}
+	<p>Formulaire d'ajout d'un local</p>
+{% endblock %}
 
 {% block main %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-	Page de formulaire d'ajout d'un local
+	<div class="form-wrapper">
+		{{ form_start(form) }}
 
-	{{ form(form) }}
+		<legend>Local</legend>
 
-</div>
+		<div class="md-form">
+			{{ form_label(form.name, 'Nom') }}
+			{{ form_widget(form.name) }}
+		</div>
+
+		<div class="md-form">
+			{{ form_label(form.address, 'Adresse') }}
+			{{ form_widget(form.address) }}
+		</div>
+
+		<div class="md-form">
+			{{ form_label(form.surface, 'Surface') }}
+			{{ form_widget(form.surface) }}
+		</div>
+
+		<div class="md-form">
+			{{ form_label(form.furnish, 'toto') }}
+			{{ form_widget(form.furnish) }}
+		</div>
+
+		<div class="default-form">
+			{{ form_label(form.files, 'Fichiers complémentaires') }}
+			{{ form_widget(form.files) }}
+		</div>
+
+		<div class="md-form">
+			{{ form_widget(form.save, { 'label': 'Enregistrer' }) }}
+		</div>
+
+		{{ form_end(form) }}
+	</div>
 {% endblock %}

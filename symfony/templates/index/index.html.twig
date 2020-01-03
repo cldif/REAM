@@ -30,7 +30,7 @@
 		<div class="card m-4" style="width: 22rem;">
 			<div class="view overlay">
 				<img src="{{ asset('ressources/img/contract-signing.jpg') }}" class="img-fluid" alt="">
-				<a href="#">
+				<a href="{{ path('addRecord') }}">
 					<div class="mask rgba-white-slight"></div>
 				</a>
 			</div>
@@ -38,14 +38,14 @@
 			<div class="card-body">
 				<h4 class="card-title">Ajout d'un contrat</h4>
 				<p class="card-text">Lien direct pour un ajout rapide de nouveau contrat</p>
-				<a href="#" class="btn btn-primary">C'est parti !</a>
+				<a href="{{ path('addRecord') }}" class="btn btn-primary">C'est parti !</a>
 			</div>
 		</div>
 
 		<div class="card m-4" style="width: 22rem;">
 			<div class="view overlay">
 				<img src="{{ asset('ressources/img/real-estate.jpg') }}" class="img-fluid" alt="">
-				<a href="#">
+				<a href="{{ path('addLocal') }}">
 					<div class="mask rgba-white-slight"></div>
 				</a>
 			</div>
@@ -53,7 +53,7 @@
 			<div class="card-body">
 				<h4 class="card-title">Ajout d'un local</h4>
 				<p class="card-text">Lien direct pour un ajout rapide de nouveau local</p>
-				<a href="#" class="btn btn-primary">C'est parti !</a>
+				<a href="{{ path('addLocal') }}" class="btn btn-primary">C'est parti !</a>
 			</div>
 		</div>
 
