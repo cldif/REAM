@@ -32,6 +32,7 @@ class RecordType extends AbstractType
             ->add('revisionIndex', TextType::class)
             ->add('releaseDate', DateType::class, [
                     'widget' => 'choice',
+                    'years' => range(date('Y') - 100, date('Y')),
                 ])
             ->add('additionalInformation', TextType::class,[
                     'required' => false,

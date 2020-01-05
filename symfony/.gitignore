@@ -6,4 +6,6 @@
 /public/bundles/
 /var/
 /vendor/
+/public/Documents/Locals/*
+/public/Documents/Records/*
 ###< symfony/framework-bundle ###

@@ -23,9 +23,11 @@ class PaymentType extends AbstractType
         $builder
             ->add('supposedDate', DateType::class, [
                     'widget' => 'choice',
+                    'years' => range(date('Y') - 100, date('Y')),
                 ])
             ->add('paidDate', DateType::class, [
                     'widget' => 'choice',
+                    'years' => range(date('Y') - 100, date('Y')),
                 ])
             ->add('state', ChoiceType::class, [
                 'choices'  => [

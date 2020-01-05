@@ -41,6 +41,12 @@ class Local
      * @Assert\Type(type="bool")
      */
     private $furnish;
+    
+    /**
+     * @ORM\Column(type="string", length=15)
+     * @Assert\NotBlank(message="Veuillez entrer le type du local")
+     */
+    private $type;
 
     public function getId(): ?int
     {
@@ -91,6 +97,18 @@ class Local
     public function setAddress(string $address): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

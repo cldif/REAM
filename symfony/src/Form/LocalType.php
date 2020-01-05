@@ -25,6 +25,11 @@ class LocalType extends AbstractType
                 'label'    => 'Meublé ?',
                 'required' => false,
             ])
+            ->add('type', ChoiceType::class, [
+                'choices'  => [
+                    'Appartement' => 'Appartement',
+                    'Hangar' => 'Hangar',
+                ]])
             ->add('files', FileType::class, [
                 'mapped' => false,
                 'multiple' => true,
