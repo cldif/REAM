@@ -21,7 +21,7 @@
 			</a>
 		</div>
 
-		<!-- Social buttons -->
+		<!-- Options buttons -->
 		<div class="card-share">
 
 			<div
@@ -112,6 +112,7 @@
 
 
 {% block js %}
+	<!-- Variables obtained by TWIG and transferred to javascript code -->
 	<span id='js-passthrough-delete-tenant-url' style="display:none">{{ path('deleteTenant', {'id': tenant.id}) }}</span>
 	<span id='js-passthrough-index-url' style="display:none">{{ path('websiteIndex') }}</span>
 

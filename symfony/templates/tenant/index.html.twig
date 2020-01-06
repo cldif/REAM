@@ -52,7 +52,7 @@
 			<div
 				class="table-wrapper">
 				<!--Table-->
-				<table id="dtBasicExample" class="table table-hover mb-0" cellspacing="0" width="100%">
+				<table id="dataTable" class="table table-hover mb-0" cellspacing="0" width="100%">
 					<thead>
 						<tr>
 							<th class="th-sm">Nom
@@ -87,7 +87,6 @@
 									<a href="{{ path('getTenant', {'id': tenant.id}) }}">
 										{{ tenant.email }}
 									</a>
-									<br>
 								</td>
 							</tr>
 						{% endfor %}
