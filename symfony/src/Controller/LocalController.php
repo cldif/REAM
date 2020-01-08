@@ -5,6 +5,7 @@ namespace App\Controller;
 use mikehaertl\pdftk\Pdf;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -67,7 +68,7 @@ class LocalController extends AbstractController
 	    	$localPath = $this->getParameter('app.localPath');
 	    	$localFolder = $localPath.$local->getId();
 
-            mkdir($localFolder, 0777);
+            mkdir($localFolder, 0700);
             SaveFiles::saveFiles($form, $localFolder);
 
 	        //Creation of the local document with the template
@@ -144,18 +145,29 @@ class LocalController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository(Local::class);
         $local = $repository->find($id);
+
+    	$localPath = $this->getParameter('app.localPath');
+    	$localFolder = $localPath.$local->getId();
+
+		SaveFiles::deleteFolder($localFolder);
+
+        $response = new Response();
+		$response->headers->set('Content-Type', 'text/plain');
     
         if($local)
         {
             $entityManager->remove($local);
             $entityManager->flush();
-            $data = ['deleted' => "OK"];
+			
+			$response->setContent('Deleted ok');
+            $response->setStatusCode(Response::HTTP_OK);
         }
         else
         {
-            $data = ['deleted' => "ERROR : Entity not found"];
+			$response->setContent('Entity not found');
+            $response->setStatusCode(Response::HTTP_NOT_FOUND);
         }
  
-        return new JsonResponse($data);
+        return $response;
     }
 }

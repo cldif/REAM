@@ -3,16 +3,12 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Tenant;
 use App\Form\TenantType;
-
-use Symfony\Component\HttpFoundation\Response;
-
-
 
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Form\FormError;
@@ -152,16 +148,22 @@ class TenantController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository(Tenant::class);
         $tenant = $repository->find($id);
+
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/plain');
     
         if($tenant)
         {
             $entityManager->remove($tenant);
             $entityManager->flush();
-            $data = ['deleted' => "OK"];
+            
+            $response->setContent('Deleted ok');
+            $response->setStatusCode(Response::HTTP_OK);
         }
         else
         {
-            $data = ['deleted' => "ERROR : Entity not found"];
+            $response->setContent('Entity not found');
+            $response->setStatusCode(Response::HTTP_NOT_FOUND);
         }
  
         return new JsonResponse($data);

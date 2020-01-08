@@ -47,7 +47,7 @@ class RecordController extends AbstractController
 	    	$recordPath = $this->getParameter('app.recordPath');
             $recordFolder = $recordPath.$record->getId();
 
-	        mkdir($recordFolder, 0777);
+	        mkdir($recordFolder, 0700);
             SaveFiles::saveFiles($form, $recordFolder);
 
 	        return $this->redirectToRoute('getRecord', array("id" => $record->getId()));
@@ -89,6 +89,11 @@ class RecordController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository(Record::class);
         $record = $repository->find($id);
+
+        $recordPath = $this->getParameter('app.recordPath');
+        $recordFolder = $recordPath.$record->getId();
+
+        SaveFiles::deleteFolder($recordFolder);
     
         if($record)
         {

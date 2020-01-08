@@ -11,6 +11,11 @@ class SaveFiles
             $file->move($folder, $file->getClientOriginalName());
         }
     }
+
+    public function deleteFolder($dir)
+    {
+		shell_exec('rm -rf '.$dir);
+    }
 }
 
 ?>
