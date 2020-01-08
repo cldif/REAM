@@ -31,8 +31,13 @@
 			{{ form_widget(form.surface) }}
 		</div>
 
+		<div class="default-form">
+			{{ form_label(form.type, 'Type du local') }}
+			{{ form_widget(form.type) }}
+		</div>
+
 		<div class="md-form">
-			{{ form_label(form.furnish, 'toto') }}
+			{{ form_label(form.furnish, 'Meublé') }}
 			{{ form_widget(form.furnish) }}
 		</div>
 
@@ -45,6 +50,12 @@
 			{{ form_widget(form.save, { 'label': 'Enregistrer' }) }}
 		</div>
 
+
 		{{ form_end(form) }}
 	</div>
+{% endblock %}
+
+{% block js %}
+	<!-- Custom JS scripts -->
+	<script type="text/javascript" src="{{ asset('ressources/js/formBase.js') }}"></script>
 {% endblock %}
