@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use mikehaertl\pdftk\Pdf;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Local;
 use App\Form\LocalType;
 
-use App\Service\SaveFiles;
+use App\Service\FileManager;
 
 /**
 * @Route("/local")
@@ -27,6 +25,17 @@ class LocalController extends AbstractController
     	$repository = $this->getDoctrine()->getRepository(Local::class);
     	$locals= $repository->findAll();
 
+       /*
+		Code to fill a docx file and save as pdf
+
+		$checked = '☑'; 
+        $unChecked = '☐';
+        $keys = array('name', 'prenom', "toto");
+        $values = array("toto", "titi", $unChecked);
+
+       FileManager::fillTemplate($keys, $values, "template.docx", "result.pdf");
+
+       */
 
 		/*$message = (new \Swift_Message('Hello Email, this is a test'))
 	        ->setFrom('test@wallofnames.com')
@@ -69,7 +78,7 @@ class LocalController extends AbstractController
 	    	$localFolder = $localPath.$local->getId();
 
             mkdir($localFolder, 0700);
-            SaveFiles::saveFiles($form, $localFolder);
+            FileManager::saveFiles($form, $localFolder);
 
 	        //Creation of the local document with the template
 	        $pdf = new Pdf($templatePath.'localTest.pdf');
@@ -127,7 +136,7 @@ class LocalController extends AbstractController
             $localPath = $this->getParameter('app.localPath');
             $localFolder = $localPath.$local->getId();
 
-            SaveFiles::saveFiles($form, $localFolder);
+            FileManager::saveFiles($form, $localFolder);
 
             return $this->redirectToRoute('getLocal', array("id" => $local->getId()));
         }

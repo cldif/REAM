@@ -24,15 +24,14 @@ class RecordType extends AbstractType
     {
         $builder
             ->add('entryDate', DateType::class, [
-                    'widget' => 'choice',
+                    'widget' => 'single_text',
                 ])
             ->add('rent', NumberType::class)
             ->add('fixedCharge', NumberType::class)
             ->add('periodicity', TextType::class)
             ->add('revisionIndex', TextType::class)
             ->add('releaseDate', DateType::class, [
-                    'widget' => 'choice',
-                    'years' => range(date('Y') - 100, date('Y')),
+                    'widget' => 'single_text',
                 ])
             ->add('additionalInformation', TextType::class,[
                     'required' => false,

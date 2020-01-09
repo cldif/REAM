@@ -9,6 +9,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Record;
 use App\Form\RecordType;
 
+use App\Service\FileManager;
+
+
 /**
 * @Route("/dossier")
 */
@@ -48,7 +51,7 @@ class RecordController extends AbstractController
             $recordFolder = $recordPath.$record->getId();
 
 	        mkdir($recordFolder, 0700);
-            SaveFiles::saveFiles($form, $recordFolder);
+            FileManager::saveFiles($form, $recordFolder);
 
 	        return $this->redirectToRoute('getRecord', array("id" => $record->getId()));
 	    }
@@ -93,7 +96,7 @@ class RecordController extends AbstractController
         $recordPath = $this->getParameter('app.recordPath');
         $recordFolder = $recordPath.$record->getId();
 
-        SaveFiles::deleteFolder($recordFolder);
+        FileManager::deleteFolder($recordFolder);
     
         if($record)
         {

@@ -166,6 +166,6 @@ class TenantController extends AbstractController
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
         }
  
-        return new JsonResponse($data);
+        return $response;
     }
 }

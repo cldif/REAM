@@ -32,7 +32,7 @@ class PersonType extends AbstractType
             ->add('email', EmailType::class)
             ->add('address')
             ->add('dateOfBirth', DateType::class, [
-                    'widget' => 'choice',
+                    'widget' => 'single_text',
                     'years' => range(date('Y') - 100, date('Y')),
                 ])
             ->add('birthPlace')
