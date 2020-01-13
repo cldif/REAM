@@ -15,10 +15,7 @@
 		class="card">
 		<!-- Card image -->
 		<div class="view overlay">
-			<img class="card-img-top" src="http://www.jemome.com/cdn/2010/02/light-purple-twitter-header_2453015.jpg" alt="Card image cap">
-			<a>
-				<div class="mask rgba-white-slight"></div>
-			</a>
+			<img class="card-img-top" src="{{ asset('/ressources/img/header-background.png') }}" alt="Card image cap">
 		</div>
 
 		<!-- Options buttons -->
@@ -28,11 +25,11 @@
 				class="social-reveal">
 
 				<!-- Modify -->
-				<a type="button" class="btn-floating btn-fb mt-0 mx-1">
+				<a type="button" class="btn-floating btn-tw mt-0 mx-1">
 					<i class="fas fa-pencil-alt"></i>
 				</a>
 				<!-- Delete -->
-				<a type="button" class="btn-floating btn-fb mt-0 mx-1" data-toggle="modal" data-target="#centralModalDanger">
+				<a type="button" class="btn-floating btn-yt mt-0 mx-1" data-toggle="modal" data-target="#centralModalDanger">
 					<i class="fas fa-trash-alt"></i>
 				</a>
 			</div>
@@ -100,6 +97,47 @@
 		</div>
 	</div>
 	<!-- Central Modal Medium Danger-->
+
+	<div class="container">
+		<div class="col-md-12">
+			<ul class="list-group list-group-flush">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<h5>
+							Patrons relatifs au local "{{ local.name }}"
+						</h5>
+					</li>
+
+					{% for file in files %}
+						<li class="list-group-item">
+							<p class="document-name">
+								{{ file }}
+							</p>
+							<div class="buttons">
+								<div class="button-wrapper">
+									<a class="text-white btn-floating btn-yt btn-sm">
+										<i class="fas fa-trash-alt"></i>
+									</a>
+									<span class="tooltip">Supprimer</span>
+								</div>
+
+								<div class="button-wrapper">
+									<a class="text-white btn-floating btn-fb btn-sm">
+										<i class="fas fa-cloud-download-alt"></i>
+									</a>
+									<span class="tooltip">Télécharger</span>
+								</div>
+							</div>
+						</li>
+					{% endfor %}
+
+					<li class="list-group-item">
+						<button class="btn btn-indigo btn-rounded btn-md">Ajouter un nouveau document</button>
+					</li>
+				</ul>
+			</ul>
+		</div>
+	</div>
 
 {% endblock %}
 

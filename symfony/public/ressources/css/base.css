@@ -1,3 +1,7 @@
+/*---------------------------------------------------*/
+/* Rules for defining the general design of the page */
+/*---------------------------------------------------*/
+
 .dark-theme {
   background-color: #181c30;
 }
@@ -75,7 +79,34 @@
   color: #cecece !important;
 }
 
+/*--------------------------------*/
+/* Global rules used in all pages */
+/*--------------------------------*/
+
+/* Setting up the font color and a padding to avoid overlapping by symfony's debugging tools. */
 main {
   color: white;
   padding-bottom: 16px;
+}
+
+/* Titles normalization */
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0px !important;
+  line-height: unset !important;
+}
+
+/* "Settings" dropdown menu */
+.nav-link.dropdown-toggle {
+  font-size: 20px;
 }
