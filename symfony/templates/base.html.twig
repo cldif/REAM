@@ -38,7 +38,10 @@
 						<!-- Logo -->
 						<li>
 							<div class="logo-wrapper sn-ad-avatar-wrapper">
-								<a href="{{ path('websiteIndex') }}"><img src="{{ asset('ressources/img/home-logo.png') }}" class="rounded-circle"/><span>Menu Principal</span>
+								<a href="{{ path('websiteIndex') }}"><img src="{{ asset('ressources/img/home-logo.png') }}" class="rounded-circle"/>
+									<h4>
+										<span>Menu Principal</span>
+									</h4>
 								</a>
 							</div>
 						</li>
@@ -52,19 +55,19 @@
 									</a>
 									<div class="collapsible-body">
 										<ul>
-											<li><a class="waves-effect"href="{{ path('addTenant') }}"><span class="sv-normal">Formulaire d'ajout</span></a></li>
-											<li><a class="waves-effect"href="{{ path('tenantIndex') }}"><span class="sv-normal">Consultation</span></a></li>
+											<li><a class="waves-effect"href="{{ path('addTenant') }}"><span class="sv-normal">Nouveau locataire</span></a></li>
+											<li><a class="waves-effect"href="{{ path('tenantIndex') }}"><span class="sv-normal">Consulter les locataires</span></a></li>
 										</ul>
 									</div>
 								</li>
 								<li>
 									<a class="collapsible-header waves-effect arrow-r">
-										<i class="far fa-copy"></i>Dossiers<i class="fas fa-angle-down rotate-icon"></i>
+										<i class="far fa-copy"></i>Contrats de location<i class="fas fa-angle-down rotate-icon"></i>
 									</a>
 									<div class="collapsible-body">
 										<ul>
-											<li><a class="waves-effect"href="{{ path('addRecord') }}"><span class="sv-normal">Formulaire d'ajout</span></a></li>
-											<li><a class="waves-effect" href="#"><span class="sv-normal">Consultation</span></a></li>
+											<li><a class="waves-effect"href="{{ path('addRecord') }}"><span class="sv-normal">Nouveau contrat</span></a></li>
+											<li><a class="waves-effect" href="#"><span class="sv-normal">Consulter les contrats</span></a></li>
 										</ul>
 									</div>
 								</li>
@@ -74,19 +77,19 @@
 									</a>
 									<div class="collapsible-body">
 										<ul>
-											<li><a class="waves-effect"href="{{ path('addLocal') }}"><span class="sv-normal">Ajouter un local</span></a></li>
-											<li><a class="waves-effect"href="{{ path('localIndex') }}"><span class="sv-normal">Consultation</span></a></li>
+											<li><a class="waves-effect"href="{{ path('addLocal') }}"><span class="sv-normal">Nouveau local</span></a></li>
+											<li><a class="waves-effect"href="{{ path('localIndex') }}"><span class="sv-normal">Consulter les locaux</span></a></li>
 										</ul>
 									</div>
 								</li>
 								<li>
 									<a class="collapsible-header waves-effect arrow-r">
-										<i class="far fa-file-alt"></i>Documents génériques<i class="fas fa-angle-down rotate-icon"></i>
+										<i class="far fa-file-alt"></i>Patrons génériques<i class="fas fa-angle-down rotate-icon"></i>
 									</a>
 									<div class="collapsible-body">
 										<ul>
-											<li><a class="waves-effect" href="#"><span class="sv-normal">Ajouter un document</span></a></li>
-											<li><a class="waves-effect" href="#"><span class="sv-normal">Liste</span></a></li>
+											<li><a class="waves-effect" href="#"><span class="sv-normal">Patrons typés</span></a></li>
+											<li><a class="waves-effect" href="#"><span class="sv-normal">Patrons globaux</span></a></li>
 										</ul>
 									</div>
 								</li>
@@ -116,7 +119,9 @@
 					</div>
 					<!-- Breadcrumb -->
 					<div class="breadcrumb-dn mr-auto text-white">
-						{% block page_title %}{% endblock %}
+						<h2>
+							{% block page_title %}{% endblock %}
+						</h2>
 					</div>
 					<ul class="nav navbar-nav nav-flex-icons ml-auto text-white">
 						<li class="nav-item dropdown">
