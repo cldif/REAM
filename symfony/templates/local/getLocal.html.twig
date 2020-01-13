@@ -98,6 +98,47 @@
 	</div>
 	<!-- Central Modal Medium Danger-->
 
+	<div class="container">
+		<div class="col-md-12">
+			<ul class="list-group list-group-flush">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<h5>
+							Patrons relatifs au local "{{ local.name }}"
+						</h5>
+					</li>
+
+					{% for file in files %}
+						<li class="list-group-item">
+							<p class="document-name">
+								{{ file }}
+							</p>
+							<div class="buttons">
+								<div class="button-wrapper">
+									<a class="text-white btn-floating btn-yt btn-sm">
+										<i class="fas fa-trash-alt"></i>
+									</a>
+									<span class="tooltip">Supprimer</span>
+								</div>
+
+								<div class="button-wrapper">
+									<a class="text-white btn-floating btn-fb btn-sm">
+										<i class="fas fa-cloud-download-alt"></i>
+									</a>
+									<span class="tooltip">Télécharger</span>
+								</div>
+							</div>
+						</li>
+					{% endfor %}
+
+					<li class="list-group-item">
+						<button class="btn btn-indigo btn-rounded btn-md">Ajouter un nouveau document</button>
+					</li>
+				</ul>
+			</ul>
+		</div>
+	</div>
+
 {% endblock %}
 
 
