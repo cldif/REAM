@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Tenant;
 use App\Entity\Local;
+use App\Entity\Person;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -56,6 +57,7 @@ class Record
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank(message="Veuillez entrer la date de départ")
      * @Assert\Date()
+     * @Assert\Expression("value >= this.getEntryDate()", message="Veuillez entrer une date supérieure à la date de début du contrat")
      */
     private $releaseDate;
 
@@ -82,6 +84,12 @@ class Record
      * @Assert\Date()
      */
     private $signingDate;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="App\Entity\Person", cascade={"persist"})
+    * @ORM\JoinColumn()
+    */
+    private $garant;
 
     public function getId(): ?int
     {
@@ -204,6 +212,18 @@ class Record
     public function setSigningDate(\DateTimeInterface $signingDate): self
     {
         $this->signingDate = $signingDate;
+
+        return $this;
+    }
+
+    public function getGarant(): ?Person
+    {
+        return $this->garant;
+    }
+
+    public function setGarant(?Person $garant): self
+    {
+        $this->garant = $garant;
 
         return $this;
     }

@@ -9,12 +9,8 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/mnt/c/MAMP/htdocs/LeaseManager/symfony/src/Controller/DocumentController.php'|file_link(0) }}">src/Controller/DocumentController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/mnt/c/MAMP/htdocs/LeaseManager/symfony/templates/document/index.html.twig'|file_link(0) }}">templates/document/index.html.twig</a></code></li>
-    </ul>
+						{% for doc in documents %}
+						{{ doc }}
+						{% endfor %}
 </div>
 {% endblock %}

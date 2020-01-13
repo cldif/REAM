@@ -8,4 +8,5 @@
 /vendor/
 /public/Documents/Locals/*
 /public/Documents/Records/*
+/users/*
 ###< symfony/framework-bundle ###

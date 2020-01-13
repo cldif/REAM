@@ -30,16 +30,18 @@ class PersonType extends AbstractType
             ->add('phone')
             ->add('mobilePhone')
             ->add('email', EmailType::class)
-            ->add('address')
+            ->add('address', TextType::class)
             ->add('dateOfBirth', DateType::class, [
-                    'widget' => 'single_text',
+                    'widget' => 'choice',
                     'years' => range(date('Y') - 100, date('Y')),
-                ])
-            ->add('birthPlace')
+                  ])
+            ->add('birthPlace', TextType::class)
             ->add('identityCard', FileType::class,
-                ["data_class" => null,]
+                ["data_class" => null,
+                 "required" => false,
+                ]
             )
-            ->add('profession')
+            ->add('profession', TextType::class)
         ;
     }
 

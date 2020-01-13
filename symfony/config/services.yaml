@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     app.userPath: '../users/default'
+    app.recordTemplatesFolder: '../users/default/generated/'
+    app.roomTemplatesFolder: '../users/default/templates/unique/'
     app.recordPath: '../users/default/generated/record'
     app.roomTemplatesPath: '../users/default/templates/unique/room'
     app.generalTemplatesPath: '../users/default/templates/general'

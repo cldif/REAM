@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Form\FormError;
 
 /**
-* @Route("/locataire")
+* @Route("/tenant")
 */
 class TenantController extends AbstractController
 {
@@ -123,16 +123,74 @@ class TenantController extends AbstractController
     /**
      * @Route("/{id}/modify", name="modifyTenant", methods={"GET", "POST"})
      */
-    public function modify(Request $request, Tenant $tenant)
+    public function modify(Request $request, Tenant $tenant, ValidatorInterface $validator)
     {
         $form = $this->createForm(TenantType::class, $tenant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) 
         {
-            $this->getDoctrine()->getManager()->flush();
+            $dataParent = $form->get("parent")->getData();
+            $errorFather = 0;
+            $errorMother = 0;
+            $errorsFather = [];
+            $errorsMother = [];
 
-            return $this->redirectToRoute('getTenant', array("id" => $tenant->getId()));
+            if($dataParent == "1" || $dataParent == "3")
+            {
+                $tenant->getFather()->setGender("Homme");
+                $errorsFather = $validator->validate($tenant->getFather());
+                $errorFather = (count($errorsFather) > 0) ? 1 : 0;
+            }
+            else
+            {
+                $tenant->setFather(NULL);
+            }
+
+            if($dataParent == "2" || $dataParent == "3")
+            {
+                $tenant->getMother()->setGender("Femme");
+                $errorsMother = $validator->validate($tenant->getMother());
+                $errorMother = (count($errorsMother) > 0) ? 1 : 0; 
+            }
+            else
+            {
+                $tenant->setMother(NULL);
+            }
+
+            if($errorMother == 0 && $errorFather == 0)
+            {
+                $repository = $this->getDoctrine()->getRepository(Tenant::class);
+                $entityManager = $this->getDoctrine()->getManager();
+
+                $tenantSaved = $repository->find($tenant->getId());
+                $toto = ($tenantSaved->getIdentityCard()) ? "oui" :"non";
+                $tenant->setBirthPlace("tatata".$tenantSaved->getId().$toto);
+
+                if($tenantSaved && null !== $tenantSaved->getIdentityCard() /*&& $tenant->getIdentityCard() == NULL*/)
+                {
+                    $tenant->setBirthPlace("totooto");
+
+                }
+
+                //$entityManager->persist($tenant);
+                $entityManager->flush();
+                return $this->redirectToRoute('getTenant', array("id" => $tenant->getId()));
+            }
+            else
+            {
+                $entityManager->clear();
+
+                if($errorFather != 0)
+                {
+                    $form->addError(new FormError("Père : ".$errorsFather[0]->getMessage()));
+                }
+                
+                if($errorMother != 0)
+                {
+                    $form->addError(new FormError("Mère : ".$errorsMother[0]->getMessage()));
+                }
+            }
         }
 
         return $this->render('tenant/formAddTenant.html.twig', array(

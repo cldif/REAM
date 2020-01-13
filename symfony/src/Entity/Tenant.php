@@ -23,13 +23,6 @@ class Tenant extends Person
     */
     private $mother;
 
-    /**
-    * @ORM\ManyToOne(targetEntity="App\Entity\Person", cascade={"persist"})
-    * @ORM\JoinColumn()
-    */
-    private $garant;
-
-
     public function getFather(): ?Person
     {
         return $this->father;
@@ -50,18 +43,6 @@ class Tenant extends Person
     public function setMother(?Person $mother): self
     {
         $this->mother = $mother;
-
-        return $this;
-    }
-
-    public function getGarant(): ?Person
-    {
-        return $this->garant;
-    }
-
-    public function setGarant(?Person $garant): self
-    {
-        $this->garant = $garant;
 
         return $this;
     }

@@ -12,8 +12,12 @@ use App\Form\LocalType;
 
 use App\Service\FileManager;
 
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+
 /**
-* @Route("/local")
+* @Route("/room")
 */
 class LocalController extends AbstractController
 {
@@ -23,7 +27,7 @@ class LocalController extends AbstractController
     public function index(\Swift_Mailer $mailer)
     {
     	$repository = $this->getDoctrine()->getRepository(Local::class);
-    	$locals= $repository->findAll();
+    	$locals = $repository->findAll();
 
        /*
 		Code to fill a docx file and save as pdf
@@ -59,19 +63,25 @@ class LocalController extends AbstractController
 	/**
 	* @Route("/add", name="addLocal", methods={"GET", "POST"})
 	*/
-    public function add(Request $request)
+    public function add(Request $request, ParameterBagInterface $params)
     {
 	    $local = new Local();
 	    $form = $this->createForm(LocalType::class, $local);
 	    $form->handleRequest($request);
 
-	    if ($form->isSubmitted() && $form->isValid()) {
-
+	    if ($form->isSubmitted() && $form->isValid()) 
+        {
 	        $local = $form->getData();
 
 	        $entityManager = $this->getDoctrine()->getManager();
 	        $entityManager->persist($local);
 	        $entityManager->flush();
+
+            $localPath = $this->getParameter('app.roomTemplatesPath');
+            $localFolder = $localPath.$local->getId();
+
+            FileManager::verificationStructure($params);
+            FileManager::createFolder($localFolder);
 
 	        return $this->redirectToRoute('getLocal', array("id" => $local->getId()));
 	    }
@@ -82,8 +92,7 @@ class LocalController extends AbstractController
     }
 
     /**
-	* @Route("/{id}", name="getLocal", methods={"GET"}),
-	requirements={"id" = "\d+"}))
+	* @Route("/{id}", name="getLocal", methods={"GET"},	requirements={"id" = "\d+"})
 	*/
     public function get($id)
     {
@@ -97,15 +106,13 @@ class LocalController extends AbstractController
 	    }
 
 	    $localPath = $this->getParameter('app.roomTemplatesPath');
-
-	    //Get the associated filed
-	    $files = array_diff(scandir($localPath.$local->getId()), array('..', '.'));
+	    $files = FileManager::getFilesInFolder($localPath.$local->getId());
 
         return $this->render('local/getLocal.html.twig', array("local"  => $local, "files" => $files));
     }
 
     /**
-     * @Route("/{id}/modify", name="modifyLocal", methods={"GET", "POST"})
+     * @Route("/{id}/modify", name="modifyLocal", methods={"GET", "POST"},  requirements={"id" = "\d+"})
      */
     public function modify(Request $request, Local $local)
     {
@@ -155,5 +162,41 @@ class LocalController extends AbstractController
         }
  
         return $response;
+    }
+
+    /**
+    * @Route("/{id}/document", name="getDocumentLocal", methods={"GET"}, requirements={"id" = "\d+"})
+    */
+    public function getDocument($id, Request $request)
+    {
+        $documentName = $request->headers->get("documentName");
+
+        $localPath = $this->getParameter('app.roomTemplatesPath');
+        $localFolder = $localPath.$id;
+
+        return new BinaryFileResponse($localFolder."/".$documentName);
+    }
+
+    /**
+    * @Route("/{id}/document", name="addDocumentLocal", methods={"POST"}, requirements={"id" = "\d+"})
+    */
+    public function addDocument($id, Request $request, ParameterBagInterface $params)
+    {
+        $localPath = $this->getParameter('app.roomTemplatesPath');
+        $localFolder = $localPath.$id;
+
+        FileManager::verificationStructure($params);
+        return FileManager::addDocument($localFolder, $request);
+    }
+
+    /**
+    * @Route("/{id}/document", name="removeDocumentLocal", methods={"DELETE"}, requirements={"id" = "\d+"})
+    */
+    public function removeDocument($id, Request $request)
+    {
+        $localPath = $this->getParameter('app.roomTemplatesPath');
+        $localFolder = $localPath.$id;
+
+        return FileManager::removeDocument($localFolder, $request);
     }
 }

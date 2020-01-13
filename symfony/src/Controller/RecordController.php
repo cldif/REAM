@@ -11,6 +11,8 @@ use App\Form\RecordType;
 
 use App\Service\FileManager;
 
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+
 /**
 * @Route("/dossier")
 */
@@ -32,7 +34,7 @@ class RecordController extends AbstractController
     /**
 	* @Route("/add", name="addRecord", methods={"GET", "POST"})
 	*/
-    public function add(Request $request)
+    public function add(Request $request, ParameterBagInterface $params)
     {
 	    $record = new Record();
 	    $form = $this->createForm(RecordType::class, $record);
@@ -45,6 +47,12 @@ class RecordController extends AbstractController
 	        $entityManager = $this->getDoctrine()->getManager();
 	        $entityManager->persist($record);
 	        $entityManager->flush();
+
+            $recordPath = $this->getParameter('app.recordPath');
+            $recordFolder = $recordPath.$record->getId();
+
+            FileManager::verificationStructure($params);
+            FileManager::createFolder($recordFolder);
 
 	        return $this->redirectToRoute('getRecord', array("id" => $record->getId()));
 	    }
