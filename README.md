@@ -113,6 +113,7 @@ The project has not been released yet. Deployment indications are coming soon...
 - [Symfony](https://symfony.com/) - PHP web application framework.
 - [Twig](https://twig.symfony.com/) - Template engine for PHP.
 - [Material Design for Bootstrap](https://mdbootstrap.com/) - UI KIT.
+- [Font Awesome](https://fontawesome.com/) - Font and icon toolkit based on CSS and LESS.
 - [jQuery](https://jquery.com/) - JavaScript library : DOM Traversal and Manipulation, Event Handling, and Ajax.
 
 ## Contributing
