@@ -33,13 +33,12 @@ class RecordType extends AbstractType
             ->add('releaseDate', DateType::class, [
                     'widget' => 'single_text',
                 ])
+            ->add('signingDate', DateType::class, [
+                    'widget' => 'single_text',
+                ])
             ->add('additionalInformation', TextType::class,[
                     'required' => false,
                 ])
-            ->add('files', FileType::class, [
-                'mapped' => false,
-                'multiple' => true,
-            ])
             ->add('tenant', EntityType::class, [
                 'class' => Tenant::class,
                 'choice_label' => 'name',

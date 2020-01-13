@@ -73,23 +73,6 @@ class LocalController extends AbstractController
 	        $entityManager->persist($local);
 	        $entityManager->flush();
 
-	    	$templatePath = $this->getParameter('app.templatePath');
-	    	$localPath = $this->getParameter('app.localPath');
-	    	$localFolder = $localPath.$local->getId();
-
-            mkdir($localFolder, 0700);
-            FileManager::saveFiles($form, $localFolder);
-
-	        //Creation of the local document with the template
-	        $pdf = new Pdf($templatePath.'localTest.pdf');
-			$pdf->fillForm([
-			        'nom'=>'mon nom',
-			        'prenom' => 'mon prenom',
-			        "meuble" => "No",
-			    ])
-			    ->needAppearances()
-			    ->saveAs($localFolder.'/localInscription.pdf');
-
 	        return $this->redirectToRoute('getLocal', array("id" => $local->getId()));
 	    }
 
@@ -113,7 +96,7 @@ class LocalController extends AbstractController
 	        );
 	    }
 
-	    $localPath = $this->getParameter('app.localPath');
+	    $localPath = $this->getParameter('app.roomTemplatesPath');
 
 	    //Get the associated filed
 	    $files = array_diff(scandir($localPath.$local->getId()), array('..', '.'));
@@ -132,12 +115,6 @@ class LocalController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $this->getDoctrine()->getManager()->flush();
-
-            $localPath = $this->getParameter('app.localPath');
-            $localFolder = $localPath.$local->getId();
-
-            FileManager::saveFiles($form, $localFolder);
-
             return $this->redirectToRoute('getLocal', array("id" => $local->getId()));
         }
 
@@ -155,7 +132,7 @@ class LocalController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Local::class);
         $local = $repository->find($id);
 
-    	$localPath = $this->getParameter('app.localPath');
+    	$localPath = $this->getParameter('app.roomTemplatesPath');
     	$localFolder = $localPath.$local->getId();
 
 		SaveFiles::deleteFolder($localFolder);

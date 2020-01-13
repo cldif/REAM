@@ -11,7 +11,6 @@ use App\Form\RecordType;
 
 use App\Service\FileManager;
 
-
 /**
 * @Route("/dossier")
 */
@@ -46,12 +45,6 @@ class RecordController extends AbstractController
 	        $entityManager = $this->getDoctrine()->getManager();
 	        $entityManager->persist($record);
 	        $entityManager->flush();
-
-	    	$recordPath = $this->getParameter('app.recordPath');
-            $recordFolder = $recordPath.$record->getId();
-
-	        mkdir($recordFolder, 0700);
-            FileManager::saveFiles($form, $recordFolder);
 
 	        return $this->redirectToRoute('getRecord', array("id" => $record->getId()));
 	    }

@@ -4,9 +4,12 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    app.localPath: 'Documents/Locals/Local'
-    app.recordPath: 'Documents/Records/Record'
-    app.templatePath: '../templates/PDF/'
+    app.userPath: '../users/default'
+    app.recordPath: '../users/default/generated/record'
+    app.roomTemplatesPath: '../users/default/templates/unique/room'
+    app.generalTemplatesPath: '../users/default/templates/general'
+    app.apartmentsTemplatesPath: '../users/default/templates/typed/apartments'
+    app.hangarsTemplatesPath: '../users/default/templates/typed/hangars'
 
 services:
     # default configuration for services in *this* file

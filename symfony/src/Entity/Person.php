@@ -42,12 +42,14 @@ class Person
     /**
      * @ORM\Column(type="string", length=15)
      * @Assert\NotBlank(message="Veuillez entrer un numéro de téléphone fixe")
+     * @Assert\Regex("/^0[0-9]{9}$/", message="Le format du numéro de téléphone est incorrect (ex : 0612345678)")
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=15)
      * @Assert\NotBlank(message="Veuillez entrer un numéro de téléphone portable")
+     * @Assert\Regex("/^0[0-9]{9}$/", message="Le format du numéro de téléphone est incorrect (ex : 0612345678)")
      */
     private $mobilePhone;
 

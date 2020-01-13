@@ -31,10 +31,6 @@ class LocalType extends AbstractType
                     'Appartement' => 'Appartement',
                     'Hangar' => 'Hangar',
                 ]])
-            ->add('files', FileType::class, [
-                'mapped' => false,
-                'multiple' => true,
-            ])
             ->add('save', SubmitType::class)
         ;
     }

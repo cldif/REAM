@@ -76,6 +76,13 @@ class Record
     */
     private $local;
 
+    /**
+     * @ORM\Column(type="datetime")
+     * @Assert\NotBlank(message="Veuillez entrer la date de signature")
+     * @Assert\Date()
+     */
+    private $signingDate;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -185,6 +192,18 @@ class Record
     public function setLocal(?Local $local): self
     {
         $this->local = $local;
+
+        return $this;
+    }
+
+    public function getSigningDate(): ?\DateTimeInterface
+    {
+        return $this->signingDate;
+    }
+
+    public function setSigningDate(\DateTimeInterface $signingDate): self
+    {
+        $this->signingDate = $signingDate;
 
         return $this;
     }
