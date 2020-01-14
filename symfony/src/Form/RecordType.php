@@ -6,12 +6,15 @@ use App\Entity\Local;
 use App\Entity\Record;
 use App\Entity\Tenant;
 
+use App\Form\PersonType;
+
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -47,6 +50,20 @@ class RecordType extends AbstractType
                 'class' => Local::class,
                 'choice_label' => 'name',
             ])
+            ->add('garantChoice', ChoiceType::class, [
+                	'label' => 'Choix du garant',
+                    'choices'  => [
+                        'Père' => 1,
+                        'Mère' => 2,
+                        'Autre' => 3,
+                    ], 
+                    'mapped' => false,
+                ])
+            
+            ->add('garant', PersonType::class, [
+                        'label'    => 'Ajouter le garant',
+                        'required' => false,
+                ])
             ->add('save', SubmitType::class)
         ;
     }

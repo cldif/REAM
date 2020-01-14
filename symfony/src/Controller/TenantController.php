@@ -58,6 +58,11 @@ class TenantController extends AbstractController
                 $tenant->getFather()->setGender("Homme");
                 $errorsFather = $validator->validate($tenant->getFather());
                 $errorFather = (count($errorsFather) > 0) ? 1 : 0;
+
+                if($errorFather != 0)
+                {
+                    $form->addError(new FormError("Père : ".$errorsFather[0]->getMessage()));
+                }
             }
             else
             {
@@ -69,6 +74,11 @@ class TenantController extends AbstractController
                 $tenant->getMother()->setGender("Femme");
                 $errorsMother = $validator->validate($tenant->getMother());
                 $errorMother = (count($errorsMother) > 0) ? 1 : 0; 
+
+                if($errorMother != 0)
+                {
+                    $form->addError(new FormError("Mère : ".$errorsMother[0]->getMessage()));
+                }
             }
             else
             {
@@ -79,21 +89,8 @@ class TenantController extends AbstractController
             {
 	           $entityManager->persist($tenant);
 	           $entityManager->flush();
-	           return $this->redirectToRoute('getTenant', array("id" => $tenant->getId()));
-            }
-            else
-            {
-                $entityManager->clear();
 
-                if($errorFather != 0)
-                {
-                    $form->addError(new FormError("Père : ".$errorsFather[0]->getMessage()));
-                }
-                
-                if($errorMother != 0)
-                {
-                    $form->addError(new FormError("Mère : ".$errorsMother[0]->getMessage()));
-                }
+	           return $this->redirectToRoute('getTenant', array("id" => $tenant->getId()));
             }
 	    }
 
@@ -141,6 +138,11 @@ class TenantController extends AbstractController
                 $tenant->getFather()->setGender("Homme");
                 $errorsFather = $validator->validate($tenant->getFather());
                 $errorFather = (count($errorsFather) > 0) ? 1 : 0;
+
+                if($errorFather != 0)
+                {
+                    $form->addError(new FormError("Père : ".$errorsFather[0]->getMessage()));
+                }
             }
             else
             {
@@ -152,6 +154,11 @@ class TenantController extends AbstractController
                 $tenant->getMother()->setGender("Femme");
                 $errorsMother = $validator->validate($tenant->getMother());
                 $errorMother = (count($errorsMother) > 0) ? 1 : 0; 
+
+                if($errorMother != 0)
+                {
+                    $form->addError(new FormError("Mère : ".$errorsMother[0]->getMessage()));
+                }
             }
             else
             {
@@ -163,33 +170,8 @@ class TenantController extends AbstractController
                 $repository = $this->getDoctrine()->getRepository(Tenant::class);
                 $entityManager = $this->getDoctrine()->getManager();
 
-                $tenantSaved = $repository->find($tenant->getId());
-                $toto = ($tenantSaved->getIdentityCard()) ? "oui" :"non";
-                $tenant->setBirthPlace("tatata".$tenantSaved->getId().$toto);
-
-                if($tenantSaved && null !== $tenantSaved->getIdentityCard() /*&& $tenant->getIdentityCard() == NULL*/)
-                {
-                    $tenant->setBirthPlace("totooto");
-
-                }
-
-                //$entityManager->persist($tenant);
                 $entityManager->flush();
                 return $this->redirectToRoute('getTenant', array("id" => $tenant->getId()));
-            }
-            else
-            {
-                $entityManager->clear();
-
-                if($errorFather != 0)
-                {
-                    $form->addError(new FormError("Père : ".$errorsFather[0]->getMessage()));
-                }
-                
-                if($errorMother != 0)
-                {
-                    $form->addError(new FormError("Mère : ".$errorsMother[0]->getMessage()));
-                }
             }
         }
 

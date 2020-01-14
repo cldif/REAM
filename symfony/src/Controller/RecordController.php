@@ -7,11 +7,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Record;
+use App\Entity\Tenant;
+
 use App\Form\RecordType;
 
 use App\Service\FileManager;
 
+use Symfony\Component\Form\FormError;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+
 
 /**
 * @Route("/dossier")
@@ -34,27 +39,73 @@ class RecordController extends AbstractController
     /**
 	* @Route("/add", name="addRecord", methods={"GET", "POST"})
 	*/
-    public function add(Request $request, ParameterBagInterface $params)
+    public function add(Request $request, ParameterBagInterface $params, ValidatorInterface $validator)
     {
 	    $record = new Record();
 	    $form = $this->createForm(RecordType::class, $record);
 	    $form->handleRequest($request);
 
-	    if ($form->isSubmitted() && $form->isValid()) {
-
+	    if ($form->isSubmitted() && $form->isValid()) 
+        {
 	        $record = $form->getData();
+            $dataGarant = $form->get("garantChoice")->getData();
 
 	        $entityManager = $this->getDoctrine()->getManager();
-	        $entityManager->persist($record);
-	        $entityManager->flush();
+            $repository = $this->getDoctrine()->getRepository(Tenant::class);
+            $tenant = $repository->find($record->getTenant()->getId());
 
-            $recordPath = $this->getParameter('app.recordPath');
-            $recordFolder = $recordPath.$record->getId();
+            //No error
+            $error = 0;
 
-            FileManager::verificationStructure($params);
-            FileManager::createFolder($recordFolder);
+            if($dataGarant == 1)
+            {
+                if($tenant->getFather() == NULL)
+                {
+                    $error = 1;
+                    $form->addError(new FormError("Le père ne peut pas être le garant"));
+                }
+                else
+                {
+                    $record->setGarant($tenant->getFather());
+                }
+            }
+            else if($dataGarant == 2)
+            {
+                if($tenant->getMother() == NULL)
+                {
+                    $error = 1;
+                    $form->addError(new FormError("La mère ne peut pas être la garante"));
+                }
+                else
+                {
+                    $record->setGarant($tenant->getMother());
+                }
+            }
+            else if($dataGarant == 3)
+            {
+                $errorsGarant = $validator->validate($record->getGarant());
+                $errorGarant = (count($errorsGarant) > 0) ? 1 : 0;
 
-	        return $this->redirectToRoute('getRecord', array("id" => $record->getId()));
+                if($errorGarant > 0)
+                {
+                    $error = 1;
+                    $form->addError(new FormError("Garant : ".$errorsGarant[0]->getMessage()));
+                }
+            }
+
+            if($error == 0)
+            {
+                $entityManager->persist($record);
+                $entityManager->flush();
+
+                $recordPath = $this->getParameter('app.recordPath');
+                $recordFolder = $recordPath.$record->getId();
+
+                FileManager::verificationStructure($params);
+                FileManager::createFolder($recordFolder);
+
+                return $this->redirectToRoute('getRecord', array("id" => $record->getId()));
+            }
 	    }
 
         return $this->render('record/formAddRecord.html.twig', array(
