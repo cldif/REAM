@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 /**
-* @Route("/dossier")
+* @Route("/record")
 */
 class RecordController extends AbstractController
 {
@@ -54,7 +54,6 @@ class RecordController extends AbstractController
             $repository = $this->getDoctrine()->getRepository(Tenant::class);
             $tenant = $repository->find($record->getTenant()->getId());
 
-            //No error
             $error = 0;
 
             if($dataGarant == 1)
@@ -91,6 +90,11 @@ class RecordController extends AbstractController
                     $error = 1;
                     $form->addError(new FormError("Garant : ".$errorsGarant[0]->getMessage()));
                 }
+            }
+            else
+            {
+                $error = 1;
+                $form->addError(new FormError("Ce choix de garant n'est pas possible"));
             }
 
             if($error == 0)
@@ -129,9 +133,7 @@ class RecordController extends AbstractController
 	    }
 
 	    $recordPath = $this->getParameter('app.recordPath');
-
-	    //Get the associated filed
-	    $files = array_diff(scandir($recordPath.$record->getId()), array('..', '.'));
+        $files = FileManager::getFilesInFolder($recordPath.$record->getId());
 
         return $this->render('record/getrecord.html.twig', array("record"  => $record, "files" => $files));
     }
@@ -145,22 +147,28 @@ class RecordController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Record::class);
         $record = $repository->find($id);
 
-        $recordPath = $this->getParameter('app.recordPath');
-        $recordFolder = $recordPath.$record->getId();
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/plain');
 
-        FileManager::deleteFolder($recordFolder);
-    
-        if($record)
+        if (!$record) 
         {
-            $entityManager->remove($record);
-            $entityManager->flush();
-            $data = ['deleted' => "OK"];
+            $response->setContent('Entity not found');
+            $response->setStatusCode(Response::HTTP_NOT_FOUND);
         }
         else
         {
-            $data = ['deleted' => "ERROR : Entity not found"];
-        }
+            $recordPath = $this->getParameter('app.recordPath');
+            $recordFolder = $recordPath.$record->getId();
+            
+            FileManager::deleteFolder($recordFolder);
+
+            $entityManager->remove($record);
+            $entityManager->flush();
+            
+            $response->setContent('Deleted ok');
+            $response->setStatusCode(Response::HTTP_OK);
+        }    
  
-        return new JsonResponse($data);
+        return $response;
     }
 }

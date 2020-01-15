@@ -29,6 +29,7 @@ class LocalController extends AbstractController
     	$repository = $this->getDoctrine()->getRepository(Local::class);
     	$locals = $repository->findAll();
 
+
        /*
 		Code to fill a docx file and save as pdf
 
@@ -139,27 +140,26 @@ class LocalController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Local::class);
         $local = $repository->find($id);
 
-    	$localPath = $this->getParameter('app.roomTemplatesPath');
-    	$localFolder = $localPath.$local->getId();
-
-		SaveFiles::deleteFolder($localFolder);
-
         $response = new Response();
-		$response->headers->set('Content-Type', 'text/plain');
-    
-        if($local)
+        $response->headers->set('Content-Type', 'text/plain');
+
+        if (!$local) 
         {
-            $entityManager->remove($local);
-            $entityManager->flush();
-			
-			$response->setContent('Deleted ok');
-            $response->setStatusCode(Response::HTTP_OK);
+            $response->setContent('Entity not found');
+            $response->setStatusCode(Response::HTTP_NOT_FOUND);
         }
         else
         {
-			$response->setContent('Entity not found');
-            $response->setStatusCode(Response::HTTP_NOT_FOUND);
-        }
+            $localPath = $this->getParameter('app.roomTemplatesPath');
+            $localFolder = $localPath.$local->getId();
+            FileManager::deleteFolder($localFolder);
+
+            $entityManager->remove($local);
+            $entityManager->flush();
+            
+            $response->setContent('Deleted ok');
+            $response->setStatusCode(Response::HTTP_OK);
+        }    
  
         return $response;
     }
@@ -174,7 +174,7 @@ class LocalController extends AbstractController
         $localPath = $this->getParameter('app.roomTemplatesPath');
         $localFolder = $localPath.$id;
 
-        return new BinaryFileResponse($localFolder."/".$documentName);
+        return FileManager::getDocument($localFolder."/".$documentName);
     }
 
     /**

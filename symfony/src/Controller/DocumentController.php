@@ -36,7 +36,7 @@ class DocumentController extends AbstractController
     	}
     	else
     	{
-	        return new BinaryFileResponse($generalDocumentPath."/".$documentName);
+	        return FileManager::getDocument($generalDocumentPath."/".$documentName);
     	}
     }
 
@@ -77,7 +77,7 @@ class DocumentController extends AbstractController
     	}
     	else
     	{
-	        return new BinaryFileResponse($apartmentsTemplatesPath."/".$documentName);
+            return FileManager::getDocument($apartmentsTemplatesPath."/".$documentName);
     	}
     }
 
@@ -118,7 +118,7 @@ class DocumentController extends AbstractController
     	}
     	else
     	{
-	        return new BinaryFileResponse($hangarsTemplatesPath."/".$documentName);
+            return FileManager::getDocument($hangarsTemplatesPath."/".$documentName);
     	}
     }
 

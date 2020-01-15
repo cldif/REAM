@@ -10,7 +10,7 @@ use App\Entity\Payment;
 use App\Form\PaymentType;
 
 /**
-* @Route("/paiement")
+* @Route("/payment")
 */
 class PaymentController extends AbstractController
 {
