@@ -32,9 +32,10 @@ class PersonType extends AbstractType
             ->add('email', EmailType::class)
             ->add('address', TextType::class)
             ->add('dateOfBirth', DateType::class, [
-                    'widget' => 'choice',
+                    'widget' => 'single_text',
                     'years' => range(date('Y') - 100, date('Y')),
-                  ])
+					'by_reference' => true,
+				])
             ->add('birthPlace', TextType::class)
             ->add('identityCard', FileType::class,
                 ["data_class" => null,

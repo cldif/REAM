@@ -28,6 +28,7 @@ class RecordType extends AbstractType
         $builder
             ->add('entryDate', DateType::class, [
                     'widget' => 'single_text',
+                    'by_reference' => true,
                 ])
             ->add('rent', NumberType::class)
             ->add('fixedCharge', NumberType::class)
@@ -35,9 +36,11 @@ class RecordType extends AbstractType
             ->add('revisionIndex', TextType::class)
             ->add('releaseDate', DateType::class, [
                     'widget' => 'single_text',
+                    'by_reference' => true,
                 ])
             ->add('signingDate', DateType::class, [
                     'widget' => 'single_text',
+                    'by_reference' => true,
                 ])
             ->add('additionalInformation', TextType::class,[
                     'required' => false,
