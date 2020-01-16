@@ -1,4 +1,30 @@
-/* Div wich includes all the forms of the page */
+/* Div which includes what is contained by the "form" tag */
 .form-wrapper {
-  width: 50%;
+  width: 95% !important;
+}
+
+/* Part which includes all the sub forms of the page */
+form {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Div which is a wrapper for each sub form */
+.sub-form-wrapper {
+  width: 45%;
+}
+
+/* Puts a margin just below the legend */
+legend {
+  margin-bottom: 25px;
+}
+
+/* The garant form will be displayed with JS according to the user selection */
+.garant-form {
+  display: none;
+}
+
+/* Do not display the error message inside the label */
+label > .invalid-feedback.d-block {
+  display: none !important;
 }
