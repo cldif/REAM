@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Local;
+use App\Entity\Record;
 use App\Form\LocalType;
 
 use App\Service\FileManager;
@@ -139,6 +140,16 @@ class LocalController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository(Local::class);
         $local = $repository->find($id);
+
+        //delete associated records
+        $repositoryRecord = $this->getDoctrine()->getRepository(Record::class);
+        $records = $repositoryRecord->findBy(
+            array('local' => $local)
+        );
+
+        foreach ($records as $record) {
+            $entityManager->remove($record);
+        }
 
         $response = new Response();
         $response->headers->set('Content-Type', 'text/plain');

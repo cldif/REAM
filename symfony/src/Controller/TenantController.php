@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Tenant;
+use App\Entity\Record;
 use App\Form\TenantType;
 
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -195,6 +196,16 @@ class TenantController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository(Tenant::class);
         $tenant = $repository->find($id);
+
+        //delete associated records
+        $repositoryRecord = $this->getDoctrine()->getRepository(Record::class);
+        $records = $repositoryRecord->findBy(
+            array('tenant' => $tenant)
+        );
+
+        foreach ($records as $record) {
+            $entityManager->remove($record);
+        }
 
         $response = new Response();
         $response->headers->set('Content-Type', 'text/plain');

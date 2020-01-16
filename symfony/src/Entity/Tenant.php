@@ -12,13 +12,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Tenant extends Person
 {
     /**
-    * @ORM\ManyToOne(targetEntity="App\Entity\Person", cascade={"persist"})
+    * @ORM\ManyToOne(targetEntity="App\Entity\Person", cascade={"persist", "remove"})
     * @ORM\JoinColumn()
     */
     private $father;
 
     /**
-    * @ORM\ManyToOne(targetEntity="App\Entity\Person", cascade={"persist"})
+    * @ORM\ManyToOne(targetEntity="App\Entity\Person", cascade={"persist", "remove"})
     * @ORM\JoinColumn()
     */
     private $mother;
