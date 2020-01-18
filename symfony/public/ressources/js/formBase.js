@@ -6,3 +6,6 @@ $("select").addClass("mdb-select md-form");
 $(document).ready(function() {
   $(".mdb-select").materialSelect();
 });
+
+// Allow to use material Date Picker, it should always be regarded as activated.
+$(".always-active > label").addClass("active");

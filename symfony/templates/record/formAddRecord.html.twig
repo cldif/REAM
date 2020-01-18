@@ -14,64 +14,153 @@
 
 	<div class="form-wrapper">
 		{{ form_start(form) }}
+		<div class="sub-form-wrapper">
+			<legend>Contrat</legend>
 
-		<legend>Contrat</legend>
+			<div class="md-form always-active">
+				{{ form_label(form.entryDate, 'Date de début du contrat') }}
+				{{ form_widget(form.entryDate) }}
+				{{ form_errors(form.entryDate) }}
+			</div>
 
-		<div class="default-form">
-			{{ form_label(form.entryDate, 'Date de début du contrat') }}
-			{{ form_widget(form.entryDate) }}
+			<div class="md-form">
+				{{ form_label(form.rent, 'Montant du loyer') }}
+				{{ form_widget(form.rent) }}
+				{{ form_errors(form.rent) }}
+			</div>
+
+			<div class="md-form">
+				{{ form_label(form.fixedCharge, 'Montant des charges fixes') }}
+				{{ form_widget(form.fixedCharge) }}
+				{{ form_errors(form.fixedCharge) }}
+			</div>
+
+			<div class="md-form">
+				{{ form_label(form.periodicity, 'Périodicité du loyer') }}
+				{{ form_widget(form.periodicity) }}
+				{{ form_errors(form.periodicity) }}
+			</div>
+
+			<div class="md-form">
+				{{ form_label(form.revisionIndex, 'Indice de révision') }}
+				{{ form_widget(form.revisionIndex) }}
+				{{ form_errors(form.revisionIndex) }}
+			</div>
+
+			<div class="md-form always-active">
+				{{ form_label(form.releaseDate, 'Date de fin du contrat') }}
+				{{ form_widget(form.releaseDate) }}
+				{{ form_errors(form.releaseDate) }}
+			</div>
+
+			<div class="md-form always-active">
+				{{ form_label(form.signingDate, 'Date de signature du contrat') }}
+				{{ form_widget(form.signingDate) }}
+				{{ form_errors(form.signingDate) }}
+			</div>
+
+			<div class="md-form">
+				{{ form_label(form.additionalInformation, 'Informations additionnelles') }}
+				{{ form_widget(form.additionalInformation) }}
+				{{ form_errors(form.additionalInformation) }}
+			</div>
+
+			<div class="default-form">
+				{{ form_label(form.tenant, 'Locataire') }}
+				{{ form_widget(form.tenant) }}
+				{{ form_errors(form.tenant) }}
+			</div>
+
+			<div class="default-form">
+				{{ form_label(form.room, 'Local') }}
+				{{ form_widget(form.room) }}
+				{{ form_errors(form.room) }}
+			</div>
+
+			<div class="md-form">
+				{{ form_widget(form.save, { 'label': 'Enregistrer' }) }}
+			</div>
 		</div>
 
-		<div class="md-form">
-			{{ form_label(form.rent, 'Montant du loyer') }}
-			{{ form_widget(form.rent) }}
+		<div class="sub-form-wrapper">
+			<legend>Caution</legend>
+
+			<div class="default-form">
+				{{ form_label(form.guarantorChoice, 'Choix de la personne') }}
+				{{ form_widget(form.guarantorChoice) }}
+				{{ form_errors(form.guarantorChoice) }}
+			</div>
+
+			<fieldset class="guarantor-form">
+				<div class="md-form">
+					{{ form_label(form.guarantor.name, 'Nom de famille') }}
+					{{ form_widget(form.guarantor.name) }}
+					{{ form_errors(form.guarantor.name) }}
+				</div>
+
+				<div class="md-form">
+					{{ form_label(form.guarantor.firstName, 'Prénom') }}
+					{{ form_widget(form.guarantor.firstName) }}
+					{{ form_errors(form.guarantor.firstName) }}
+				</div>
+
+				<div class="default-form">
+					{{ form_label(form.guarantor.gender, 'Sexe') }}
+					{{ form_widget(form.guarantor.gender) }}
+					{{ form_errors(form.guarantor.gender) }}
+				</div>
+
+				<div class="md-form">
+					{{ form_label(form.guarantor.phone, 'Téléphone fixe') }}
+					{{ form_widget(form.guarantor.phone) }}
+					{{ form_errors(form.guarantor.phone) }}
+				</div>
+
+				<div class="md-form">
+					{{ form_label(form.guarantor.mobilePhone, 'Téléphone portable') }}
+					{{ form_widget(form.guarantor.mobilePhone) }}
+					{{ form_errors(form.guarantor.mobilePhone) }}
+				</div>
+
+				<div class="md-form">
+					{{ form_label(form.guarantor.email, 'E-Mail') }}
+					{{ form_widget(form.guarantor.email) }}
+					{{ form_errors(form.guarantor.email) }}
+				</div>
+
+				<div class="md-form">
+					{{ form_label(form.guarantor.address, 'Adresse postale') }}
+					{{ form_widget(form.guarantor.address) }}
+					{{ form_errors(form.guarantor.address) }}
+				</div>
+
+				<div class="default-form">
+					{{ form_label(form.guarantor.dateOfBirth, 'Date de naissance') }}
+					{{ form_widget(form.guarantor.dateOfBirth) }}
+					{{ form_errors(form.guarantor.dateOfBirth) }}
+				</div>
+
+				<div class="md-form">
+					{{ form_label(form.guarantor.birthPlace, 'Lieu de naissance') }}
+					{{ form_widget(form.guarantor.birthPlace) }}
+					{{ form_errors(form.guarantor.birthPlace) }}
+				</div>
+
+
+				<div class="md-form">
+					{{ form_label(form.guarantor.profession, 'Profession') }}
+					{{ form_widget(form.guarantor.profession) }}
+					{{ form_errors(form.guarantor.profession) }}
+				</div>
+
+				<div class="default-form">
+					{{ form_label(form.guarantor.identityCard, "Carte d'identité") }}
+					{{ form_widget(form.guarantor.identityCard) }}
+					{{ form_errors(form.guarantor.identityCard) }}
+				</div>
+			</fieldset>
 		</div>
 
-		<div class="md-form">
-			{{ form_label(form.fixedCharge, 'Montant des charges fixes') }}
-			{{ form_widget(form.fixedCharge) }}
-		</div>
-
-		<div class="md-form">
-			{{ form_label(form.periodicity, 'Périodicité du loyer') }}
-			{{ form_widget(form.periodicity) }}
-		</div>
-
-		<div class="md-form">
-			{{ form_label(form.revisionIndex, 'Indice de révision') }}
-			{{ form_widget(form.revisionIndex) }}
-		</div>
-
-		<div class="default-form">
-			{{ form_label(form.releaseDate, 'Date de fin du contrat') }}
-			{{ form_widget(form.releaseDate) }}
-		</div>
-
-		<div class="default-form">
-			{{ form_label(form.signingDate, 'Date de signature du contrat') }}
-			{{ form_widget(form.signingDate) }}
-		</div>
-
-		<div class="md-form">
-			{{ form_label(form.additionalInformation, 'Informations additionnelles') }}
-			{{ form_widget(form.additionalInformation) }}
-		</div>
-
-		<div class="default-form">
-			{{ form_label(form.tenant, 'Locataire') }}
-			{{ form_widget(form.tenant) }}
-		</div>
-
-		<div class="default-form">
-			{{ form_label(form.room, 'Local') }}
-			{{ form_widget(form.room) }}
-		</div>
-
-		<div class="md-form">
-			{{ form_widget(form.save, { 'label': 'Enregistrer' }) }}
-		</div>
-
-		{{ form_errors(form) }}
 		{{ form_end(form) }}
 	</div>
 
@@ -80,4 +169,5 @@
 {% block js %}
 	<!-- Custom JS scripts -->
 	<script type="text/javascript" src="{{ asset('ressources/js/formBase.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('ressources/js/record/formAddRecord.js') }}"></script>
 {% endblock %}
