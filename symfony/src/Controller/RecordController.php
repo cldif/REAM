@@ -48,7 +48,7 @@ class RecordController extends AbstractController
 	    if ($form->isSubmitted() && $form->isValid()) 
         {
 	        $record = $form->getData();
-            $dataGarant = $form->get("garantChoice")->getData();
+            $dataGuarantor = $form->get("guarantorChoice")->getData();
 
 	        $entityManager = $this->getDoctrine()->getManager();
             $repository = $this->getDoctrine()->getRepository(Tenant::class);
@@ -56,7 +56,7 @@ class RecordController extends AbstractController
 
             $error = 0;
 
-            if($dataGarant == 1)
+            if($dataGuarantor == 1)
             {
                 if($tenant->getFather() == NULL)
                 {
@@ -65,10 +65,10 @@ class RecordController extends AbstractController
                 }
                 else
                 {
-                    $record->setGarant($tenant->getFather());
+                    $record->setGuarantor($tenant->getFather());
                 }
             }
-            else if($dataGarant == 2)
+            else if($dataGuarantor == 2)
             {
                 if($tenant->getMother() == NULL)
                 {
@@ -77,18 +77,18 @@ class RecordController extends AbstractController
                 }
                 else
                 {
-                    $record->setGarant($tenant->getMother());
+                    $record->setGuarantor($tenant->getMother());
                 }
             }
-            else if($dataGarant == 3)
+            else if($dataGuarantor == 3)
             {
-                $errorsGarant = $validator->validate($record->getGarant());
-                $errorGarant = (count($errorsGarant) > 0) ? 1 : 0;
+                $errorsGuarantor = $validator->validate($record->getGuarantor());
+                $errorGuarantor = (count($errorsGuarantor) > 0) ? 1 : 0;
 
-                if($errorGarant > 0)
+                if($errorGuarantor > 0)
                 {
                     $error = 1;
-                    $form->addError(new FormError("Garant : ".$errorsGarant[0]->getMessage()));
+                    $form->addError(new FormError("Garant : ".$errorsGuarantor[0]->getMessage()));
                 }
             }
             else

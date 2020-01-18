@@ -7,9 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-use App\Entity\Local;
+use App\Entity\Room;
 use App\Entity\Record;
-use App\Form\LocalType;
+use App\Form\RoomType;
 
 use App\Service\FileManager;
 
@@ -20,15 +20,15 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 /**
 * @Route("/room")
 */
-class LocalController extends AbstractController
+class RoomController extends AbstractController
 {
     /**
-     * @Route("/", name="localIndex" , methods={"GET"})
+     * @Route("/", name="roomIndex" , methods={"GET"})
      */
     public function index(\Swift_Mailer $mailer)
     {
-    	$repository = $this->getDoctrine()->getRepository(Local::class);
-    	$locals = $repository->findAll();
+    	$repository = $this->getDoctrine()->getRepository(Room::class);
+    	$rooms = $repository->findAll();
 
 
        /*
@@ -57,94 +57,94 @@ class LocalController extends AbstractController
 
     	$mailer->send($message);*/
 
-        return $this->render('local/index.html.twig', [
-            'locals' => $locals,
+        return $this->render('room/index.html.twig', [
+            'rooms' => $rooms,
         ]);
     }
 
 	/**
-	* @Route("/add", name="addLocal", methods={"GET", "POST"})
+	* @Route("/add", name="addRoom", methods={"GET", "POST"})
 	*/
     public function add(Request $request, ParameterBagInterface $params)
     {
-	    $local = new Local();
-	    $form = $this->createForm(LocalType::class, $local);
+	    $room = new Room();
+	    $form = $this->createForm(RoomType::class, $room);
 	    $form->handleRequest($request);
 
 	    if ($form->isSubmitted() && $form->isValid()) 
         {
-	        $local = $form->getData();
+	        $room = $form->getData();
 
 	        $entityManager = $this->getDoctrine()->getManager();
-	        $entityManager->persist($local);
+	        $entityManager->persist($room);
 	        $entityManager->flush();
 
-            $localPath = $this->getParameter('app.roomTemplatesPath');
-            $localFolder = $localPath.$local->getId();
+            $roomPath = $this->getParameter('app.roomTemplatesPath');
+            $roomFolder = $roomPath.$room->getId();
 
             FileManager::verificationStructure($params);
-            FileManager::createFolder($localFolder);
+            FileManager::createFolder($roomFolder);
 
-	        return $this->redirectToRoute('getLocal', array("id" => $local->getId()));
+	        return $this->redirectToRoute('getRoom', array("id" => $room->getId()));
 	    }
 
-        return $this->render('local/formAddLocal.html.twig', array(
+        return $this->render('room/formAddRoom.html.twig', array(
 	      'form' => $form->createView(),
 	    ));
     }
 
     /**
-	* @Route("/{id}", name="getLocal", methods={"GET"},	requirements={"id" = "\d+"})
+	* @Route("/{id}", name="getRoom", methods={"GET"},	requirements={"id" = "\d+"})
 	*/
     public function get($id)
     {
-    	$repository = $this->getDoctrine()->getRepository(Local::class);
-    	$local = $repository->find($id);
+    	$repository = $this->getDoctrine()->getRepository(Room::class);
+    	$room = $repository->find($id);
 
-	   if (!$local) {
+	   if (!$room) {
 	        throw $this->createNotFoundException(
-	            'No local found for id '.$id
+	            'No room found for id '.$id
 	        );
 	    }
 
-	    $localPath = $this->getParameter('app.roomTemplatesPath');
-	    $files = FileManager::getFilesInFolder($localPath.$local->getId());
+	    $roomPath = $this->getParameter('app.roomTemplatesPath');
+	    $files = FileManager::getFilesInFolder($roomPath.$room->getId());
 
-        return $this->render('local/getLocal.html.twig', array("local"  => $local, "files" => $files));
+        return $this->render('room/getRoom.html.twig', array("room"  => $room, "files" => $files));
     }
 
     /**
-     * @Route("/{id}/modify", name="modifyLocal", methods={"GET", "POST"},  requirements={"id" = "\d+"})
+     * @Route("/{id}/modify", name="modifyRoom", methods={"GET", "POST"},  requirements={"id" = "\d+"})
      */
-    public function modify(Request $request, Local $local)
+    public function modify(Request $request, Room $room)
     {
-        $form = $this->createForm(LocalType::class, $local);
+        $form = $this->createForm(RoomType::class, $room);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('getLocal', array("id" => $local->getId()));
+            return $this->redirectToRoute('getRoom', array("id" => $room->getId()));
         }
 
-        return $this->render('local/formAddLocal.html.twig', array(
+        return $this->render('room/formAddRoom.html.twig', array(
           'form' => $form->createView(),
         ));
     }
 
     /**
-	* @Route("/{id}", name="deleteLocal", methods={"DELETE"}, requirements={"id" = "\d+"})
+	* @Route("/{id}", name="deleteRoom", methods={"DELETE"}, requirements={"id" = "\d+"})
 	*/
     public function delete($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $repository = $this->getDoctrine()->getRepository(Local::class);
-        $local = $repository->find($id);
+        $repository = $this->getDoctrine()->getRepository(Room::class);
+        $room = $repository->find($id);
 
         //delete associated records
         $repositoryRecord = $this->getDoctrine()->getRepository(Record::class);
         $records = $repositoryRecord->findBy(
-            array('local' => $local)
+            array('room' => $room)
         );
 
         foreach ($records as $record) {
@@ -154,18 +154,18 @@ class LocalController extends AbstractController
         $response = new Response();
         $response->headers->set('Content-Type', 'text/plain');
 
-        if (!$local) 
+        if (!$room) 
         {
             $response->setContent('Entity not found');
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
         }
         else
         {
-            $localPath = $this->getParameter('app.roomTemplatesPath');
-            $localFolder = $localPath.$local->getId();
-            FileManager::deleteFolder($localFolder);
+            $roomPath = $this->getParameter('app.roomTemplatesPath');
+            $roomFolder = $roomPath.$room->getId();
+            FileManager::deleteFolder($roomFolder);
 
-            $entityManager->remove($local);
+            $entityManager->remove($room);
             $entityManager->flush();
             
             $response->setContent('Deleted ok');
@@ -176,38 +176,38 @@ class LocalController extends AbstractController
     }
 
     /**
-    * @Route("/{id}/document", name="getDocumentLocal", methods={"GET"}, requirements={"id" = "\d+"})
+    * @Route("/{id}/document", name="getDocumentRoom", methods={"GET"}, requirements={"id" = "\d+"})
     */
     public function getDocument($id, Request $request)
     {
         $documentName = $request->headers->get("documentName");
 
-        $localPath = $this->getParameter('app.roomTemplatesPath');
-        $localFolder = $localPath.$id;
+        $roomPath = $this->getParameter('app.roomTemplatesPath');
+        $roomFolder = $roomPath.$id;
 
-        return FileManager::getDocument($localFolder."/".$documentName);
+        return FileManager::getDocument($roomFolder."/".$documentName);
     }
 
     /**
-    * @Route("/{id}/document", name="addDocumentLocal", methods={"POST"}, requirements={"id" = "\d+"})
+    * @Route("/{id}/document", name="addDocumentRoom", methods={"POST"}, requirements={"id" = "\d+"})
     */
     public function addDocument($id, Request $request, ParameterBagInterface $params)
     {
-        $localPath = $this->getParameter('app.roomTemplatesPath');
-        $localFolder = $localPath.$id;
+        $roomPath = $this->getParameter('app.roomTemplatesPath');
+        $roomFolder = $roomPath.$id;
 
         FileManager::verificationStructure($params);
-        return FileManager::addDocument($localFolder, $request);
+        return FileManager::addDocument($roomFolder, $request);
     }
 
     /**
-    * @Route("/{id}/document", name="removeDocumentLocal", methods={"DELETE"}, requirements={"id" = "\d+"})
+    * @Route("/{id}/document", name="removeDocumentRoom", methods={"DELETE"}, requirements={"id" = "\d+"})
     */
     public function removeDocument($id, Request $request)
     {
-        $localPath = $this->getParameter('app.roomTemplatesPath');
-        $localFolder = $localPath.$id;
+        $roomPath = $this->getParameter('app.roomTemplatesPath');
+        $roomFolder = $roomPath.$id;
 
-        return FileManager::removeDocument($localFolder, $request);
+        return FileManager::removeDocument($roomFolder, $request);
     }
 }

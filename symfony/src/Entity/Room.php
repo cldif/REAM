@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\LocalRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\RoomRepository")
  */
-class Local
+class Room
 {
     /**
      * @ORM\Id()

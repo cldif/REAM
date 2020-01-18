@@ -1,10 +1,10 @@
-let deleteLocalUrl = $("#js-passthrough-delete-local-url").text();
+let deleteRoomUrl = $("#js-passthrough-delete-room-url").text();
 let websiteIndex = $("#js-passthrough-index-url").text();
 
 function makeAjaxRequest() {
   return new Promise((resolve, reject) => {
     $.ajax({
-      url: deleteLocalUrl,
+      url: deleteRoomUrl,
       type: "DELETE",
       success: function(result) {
         resolve(result);
@@ -16,7 +16,7 @@ function makeAjaxRequest() {
   });
 }
 
-$("#delete-local-button").on("click", function() {
+$("#delete-room-button").on("click", function() {
   makeAjaxRequest()
     .then(data => {
       console.log("%c Deleted successfully", "color:green;");

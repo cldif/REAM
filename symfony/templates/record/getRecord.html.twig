@@ -19,8 +19,8 @@
 	release date : {{ record.releaseDate | date("m/d/Y") }}<br>
 	additional Information : {{ record.additionalInformation }}<br>
 	tenant : {{ record.tenant.id }}<br>
-	local : {{ record.local.name }}<br>
-	garant : {{ record.garant.id }}<br>
+	room : {{ record.room.name }}<br>
+	guarantor : {{ record.guarantor.id }}<br>
 
 	Fichier associés : 
     {% for file in files %}

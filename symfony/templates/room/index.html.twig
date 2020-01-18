@@ -6,7 +6,7 @@
 	href="{{ asset('mdb/css/addons/datatables.min.css') }}" rel="stylesheet">
 
 	<!-- Custom styles -->
-	<link href="{{ asset('ressources/css/local/index.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('ressources/css/room/index.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block page_title %}
@@ -64,19 +64,19 @@
 						</tr>
 					</thead>
 					<tbody>
-						{% for local in locals %}
+						{% for room in rooms %}
 							<tr>
 								<td>
-									<a href="{{ path('getLocal', {'id': local.id}) }}">
-										{{ local.name }}</a>
+									<a href="{{ path('getRoom', {'id': room.id}) }}">
+										{{ room.name }}</a>
 								</td>
 								<td>
-									<a href="{{ path('getLocal', {'id': local.id}) }}">
-										{{ local.address }}</a>
+									<a href="{{ path('getRoom', {'id': room.id}) }}">
+										{{ room.address }}</a>
 								</td>
 								<td>
-									<a href="{{ path('getLocal', {'id': local.id}) }}">
-										{{ local.furnish ? "✅" : "❌" }}</a>
+									<a href="{{ path('getRoom', {'id': room.id}) }}">
+										{{ room.furnish ? "✅" : "❌" }}</a>
 								</td>
 							</tr>
 						{% endfor %}
@@ -106,5 +106,5 @@
 	<script type="text/javascript" src="{{ asset('mdb/js/addons/datatables.min.js') }}"></script>
 
 	<!-- Custom JS scripts -->
-	<script type="text/javascript" src="{{ asset('ressources/js/local/index.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('ressources/js/room/index.js') }}"></script>
 {% endblock %}

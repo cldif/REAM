@@ -2,7 +2,7 @@
 
 {% block css %}
 	<!-- Custom styles -->
-	<link href="{{ asset('ressources/css/local/getLocal.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('ressources/css/room/getLocal.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block page_title %}
@@ -46,15 +46,15 @@
 			class="card-body">
 
 			<!-- Title -->
-			<h4 class="card-title">{{ local.name }}</h4>
+			<h4 class="card-title">{{ room.name }}</h4>
 			<hr>
 			<!-- Text -->
 			<p class="card-text">
 				<i class="fas fa-home"></i>
-				&nbsp;{{ local.address }}<br>
+				&nbsp;{{ room.address }}<br>
 
 				<i class="fas fa-couch"></i>
-				&nbsp;{{ local.furnish ? "✅" : "❌" }}<br>
+				&nbsp;{{ room.furnish ? "✅" : "❌" }}<br>
 			</p>
 
 			<button class="btn btn-indigo btn-rounded btn-md">A venir</button>
@@ -89,7 +89,7 @@
 
 				<!--Footer-->
 				<div class="modal-footer justify-content-center">
-					<a id="delete-local-button" type="button" class="btn btn-danger">Confirmer la suppression</a>
+					<a id="delete-room-button" type="button" class="btn btn-danger">Confirmer la suppression</a>
 					<a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Annuler l'opération</a>
 				</div>
 			</div>
@@ -104,7 +104,7 @@
 				<ul class="list-group">
 					<li class="list-group-item">
 						<h5>
-							Patrons relatifs au local "{{ local.name }}"
+							Patrons relatifs au local "{{ room.name }}"
 						</h5>
 					</li>
 
@@ -144,9 +144,9 @@
 
 {% block js %}
 	<!-- Variables obtained by TWIG and transferred to javascript code -->
-	<span id='js-passthrough-delete-local-url' style="display:none">{{ path('deleteLocal', {'id': local.id}) }}</span>
+	<span id='js-passthrough-delete-room-url' style="display:none">{{ path('deleteLocal', {'id': room.id}) }}</span>
 	<span id='js-passthrough-index-url' style="display:none">{{ path('websiteIndex') }}</span>
 
 	<!-- Custom JS scripts -->
-	<script type="text/javascript" src="{{ asset('ressources/js/local/getLocal.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('ressources/js/room/getLocal.js') }}"></script>
 {% endblock %}

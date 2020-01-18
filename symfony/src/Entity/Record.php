@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Tenant;
-use App\Entity\Local;
+use App\Entity\Room;
 use App\Entity\Person;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -73,10 +73,10 @@ class Record
     private $tenant;
 
     /**
-    * @ORM\ManyToOne(targetEntity="App\Entity\Local")
+    * @ORM\ManyToOne(targetEntity="App\Entity\Room")
     * @ORM\JoinColumn(nullable=false)
     */
-    private $local;
+    private $room;
 
     /**
      * @ORM\Column(type="datetime")
@@ -89,7 +89,7 @@ class Record
     * @ORM\ManyToOne(targetEntity="App\Entity\Person", cascade={"persist"})
     * @ORM\JoinColumn()
     */
-    private $garant;
+    private $guarantor;
 
     public function getId(): ?int
     {
@@ -192,14 +192,14 @@ class Record
         return $this;
     }
 
-    public function getLocal(): ?Local
+    public function getRoom(): ?Room
     {
-        return $this->local;
+        return $this->room;
     }
 
-    public function setLocal(?Local $local): self
+    public function setRoom(?Room $room): self
     {
-        $this->local = $local;
+        $this->room = $room;
 
         return $this;
     }
@@ -216,14 +216,14 @@ class Record
         return $this;
     }
 
-    public function getGarant(): ?Person
+    public function getGuarantor(): ?Person
     {
-        return $this->garant;
+        return $this->guarantor;
     }
 
-    public function setGarant(?Person $garant): self
+    public function setGuarantor(?Person $guarantor): self
     {
-        $this->garant = $garant;
+        $this->guarantor = $guarantor;
 
         return $this;
     }

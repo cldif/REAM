@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Local;
+use App\Entity\Room;
 use App\Entity\Record;
 use App\Entity\Tenant;
 
@@ -49,11 +49,11 @@ class RecordType extends AbstractType
                 'class' => Tenant::class,
                 'choice_label' => 'name',
             ])
-            ->add('local', EntityType::class, [
-                'class' => Local::class,
+            ->add('room', EntityType::class, [
+                'class' => Room::class,
                 'choice_label' => 'name',
             ])
-            ->add('garantChoice', ChoiceType::class, [
+            ->add('guarantorChoice', ChoiceType::class, [
                 	'label' => 'Choix du garant',
                     'choices'  => [
                         'Père' => 1,
@@ -63,7 +63,7 @@ class RecordType extends AbstractType
                     'mapped' => false,
                 ])
             
-            ->add('garant', PersonType::class, [
+            ->add('guarantor', PersonType::class, [
                         'label'    => 'Ajouter le garant',
                         'required' => false,
                 ])
