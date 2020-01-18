@@ -168,14 +168,6 @@ class TenantController extends AbstractController
 
             if($errorMother == 0 && $errorFather == 0)
             {
-                $repository = $this->getDoctrine()->getRepository(Tenant::class);
-                $tenantSaved = $repository->find($tenant->getId());
-
-                if($tenant->getIdentityCard() != NULL)
-                {
-                    $tenantSaved->setIdentityCard($tenant->getIdentityCard());
-                }
-
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->flush();
 

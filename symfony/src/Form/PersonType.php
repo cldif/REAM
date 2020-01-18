@@ -37,11 +37,6 @@ class PersonType extends AbstractType
 					'by_reference' => true,
 				])
             ->add('birthPlace', TextType::class)
-            ->add('identityCard', FileType::class,
-                ["data_class" => null,
-                 "required" => false,
-                ]
-            )
             ->add('profession', TextType::class)
         ;
     }

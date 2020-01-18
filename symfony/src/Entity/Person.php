@@ -80,12 +80,6 @@ class Person
     private $birthPlace;
 
     /**
-     * @ORM\Column(type="blob", nullable=true)
-     * @Assert\File()
-     */
-    private $identityCard;
-
-    /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $profession;
@@ -175,18 +169,6 @@ class Person
     public function setBirthPlace(string $birthPlace): self
     {
         $this->birthPlace = $birthPlace;
-
-        return $this;
-    }
-
-    public function getIdentityCard()
-    {
-        return $this->identityCard;
-    }
-
-    public function setIdentityCard($identityCard): self
-    {
-        $this->identityCard = $identityCard;
 
         return $this;
     }
