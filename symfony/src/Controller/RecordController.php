@@ -135,7 +135,7 @@ class RecordController extends AbstractController
 	    $recordPath = $this->getParameter('app.recordPath');
         $files = FileManager::getFilesInFolder($recordPath.$record->getId());
 
-        return $this->render('record/getrecord.html.twig', array("record"  => $record, "files" => $files));
+        return $this->render('record/getRecord.html.twig', array("record"  => $record, "files" => $files));
     }
 
     /**

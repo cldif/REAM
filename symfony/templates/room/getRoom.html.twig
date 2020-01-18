@@ -2,7 +2,7 @@
 
 {% block css %}
 	<!-- Custom styles -->
-	<link href="{{ asset('ressources/css/room/getLocal.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('ressources/css/room/getRoom.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block page_title %}
@@ -144,9 +144,9 @@
 
 {% block js %}
 	<!-- Variables obtained by TWIG and transferred to javascript code -->
-	<span id='js-passthrough-delete-room-url' style="display:none">{{ path('deleteLocal', {'id': room.id}) }}</span>
+	<span id='js-passthrough-delete-room-url' style="display:none">{{ path('deleteRoom', {'id': room.id}) }}</span>
 	<span id='js-passthrough-index-url' style="display:none">{{ path('websiteIndex') }}</span>
 
 	<!-- Custom JS scripts -->
-	<script type="text/javascript" src="{{ asset('ressources/js/room/getLocal.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('ressources/js/room/getRoom.js') }}"></script>
 {% endblock %}
