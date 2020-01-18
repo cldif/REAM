@@ -5,6 +5,7 @@
         "php": "^7.1.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "alchemy/zippy": "^0.4.9",
         "doctrine/annotations": "^1.8",
         "ncjoes/office-converter": "^1.0",
         "phpoffice/phpword": "^0.17.0",

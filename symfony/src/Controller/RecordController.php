@@ -171,4 +171,28 @@ class RecordController extends AbstractController
  
         return $response;
     }
+
+    /**
+    * @Route("/{id}/document", name="getDocumentRecord", methods={"GET"}, requirements={"id" = "\d+"})
+    */
+    public function getDocument($id, Request $request)
+    {
+        $documentName = $request->headers->get("documentName");
+
+        $recordPath = $this->getParameter('app.recordPath');
+        $recordFolder = $recordPath.$id;
+
+        return FileManager::getDocument($recordFolder."/".$documentName);
+    }
+
+    /**
+    * @Route("/{id}/allDocument", name="getAllDocumentRecord", methods={"GET"}, requirements={"id" = "\d+"})
+    */
+    public function getAllDocument($id)
+    {
+        $recordPath = $this->getParameter('app.recordPath');
+        $recordFolder = $recordPath.$id;
+
+        return FileManager::getALlDocument($recordFolder);
+    }
 }

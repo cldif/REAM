@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 use NcJoes\OfficeConverter\OfficeConverter;
-
+use Alchemy\Zippy\Zippy;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -136,7 +136,7 @@ class FileManager
 
     public function getDocument($path)
     {
-        if(file_exists($file))
+        if(file_exists($path))
         {
             return new BinaryFileResponse($path);
         }
@@ -145,6 +145,36 @@ class FileManager
             $response = new Response();
             $response->headers->set('Content-Type', 'text/plain');
             $response->setContent('Document not found');
+            $response->setStatusCode(Response::HTTP_NOT_FOUND);
+
+            return $response;
+        }
+    }
+
+    public function getAllDocument($path)
+    {
+        if(is_dir($path))
+        {
+            $zipName = "archive.zip";
+            $zippy = Zippy::load();
+            $archive = $zippy->create($zipName, array(
+                'archive' => $path
+            ), true);
+
+            $response = new Response(file_get_contents($zipName));
+            $response->headers->set('Content-Type', 'application/zip');
+            $response->headers->set('Content-Disposition', 'attachment;filename="'.$zipName.'"');
+            $response->headers->set('Content-length', filesize($zipName));
+
+            unlink($zipName);
+
+            return $response;
+        }
+        else
+        {
+            $response = new Response();
+            $response->headers->set('Content-Type', 'text/plain');
+            $response->setContent('Path not found');
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
 
             return $response;
