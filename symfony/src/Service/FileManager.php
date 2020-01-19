@@ -91,13 +91,14 @@ class FileManager
     {
         $documentName = $request->headers->get("documentName");
         $file = $request->files->get('document');
+        $extension = $file->guessExtension();
 
         $response = new Response();
         $response->headers->set('Content-Type', 'text/plain');
 
         if(!is_null($file) && is_dir($path))
         {
-            $file->move($path, $documentName);
+            $file->move($path, $documentName.".".$extension);
 
             $response->setContent('Document added');
             $response->setStatusCode(Response::HTTP_OK);

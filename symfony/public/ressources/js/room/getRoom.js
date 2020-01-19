@@ -1,6 +1,6 @@
 let deleteRoomUrl = $("#js-passthrough-delete-room-url").text();
 let websiteIndexUrl = $("#js-passthrough-index-url").text();
-let addDocumentUrl = $("#js-passthrough-add-document-url").text();
+let addDocumentUrl = $("#js-passthrough-add-document-room-url").text();
 
 /* Ajax Requests definitions */
 

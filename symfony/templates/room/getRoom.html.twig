@@ -184,7 +184,7 @@
 	<!-- Variables obtained by TWIG and transferred to javascript code -->
 	<span id='js-passthrough-delete-room-url' style="display:none">{{ path('deleteRoom', {'id': room.id}) }}</span>
 	<span id='js-passthrough-index-url' style="display:none">{{ path('websiteIndex') }}</span>
-	<span id='js-passthrough-add-document-url' style="display:none">{{ path('addDocument') }}</span>
+	<span id='js-passthrough-add-document-room-url' style="display:none">{{ path('addDocumentRoom', {'id': room.id}) }}</span>
 
 	<!-- Custom JS scripts -->
 	<script type="text/javascript" src="{{ asset('ressources/js/room/getRoom.js') }}"></script>

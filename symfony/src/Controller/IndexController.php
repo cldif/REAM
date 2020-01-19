@@ -21,7 +21,7 @@ class IndexController extends AbstractController
     	$repository = $this->getDoctrine()->getRepository(Tenant::class);
 
     	$tenant = $repository->findBy(
-			array('identityCard' => NULL)
+			array('name' => NULL)
 		);
 
         return $this->render('index/index.html.twig', [
