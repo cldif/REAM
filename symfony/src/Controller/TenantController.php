@@ -34,10 +34,14 @@ class TenantController extends AbstractController
 
     /**
 	* @Route("/add", name="addTenant", methods={"GET", "POST"})
+	* @Route("/{id}/modify", name="modifyTenant", methods={"GET", "POST"})
 	*/
-    public function add(Request $request, ValidatorInterface $validator)
+    public function add(Request $request, Tenant $tenant = NULL, ValidatorInterface $validator)
     {
-	    $tenant = new Tenant();
+    	if($tenant == NULL)
+    	{
+	    	$tenant = new Tenant();
+    	}
 
 	    $form = $this->createForm(TenantType::class, $tenant);
 	    $form->handleRequest($request);
@@ -45,7 +49,6 @@ class TenantController extends AbstractController
 	    if ($form->isSubmitted() && $form->isValid()) 
         {
 	        $tenant = $form->getData();
-
             $entityManager = $this->getDoctrine()->getManager();
 
             $dataParent = $form->get("parent")->getData();
@@ -116,68 +119,6 @@ class TenantController extends AbstractController
 	    }
 
         return $this->render('tenant/getTenant.html.twig', array("tenant"  => $tenant));
-    }
-
-    /**
-     * @Route("/{id}/modify", name="modifyTenant", methods={"GET", "POST"})
-     */
-    public function modify(Request $request, Tenant $tenant, ValidatorInterface $validator)
-    {
-        $form = $this->createForm(TenantType::class, $tenant);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) 
-        {
-            $dataParent = $form->get("parent")->getData();
-            $errorFather = 0;
-            $errorMother = 0;
-            $errorsFather = [];
-            $errorsMother = [];
-
-            if($dataParent == "1" || $dataParent == "3")
-            {
-                $tenant->getFather()->setGender("Homme");
-                $errorsFather = $validator->validate($tenant->getFather());
-                $errorFather = (count($errorsFather) > 0) ? 1 : 0;
-
-                if($errorFather != 0)
-                {
-                    $form->addError(new FormError("Père : ".$errorsFather[0]->getMessage()));
-                }
-            }
-            else
-            {
-                $tenant->setFather(NULL);
-            }
-
-            if($dataParent == "2" || $dataParent == "3")
-            {
-                $tenant->getMother()->setGender("Femme");
-                $errorsMother = $validator->validate($tenant->getMother());
-                $errorMother = (count($errorsMother) > 0) ? 1 : 0; 
-
-                if($errorMother != 0)
-                {
-                    $form->addError(new FormError("Mère : ".$errorsMother[0]->getMessage()));
-                }
-            }
-            else
-            {
-                $tenant->setMother(NULL);
-            }
-
-            if($errorMother == 0 && $errorFather == 0)
-            {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->flush();
-
-                return $this->redirectToRoute('getTenant', array("id" => $tenant->getId()));
-            }
-        }
-
-        return $this->render('tenant/formAddTenant.html.twig', array(
-          'form' => $form->createView(),
-        ));
     }
 
     /**
