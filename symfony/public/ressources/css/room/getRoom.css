@@ -53,3 +53,8 @@ main {
   transform: scale(1) rotate(0);
   opacity: 0.8 !important;
 }
+
+/* The modal title should be displayed in gray as the background is white */
+.modal-title {
+  color: gray;
+}

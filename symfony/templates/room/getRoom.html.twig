@@ -29,7 +29,7 @@
 					<i class="fas fa-pencil-alt"></i>
 				</a>
 				<!-- Delete -->
-				<a type="button" class="btn-floating btn-yt mt-0 mx-1" data-toggle="modal" data-target="#centralModalDanger">
+				<a type="button" class="btn-floating btn-yt mt-0 mx-1" data-toggle="modal" data-target="#roomDeletionModal">
 					<i class="fas fa-trash-alt"></i>
 				</a>
 			</div>
@@ -62,41 +62,6 @@
 		</div>
 	</div>
 	<!-- Card -->
-
-	<!-- Central Modal Medium Danger -->
-	<div class="modal fade" id="centralModalDanger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div
-			class="modal-dialog modal-notify modal-danger" role="document">
-			<!--Content-->
-			<div
-				class="modal-content">
-				<!--Header-->
-				<div class="modal-header">
-					<p class="heading lead">Suppression de local</p>
-
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true" class="white-text">&times;</span>
-					</button>
-				</div>
-
-				<!--Body-->
-				<div class="modal-body">
-					<div class="text-center">
-						<i class="fas fa-exclamation-triangle fa-4x mb-3 animated rotateIn"></i>
-						<p>Attention, la suppression d'un local est définitive et supprimera tous les dossiers associés.<br>En poursuivant, vous acceptez et comprenez les risques.</p>
-					</div>
-				</div>
-
-				<!--Footer-->
-				<div class="modal-footer justify-content-center">
-					<a id="delete-room-button" type="button" class="btn btn-danger">Confirmer la suppression</a>
-					<a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Annuler l'opération</a>
-				</div>
-			</div>
-			<!--/.Content-->
-		</div>
-	</div>
-	<!-- Central Modal Medium Danger-->
 
 	<div class="container">
 		<div class="col-md-12">
@@ -132,12 +97,85 @@
 					{% endfor %}
 
 					<li class="list-group-item">
-						<button class="btn btn-indigo btn-rounded btn-md">Ajouter un nouveau document</button>
+						<button class="btn btn-indigo btn-rounded btn-md" data-toggle="modal" data-target="#documentAdditionModal">Ajouter un nouveau document</button>
 					</li>
 				</ul>
 			</ul>
 		</div>
 	</div>
+	<!-- Room deletion modal -->
+	<div class="modal fade" id="roomDeletionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div
+			class="modal-dialog modal-notify modal-danger" role="document">
+			<!--Content-->
+			<div
+				class="modal-content">
+				<!--Header-->
+				<div class="modal-header">
+					<p class="heading lead">Suppression de local</p>
+
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true" class="white-text">&times;</span>
+					</button>
+				</div>
+
+				<!--Body-->
+				<div class="modal-body">
+					<div class="text-center">
+						<i class="fas fa-exclamation-triangle fa-4x mb-3 animated rotateIn"></i>
+						<p>Attention, la suppression d'un local est définitive et supprimera tous les dossiers associés.<br>En poursuivant, vous acceptez et comprenez les risques.</p>
+					</div>
+				</div>
+
+				<!--Footer-->
+				<div class="modal-footer justify-content-center">
+					<a id="delete-room-button" type="button" class="btn btn-danger">Confirmer la suppression</a>
+					<a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Annuler l'opération</a>
+				</div>
+			</div>
+			<!--/.Content-->
+		</div>
+	</div>
+	<!-- Room deletion modal -->
+
+	<!-- Doccument addition modal -->
+	<div class="modal fade" id="documentAdditionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header text-center">
+					<h4 class="modal-title w-100 font-weight-bold">Ajout de document</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body mx-3">
+					<div class="md-form mb-5">
+						<i class="fas fa-file-signature prefix grey-text"></i>
+						<input type="text" id="file-name" class="form-control">
+						<label data-error="wrong" data-success="right" for="orangeForm-name">Nom du document</label>
+					</div>
+
+					<div class="md-form mb-5">
+						<div class="file-field">
+							<div class="btn btn-outline-info waves-effect btn-sm float-left">
+								<span>Choisir un fichier</span>
+								<input id="file-input" type="file">
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path" type="text" placeholder="En attente d'un fichier" disabled>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer d-flex justify-content-center">
+					<button id="add-document-button" type="button" class="btn btn-outline-secondary waves-effect">OK !</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Doccument addition modal -->
 
 {% endblock %}
 
@@ -146,6 +184,7 @@
 	<!-- Variables obtained by TWIG and transferred to javascript code -->
 	<span id='js-passthrough-delete-room-url' style="display:none">{{ path('deleteRoom', {'id': room.id}) }}</span>
 	<span id='js-passthrough-index-url' style="display:none">{{ path('websiteIndex') }}</span>
+	<span id='js-passthrough-add-document-url' style="display:none">{{ path('addDocument') }}</span>
 
 	<!-- Custom JS scripts -->
 	<script type="text/javascript" src="{{ asset('ressources/js/room/getRoom.js') }}"></script>
