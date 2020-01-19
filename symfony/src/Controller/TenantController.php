@@ -11,8 +11,12 @@ use App\Entity\Tenant;
 use App\Entity\Record;
 use App\Form\TenantType;
 
+use App\Service\FileManager;
+
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Form\FormError;
+
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
 * @Route("/tenant")
@@ -36,7 +40,7 @@ class TenantController extends AbstractController
 	* @Route("/add", name="addTenant", methods={"GET", "POST"})
 	* @Route("/{id}/modify", name="modifyTenant", methods={"GET", "POST"})
 	*/
-    public function add(Request $request, Tenant $tenant = NULL, ValidatorInterface $validator)
+    public function add(Request $request, Tenant $tenant = NULL, ValidatorInterface $validator, ParameterBagInterface $params)
     {
     	if($tenant == NULL)
     	{
@@ -90,9 +94,15 @@ class TenantController extends AbstractController
             }
 
             if($errorMother == 0 && $errorFather == 0)
-            {
+            {            
 	           $entityManager->persist($tenant);
 	           $entityManager->flush();
+
+	            $tenantPath = $this->getParameter('app.tenantPath');
+	            $tenantFolder = $tenantPath.$tenant->getId();
+
+	            FileManager::verificationStructure($params);
+	            FileManager::createFolder($tenantFolder);
 
 	           return $this->redirectToRoute('getTenant', array("id" => $tenant->getId()));
             }
@@ -118,7 +128,10 @@ class TenantController extends AbstractController
 	        );
 	    }
 
-        return $this->render('tenant/getTenant.html.twig', array("tenant"  => $tenant));
+	    $tenantPath = $this->getParameter('app.tenantPath');
+	    $files = FileManager::getFilesInFolder($tenantPath.$tenant->getId());
+
+        return $this->render('tenant/getTenant.html.twig', array("tenant"  => $tenant, "files" => $files));
     }
 
     /**
@@ -145,6 +158,10 @@ class TenantController extends AbstractController
     
         if($tenant)
         {
+            $tenantPath = $this->getParameter('app.tenantPath');
+            $tenantFolder = $tenantPath.$tenant->getId();
+            FileManager::deleteFolder($tenantFolder);
+
             $entityManager->remove($tenant);
             $entityManager->flush();
             
@@ -158,5 +175,39 @@ class TenantController extends AbstractController
         }
  
         return $response;
+    }
+
+    /**
+    * @Route("/{id}/document", name="getDocumentTenant", methods={"GET"}, requirements={"id" = "\d+"})
+    */
+    public function getDocument($id, Request $request)
+    {
+        $tenantPath = $this->getParameter('app.tenantPath');
+        $tenantFolder = $tenantPath.$id;
+
+        return FileManager::getDocument($tenantFolder, $request);
+    }
+
+    /**
+    * @Route("/{id}/document", name="addDocumentTenant", methods={"POST"}, requirements={"id" = "\d+"})
+    */
+    public function addDocument($id, Request $request, ParameterBagInterface $params)
+    {
+        $tenantPath = $this->getParameter('app.tenantPath');
+        $tenantFolder = $tenantPath.$id;
+
+        FileManager::verificationStructure($params);
+        return FileManager::addDocument($tenantFolder, $request);
+    }
+
+    /**
+    * @Route("/{id}/document", name="removeDocumentTenant", methods={"DELETE"}, requirements={"id" = "\d+"})
+    */
+    public function removeDocument($id, Request $request)
+    {
+        $tenantPath = $this->getParameter('app.tenantPath');
+        $tenantFolder = $tenantPath.$id;
+
+        return FileManager::removeDocument($tenantFolder, $request);
     }
 }

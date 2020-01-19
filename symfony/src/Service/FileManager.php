@@ -19,6 +19,7 @@ class FileManager
         $roomFolder = $params->get('app.roomTemplatesFolder');
         $apartmentsFolder = $params->get('app.apartmentsTemplatesPath');
         $hangarsFolder = $params->get('app.hangarsTemplatesPath');
+        $tenantsFolder = $params->get('app.tenantFolder');
 
         if (!file_exists($recordFolder)) {
             mkdir($recordFolder, 0700, true);
@@ -34,6 +35,9 @@ class FileManager
         }
         if (!file_exists($hangarsFolder)) {
             mkdir($hangarsFolder, 0700, true);
+        }
+        if (!file_exists($tenantsFolder)) {
+            mkdir($tenantsFolder, 0700, true);
         }
     }
 
@@ -92,20 +96,36 @@ class FileManager
         $documentName = $request->headers->get("documentName");
         $file = $request->files->get('document');
         $extension = $file->guessExtension();
+        $destinationFile = $path.'/'.$documentName.'.'.$extension;
 
         $response = new Response();
         $response->headers->set('Content-Type', 'text/plain');
 
-        if(!is_null($file) && is_dir($path))
+        if(is_dir($path))
         {
-            $file->move($path, $documentName.".".$extension);
-
-            $response->setContent('Document added');
-            $response->setStatusCode(Response::HTTP_OK);
+            if(!is_null($file))
+            {
+                if(!file_exists($destinationFile))
+                {
+                    $file->move($path, $documentName.".".$extension);
+                    $response->setContent('Document added');
+                    $response->setStatusCode(Response::HTTP_OK);
+                }
+                else
+                {
+                    $response->setContent('Document not added : File already exists');
+                    $response->setStatusCode(Response::HTTP_NOT_FOUND);
+                }
+            }
+            else
+            {
+                $response->setContent('Document not added : File sent is null');
+                $response->setStatusCode(Response::HTTP_NOT_FOUND);
+            }
         }
         else
         {
-            $response->setContent('Document not added');
+            $response->setContent('Document not added : Path not found');
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
         }
  
@@ -135,11 +155,14 @@ class FileManager
         return $response;
     }
 
-    public function getDocument($path)
+    public function getDocument($path, $request)
     {
-        if(file_exists($path))
+        $documentName = $request->headers->get("documentName");
+        $file = $path."/".$documentName;
+
+        if(file_exists($file))
         {
-            return new BinaryFileResponse($path);
+            return new BinaryFileResponse($file);
         }
         else
         {

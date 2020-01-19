@@ -177,12 +177,10 @@ class RecordController extends AbstractController
     */
     public function getDocument($id, Request $request)
     {
-        $documentName = $request->headers->get("documentName");
-
         $recordPath = $this->getParameter('app.recordPath');
         $recordFolder = $recordPath.$id;
 
-        return FileManager::getDocument($recordFolder."/".$documentName);
+        return FileManager::getDocument($recordFolder, $request);
     }
 
     /**

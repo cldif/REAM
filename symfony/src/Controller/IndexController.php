@@ -19,13 +19,21 @@ class IndexController extends AbstractController
     {
     	//Get people who the identity card is missing
     	$repository = $this->getDoctrine()->getRepository(Tenant::class);
+    	$tenants = $repository->findAll();
+        $listTenants = array();
 
-    	$tenant = $repository->findBy(
-			array('name' => NULL)
-		);
+        $tenantPath = $this->getParameter('app.tenantPath');
+
+        foreach($tenants as $tenant)
+        {
+            if(!file_exists($tenantPath.$tenant->getId().'/identityCard.pdf'))
+            {
+                array_push($listTenants, $tenant);
+            }
+        }
 
         return $this->render('index/index.html.twig', [
-        	"tenants" => $tenant
+        	"tenants" => $listTenants
         ]);
     }
 }

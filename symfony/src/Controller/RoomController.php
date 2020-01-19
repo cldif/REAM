@@ -180,12 +180,10 @@ class RoomController extends AbstractController
     */
     public function getDocument($id, Request $request)
     {
-        $documentName = $request->headers->get("documentName");
-
         $roomPath = $this->getParameter('app.roomTemplatesPath');
         $roomFolder = $roomPath.$id;
 
-        return FileManager::getDocument($roomFolder."/".$documentName);
+        return FileManager::getDocument($roomFolder, $request);
     }
 
     /**

@@ -12,6 +12,8 @@ parameters:
     app.generalTemplatesPath: '../users/default/templates/general'
     app.apartmentsTemplatesPath: '../users/default/templates/typed/apartments'
     app.hangarsTemplatesPath: '../users/default/templates/typed/hangars'
+    app.tenantPath: '../users/default/tenants/tenant'
+    app.tenantFolder: '../users/default/tenants/'
 
 services:
     # default configuration for services in *this* file
