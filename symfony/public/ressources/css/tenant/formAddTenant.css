@@ -26,13 +26,14 @@ form,
   margin-left: 45px;
 }
 
-/* Margin between the different forms */
+/* Margin between the different forms + setting form size */
 fieldset {
   margin-right: 18px;
   margin-left: 18px;
+  width: 450px;
 }
 
-/* Fixed width for selects */
-.select-wrapper.mdb-select.md-form {
-  width: 25%;
+/* The tenant form should cover just under half of the main part of the page. */
+.tenant {
+  width: 40%;
 }

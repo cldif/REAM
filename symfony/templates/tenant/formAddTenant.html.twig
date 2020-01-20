@@ -27,7 +27,7 @@
 				{{ form_widget(form.firstName) }}
 			</div>
 
-			<div class="default-form">
+			<div class="md-form always-active">
 				{{ form_label(form.gender, 'Sexe') }}
 				{{ form_widget(form.gender) }}
 			</div>
@@ -52,7 +52,7 @@
 				{{ form_widget(form.address) }}
 			</div>
 
-			<div class="default-form">
+			<div class="md-form always-active">
 				{{ form_label(form.dateOfBirth, 'Date de naissance') }}
 				{{ form_widget(form.dateOfBirth) }}
 			</div>
@@ -71,7 +71,7 @@
 		<section class="including-forms">
 			<legend>Parent(s)</legend>
 			<div class="choice-header">
-				<div class="default-form">
+				<div class="default-form always-active">
 					{{ form_label(form.parent, 'Choix du parent') }}
 					{{ form_widget(form.parent) }}
 				</div>
@@ -113,7 +113,7 @@
 							{{ form_widget(form.father.address) }}
 						</div>
 
-						<div class="default-form">
+						<div class="md-form always-active">
 							{{ form_label(form.father.dateOfBirth, 'Date de naissance') }}
 							{{ form_widget(form.father.dateOfBirth) }}
 						</div>
@@ -164,7 +164,7 @@
 							{{ form_widget(form.mother.address) }}
 						</div>
 
-						<div class="default-form">
+						<div class="md-form always-active">
 							{{ form_label(form.mother.dateOfBirth, 'Date de naissance') }}
 							{{ form_widget(form.mother.dateOfBirth) }}
 						</div>

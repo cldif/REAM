@@ -1,5 +1,6 @@
 const slideDuration = 500;
 let formsMinWidth;
+const formsMaxWidth = "50%";
 
 function getFormsMinWidth() {
   /* This function could surely be improved.
@@ -32,7 +33,6 @@ let updateLegalRepresentative = () => {
       )
       .then(() => {
         $(".including-forms").animate({ width: formsMinWidth });
-        $(".transition-div").animate({ width: "100%" });
       });
   }
 
@@ -48,10 +48,9 @@ let updateLegalRepresentative = () => {
       )
       .then(() => {
         $(".including-forms").animate({ width: formsMinWidth });
-        $(".transition-div").animate({ width: "100%" });
       });
   } else if (selectorValue == "3") {
-    $(".including-forms").animate({ width: formsMinWidth * 2 });
+    $(".including-forms").animate({ width: formsMaxWidth });
     $(".mother-form").slideDown(slideDuration);
     $(".father-form").slideDown(slideDuration);
   }
