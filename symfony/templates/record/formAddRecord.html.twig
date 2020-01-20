@@ -65,13 +65,13 @@
 				{{ form_errors(form.additionalInformation) }}
 			</div>
 
-			<div class="default-form">
+			<div class="md-form always-active">
 				{{ form_label(form.tenant, 'Locataire') }}
 				{{ form_widget(form.tenant) }}
 				{{ form_errors(form.tenant) }}
 			</div>
 
-			<div class="default-form">
+			<div class="md-form always-active">
 				{{ form_label(form.room, 'Local') }}
 				{{ form_widget(form.room) }}
 				{{ form_errors(form.room) }}
@@ -85,7 +85,7 @@
 		<div class="sub-form-wrapper">
 			<legend>Caution</legend>
 
-			<div class="default-form">
+			<div class="default-form always-active">
 				{{ form_label(form.guarantorChoice, 'Choix de la personne') }}
 				{{ form_widget(form.guarantorChoice) }}
 				{{ form_errors(form.guarantorChoice) }}
@@ -104,7 +104,7 @@
 					{{ form_errors(form.guarantor.firstName) }}
 				</div>
 
-				<div class="default-form">
+				<div class="md-form always-active">
 					{{ form_label(form.guarantor.gender, 'Sexe') }}
 					{{ form_widget(form.guarantor.gender) }}
 					{{ form_errors(form.guarantor.gender) }}
@@ -134,7 +134,7 @@
 					{{ form_errors(form.guarantor.address) }}
 				</div>
 
-				<div class="default-form">
+				<div class="md-form always-active">
 					{{ form_label(form.guarantor.dateOfBirth, 'Date de naissance') }}
 					{{ form_widget(form.guarantor.dateOfBirth) }}
 					{{ form_errors(form.guarantor.dateOfBirth) }}
