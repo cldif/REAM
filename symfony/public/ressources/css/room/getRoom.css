@@ -13,7 +13,8 @@ main {
 }
 
 /* Document name color + override MDB margin which is not useful since it creates an offset */
-.document-name {
+.document-name,
+.no-document-warning {
   margin: 0px !important;
   color: #bbbbbb;
 }

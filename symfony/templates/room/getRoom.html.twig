@@ -50,15 +50,22 @@
 			<hr>
 			<!-- Text -->
 			<p class="card-text">
-				<i class="fas fa-home"></i>
+				<i class="fas fa-road"></i>
 				&nbsp;{{ room.address }}<br>
 
 				<i class="fas fa-couch"></i>
-				&nbsp;{{ room.furnish ? "✅" : "❌" }}<br>
+				&nbsp;<i class="{{ room.furnish ? "fas fa-check" : "fas fa-times" }}"></i><br>
+
+				<i class="fas fa-ruler-combined"></i>
+				&nbsp;{{ room.surface }}<br>
+
+				<i class="fas fa-home"></i>
+				&nbsp;{{ room.type }}<br>
 			</p>
 
-			<button class="btn btn-indigo btn-rounded btn-md">A venir</button>
-
+			<button class="btn btn-danger" data-toggle="modal" data-target="#roomDeletionModal">
+				<i class="fas fa-trash-alt"></i>
+				&nbsp;Supprimer</button>
 		</div>
 	</div>
 	<!-- Card -->
@@ -73,28 +80,40 @@
 						</h5>
 					</li>
 
-					{% for file in files %}
-						<li class="list-group-item">
-							<p class="document-name">
-								{{ file }}
-							</p>
-							<div class="buttons">
-								<div class="button-wrapper">
-									<a class="text-white btn-floating btn-yt btn-sm">
-										<i class="fas fa-trash-alt"></i>
-									</a>
-									<span class="tooltip">Supprimer</span>
-								</div>
+					{% if files %}
+						{% for file in files %}
+							<li class="list-group-item">
+								<p class="document-name">
+									{{ file }}
+								</p>
+								<div class="buttons">
+									<div class="button-wrapper">
+										<a name="{{ file }}" class="text-white btn-floating btn-yt btn-sm doc-delete-button" data-toggle="modal" data-target="#documentDeletionModal">
+											<i class="fas fa-trash-alt"></i>
+										</a>
+										<span class="tooltip">Supprimer</span>
+									</div>
 
-								<div class="button-wrapper">
-									<a class="text-white btn-floating btn-fb btn-sm">
-										<i class="fas fa-cloud-download-alt"></i>
-									</a>
-									<span class="tooltip">Télécharger</span>
+									<div class="button-wrapper">
+										<a name="{{ file }}" class="text-white btn-floating btn-fb btn-sm get-doc-btn">
+											<i class="fas fa-cloud-download-alt"></i>
+										</a>
+										<span class="tooltip">Télécharger</span>
+									</div>
 								</div>
-							</div>
+							</li>
+						{% endfor %}
+
+					{% else %}
+
+						<li class="list-group-item">
+							<p class="no-document-warning">
+								Aucun fichier n'a encore été enregistré
+							</p>
 						</li>
-					{% endfor %}
+
+
+					{% endif %}
 
 					<li class="list-group-item">
 						<button class="btn btn-indigo btn-rounded btn-md" data-toggle="modal" data-target="#documentAdditionModal">Ajouter un nouveau document</button>
@@ -103,8 +122,9 @@
 			</ul>
 		</div>
 	</div>
+
 	<!-- Room deletion modal -->
-	<div class="modal fade" id="roomDeletionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="roomDeletionModal" tabindex="-1" role="dialog">
 		<div
 			class="modal-dialog modal-notify modal-danger" role="document">
 			<!--Content-->
@@ -129,7 +149,7 @@
 
 				<!--Footer-->
 				<div class="modal-footer justify-content-center">
-					<a id="delete-room-button" type="button" class="btn btn-danger">Confirmer la suppression</a>
+					<a id="del-room-btn" type="button" class="btn btn-danger">Confirmer la suppression</a>
 					<a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Annuler l'opération</a>
 				</div>
 			</div>
@@ -139,7 +159,7 @@
 	<!-- Room deletion modal -->
 
 	<!-- Doccument addition modal -->
-	<div class="modal fade" id="documentAdditionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="documentAdditionModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header text-center">
@@ -170,12 +190,43 @@
 				</div>
 
 				<div class="modal-footer d-flex justify-content-center">
-					<button id="add-document-button" type="button" class="btn btn-outline-secondary waves-effect">OK !</button>
+					<button id="add-doc-btn" type="button" class="btn btn-outline-secondary waves-effect">OK !</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- Doccument addition modal -->
+
+	<!-- Doccument deletion modal -->
+	<div class="modal fade" id="documentDeletionModal" tabindex="-1" role="dialog">
+		<div
+			class="modal-dialog modal-notify modal-danger" role="document">
+			<!--Content-->
+			<div
+				class="modal-content text-center">
+				<!--Header-->
+				<div class="modal-header d-flex justify-content-center">
+					<p class="heading">Souhaitez-vous réellement supprimer ce patron ?</p>
+				</div>
+
+				<!--Body-->
+				<div class="modal-body">
+					<div class="text-center">
+						<i class="fas fa-times fa-4x mb-3 animated rotateIn"></i>
+						<p>Attention ! Le patron ne pourra pas être récupéré après la suppression, celle-ci est donc irréversible.</p>
+					</div>
+				</div>
+
+				<!--Footer-->
+				<div class="modal-footer flex-center">
+					<a id="del-doc-btn" type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Oui, je veux le supprimer</a>
+					<a class="btn btn-outline-danger" data-dismiss="modal">Non, je préfère le conserver</a>
+				</div>
+			</div>
+			<!--/.Content-->
+		</div>
+	</div>
+	<!-- Doccument deletion modal -->
 
 {% endblock %}
 
@@ -185,6 +236,8 @@
 	<span id='js-passthrough-delete-room-url' style="display:none">{{ path('deleteRoom', {'id': room.id}) }}</span>
 	<span id='js-passthrough-index-url' style="display:none">{{ path('websiteIndex') }}</span>
 	<span id='js-passthrough-add-document-room-url' style="display:none">{{ path('addDocumentRoom', {'id': room.id}) }}</span>
+	<span id='js-passthrough-del-document-room-url' style="display:none">{{ path('removeDocumentRoom', {'id': room.id}) }}</span>
+	<span id='js-passthrough-get-document-room-url' style="display:none">{{ path('getDocumentRoom', {'id': room.id}) }}</span>
 
 	<!-- Custom JS scripts -->
 	<script type="text/javascript" src="{{ asset('ressources/js/room/getRoom.js') }}"></script>

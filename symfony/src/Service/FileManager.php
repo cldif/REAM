@@ -158,7 +158,7 @@ class FileManager
         }
         else
         {
-            $response->setContent('Document not removed');
+            $response->setContent('Document not removed. Path : '.$file);
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
         }
  
