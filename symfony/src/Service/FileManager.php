@@ -93,6 +93,8 @@ class FileManager
 
     public function addDocument($path, $request)
     {
+    	$extensionAllowed = ["jpg", "jpeg", "pdf", "doc", "docx", "png"];
+
         $documentName = $request->headers->get("documentName");
         $file = $request->files->get('document');
         $extension = $file->guessExtension();
@@ -107,9 +109,17 @@ class FileManager
             {
                 if(!file_exists($destinationFile))
                 {
-                    $file->move($path, $documentName.".".$extension);
-                    $response->setContent('Document added');
-                    $response->setStatusCode(Response::HTTP_OK);
+                	if(in_array($extension, $extensionAllowed))
+                	{
+	                    $file->move($path, $documentName.".".$extension);
+	                    $response->setContent('Document added');
+	                    $response->setStatusCode(Response::HTTP_OK);
+                	}
+                	else
+                	{
+	                    $response->setContent('Document not added : extension not allowed');
+            			$response->setStatusCode(Response::HTTP_NOT_FOUND);
+                	}
                 }
                 else
                 {
