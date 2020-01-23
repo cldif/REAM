@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class FileManager
 {
+	//verifie la structure des dossiers pour le stockage des documents 
+	//recrée la structure correcte si celle-ci est incorrecte
     public function verificationStructure(ParameterBagInterface $params)
     {
         $recordFolder = $params->get('app.recordTemplatesFolder');
@@ -41,6 +43,7 @@ class FileManager
         }
     }
 
+    //récupère tous les fichiers qui se trouvent dans un dossier
     public function getFilesInFolder($folder)
     {
         if(is_dir($folder))
@@ -53,11 +56,13 @@ class FileManager
         }
     }
 
+    //supprime un dossier et ce qu'il y a à l'intérieur
     public function deleteFolder($dir)
     {
 		shell_exec('rm -rf '.$dir);
     }
 
+    //crée un dossier s'il n'existe pas
     public function createFolder($path)
     {
         if(!is_dir($path))
@@ -66,6 +71,7 @@ class FileManager
         }
     }
 
+    //crée un template docx
     private function createTemplate($name)
     {
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
@@ -77,6 +83,7 @@ class FileManager
         $objWriter->save($name.'docx');
     }
 
+    //remplit un template docx
     public function fillTemplate($keys, $values, $templateToFill, $finalName)
     {
         $tempFile = "temp.docx";
@@ -91,6 +98,7 @@ class FileManager
         unlink($tempFile);
     }
 
+    //ajoute un document dans un dossier
     public function addDocument($path, $request)
     {
     	$extensionAllowed = ["jpg", "jpeg", "pdf", "doc", "docx", "png"];
@@ -142,6 +150,7 @@ class FileManager
         return $response;
     }
 
+    //supprime un fichier 
     public function removeDocument($path, $request)
     {
         $documentName = $request->headers->get("documentName");
@@ -165,6 +174,7 @@ class FileManager
         return $response;
     }
 
+    //récupère un document
     public function getDocument($path, $request)
     {
         $documentName = $request->headers->get("documentName");
@@ -185,6 +195,7 @@ class FileManager
         }
     }
 
+    //récupère tous les documents d'un dossier et les renvoit sous forme d'archive
     public function getAllDocument($path)
     {
         if(is_dir($path))
