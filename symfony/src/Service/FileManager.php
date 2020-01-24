@@ -103,10 +103,10 @@ class FileManager
     {
     	$extensionAllowed = ["jpg", "jpeg", "pdf", "doc", "docx", "png"];
 
-        $documentName = $request->headers->get("documentName");
         $file = $request->files->get('document');
         $extension = $file->guessExtension();
-        $destinationFile = $path.'/'.$documentName.'.'.$extension;
+        $documentName = $file->getClientOriginalName();     // The filename is extracted from the request from which the file has been uploaded.
+        $destinationFile = $path.'/'.$documentName;
 
         $response = new Response();
         $response->headers->set('Content-Type', 'text/plain');
@@ -119,7 +119,7 @@ class FileManager
                 {
                 	if(in_array($extension, $extensionAllowed))
                 	{
-	                    $file->move($path, $documentName.".".$extension);
+	                    $file->move($path, $documentName);
 	                    $response->setContent('Document added');
 	                    $response->setStatusCode(Response::HTTP_OK);
                 	}

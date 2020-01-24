@@ -23,7 +23,7 @@ function deleteRoomAR() {
   });
 }
 
-function addDocumentAR(url, file, fileName) {
+function addDocumentAR(url, file) {
   let formData = new FormData();
   formData.append("document", file);
 
@@ -31,7 +31,6 @@ function addDocumentAR(url, file, fileName) {
     $.ajax({
       url: url,
       type: "POST",
-      headers: { documentName: fileName },
       data: formData,
       processData: false,
       contentType: false,
@@ -102,9 +101,8 @@ $("#del-room-btn").on("click", function() {
 
 $("#add-doc-btn").on("click", function() {
   let file = document.getElementById("file-input").files[0];
-  let fileName = $("#file-name").val();
 
-  addDocumentAR(addDocumentUrl, file, fileName)
+  addDocumentAR(addDocumentUrl, file)
     .then(data => {
       console.log("%c Document added successfully.", "color:green;");
       console.log(data);
