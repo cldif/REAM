@@ -122,7 +122,7 @@ class TenantController extends AbstractController
     	$repository = $this->getDoctrine()->getRepository(Tenant::class);
     	$tenant = $repository->find($id);
 
-	   if (!$tenant) {
+	    if (!$tenant) {
 	        throw $this->createNotFoundException(
 	            'No tenant found for id '.$id
 	        );
@@ -130,8 +130,14 @@ class TenantController extends AbstractController
 
 	    $tenantPath = $this->getParameter('app.tenantPath');
 	    $files = FileManager::getFilesInFolder($tenantPath.$tenant->getId());
+        $filesNotAdded = array();
 
-        return $this->render('tenant/getTenant.html.twig', array("tenant"  => $tenant, "files" => $files));
+        if($tenant->getIdentityCard() == NULL)
+        {
+            array_push($filesNotAdded, "identityCard");
+        }
+
+        return $this->render('tenant/getTenant.html.twig', array("tenant"  => $tenant, "files" => $files, "filesNotAdded" => $filesNotAdded));
     }
 
     /**
@@ -213,6 +219,12 @@ class TenantController extends AbstractController
         {
             if($request->headers->get("documentType") == "identityCard")
             {
+                //if identity Card already exist, then delete it
+                if($tenant->getIdentityCard() != NULL)
+                {
+                    unlink($tenantFolder."/".$tenant->getIdentityCard());
+                }
+
                 $tenant->setIdentityCard($request->files->get('document')->getClientOriginalName());
                 $entityManager->flush();
             }
