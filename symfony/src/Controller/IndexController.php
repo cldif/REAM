@@ -26,7 +26,7 @@ class IndexController extends AbstractController
 
         foreach($tenants as $tenant)
         {
-            if(!file_exists($tenantPath.$tenant->getId().'/identityCard.pdf'))
+            if(!file_exists($tenantPath.$tenant->getId().'/'.$tenant->getIdentityCard()))
             {
                 array_push($listTenants, $tenant);
             }

@@ -195,7 +195,8 @@ class RoomController extends AbstractController
         $roomFolder = $roomPath.$id;
 
         FileManager::verificationStructure($params);
-        return FileManager::addDocument($roomFolder, $request);
+        $extensionsAllowed = ["docx"];
+        return FileManager::addDocument($roomFolder, $request, $extensionsAllowed);
     }
 
     /**

@@ -95,8 +95,8 @@ class TenantController extends AbstractController
 
             if($errorMother == 0 && $errorFather == 0)
             {            
-	           $entityManager->persist($tenant);
-	           $entityManager->flush();
+                $entityManager->persist($tenant);
+                $entityManager->flush();
 
 	            $tenantPath = $this->getParameter('app.tenantPath');
 	            $tenantFolder = $tenantPath.$tenant->getId();
@@ -104,7 +104,7 @@ class TenantController extends AbstractController
 	            FileManager::verificationStructure($params);
 	            FileManager::createFolder($tenantFolder);
 
-	           return $this->redirectToRoute('getTenant', array("id" => $tenant->getId()));
+                return $this->redirectToRoute('getTenant', array("id" => $tenant->getId()));
             }
 	    }
 
@@ -193,11 +193,32 @@ class TenantController extends AbstractController
     */
     public function addDocument($id, Request $request, ParameterBagInterface $params)
     {
+        $repository = $this->getDoctrine()->getRepository(Tenant::class);
+        $tenant = $repository->find($id);
+
+       if (!$tenant) {
+            throw $this->createNotFoundException(
+                'No tenant found for id '.$id
+            );
+        }
+
         $tenantPath = $this->getParameter('app.tenantPath');
         $tenantFolder = $tenantPath.$id;
 
         FileManager::verificationStructure($params);
-        return FileManager::addDocument($tenantFolder, $request);
+        $extensionsAllowed = ["pdf", "png", "jpg", "jpeg"];
+        $res = FileManager::addDocument($tenantFolder, $request, $extensionsAllowed);
+
+        if($res->getStatusCode() == HTTP_OK)
+        {
+            if($request->headers->get("documentType") == "identityCard")
+            {
+                $tenant->setIdentityCard($request->files->get('document')->getClientOriginalName());
+                $entityManager->flush();
+            }
+        }
+
+        return $res;
     }
 
     /**
@@ -208,6 +229,17 @@ class TenantController extends AbstractController
         $tenantPath = $this->getParameter('app.tenantPath');
         $tenantFolder = $tenantPath.$id;
 
-        return FileManager::removeDocument($tenantFolder, $request);
+        $res = FileManager::removeDocument($tenantFolder, $request);
+
+        if($res->getStatusCode() == HTTP_OK)
+        {
+            if($request->headers->get("documentType") == "identityCard")
+            {
+                $tenant->setIdentityCard(NULL);
+                $entityManager->flush();
+            }
+        }
+
+        return $res;
     }
 }

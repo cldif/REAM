@@ -47,7 +47,8 @@ class DocumentController extends AbstractController
     {
         $generalDocumentPath = $this->getParameter('app.generalTemplatesPath');
         FileManager::verificationStructure($params);
-        return FileManager::addDocument($generalDocumentPath, $request);
+        $extensionsAllowed = ["docx"];
+        return FileManager::addDocument($generalDocumentPath, $request, $extensionsAllowed);
     }
 
     /**

@@ -84,6 +84,11 @@ class Person
      */
     private $profession;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $identityCard;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -205,6 +210,18 @@ class Person
     public function setGender(string $gender): self
     {
         $this->gender = $gender;
+
+        return $this;
+    }
+
+    public function getIdentityCard(): ?string
+    {
+        return $this->identityCard;
+    }
+
+    public function setIdentityCard(?string $identityCard): self
+    {
+        $this->identityCard = $identityCard;
 
         return $this;
     }

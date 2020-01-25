@@ -99,10 +99,8 @@ class FileManager
     }
 
     //ajoute un document dans un dossier
-    public function addDocument($path, $request)
+    public function addDocument($path, $request, $extensionsAllowed)
     {
-    	$extensionAllowed = ["jpg", "jpeg", "pdf", "doc", "docx", "png"];
-
         $file = $request->files->get('document');
         $extension = $file->guessExtension();
         $documentName = $file->getClientOriginalName();     // The filename is extracted from the request from which the file has been uploaded.
@@ -117,7 +115,7 @@ class FileManager
             {
                 if(!file_exists($destinationFile))
                 {
-                	if(in_array($extension, $extensionAllowed))
+                	if(in_array(strtolower($extension), $extensionsAllowed))
                 	{
 	                    $file->move($path, $documentName);
 	                    $response->setContent('Document added');
