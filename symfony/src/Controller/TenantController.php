@@ -201,6 +201,7 @@ class TenantController extends AbstractController
     {
         $repository = $this->getDoctrine()->getRepository(Tenant::class);
         $tenant = $repository->find($id);
+        $entityManager = $this->getDoctrine()->getManager();
 
        if (!$tenant) {
             throw $this->createNotFoundException(
@@ -215,7 +216,7 @@ class TenantController extends AbstractController
         $extensionsAllowed = ["pdf", "png", "jpg", "jpeg"];
         $res = FileManager::addDocument($tenantFolder, $request, $extensionsAllowed);
 
-        if($res->getStatusCode() == HTTP_OK)
+        if($res->getStatusCode() == Response::HTTP_OK)
         {
             if($request->headers->get("documentType") == "identityCard")
             {
@@ -238,12 +239,15 @@ class TenantController extends AbstractController
     */
     public function removeDocument($id, Request $request)
     {
+        $repository = $this->getDoctrine()->getRepository(Tenant::class);
+        $tenant = $repository->find($id);
         $tenantPath = $this->getParameter('app.tenantPath');
         $tenantFolder = $tenantPath.$id;
+        $entityManager = $this->getDoctrine()->getManager();
 
         $res = FileManager::removeDocument($tenantFolder, $request);
 
-        if($res->getStatusCode() == HTTP_OK)
+        if($res->getStatusCode() == Response::HTTP_OK)
         {
             if($request->headers->get("documentType") == "identityCard")
             {

@@ -29,7 +29,7 @@
 					<i class="fas fa-pencil-alt"></i>
 				</a>
 				<!-- Delete -->
-				<a type="button" class="btn-floating btn-yt mt-0 mx-1" data-toggle="modal" data-target="#centralModalDanger">
+				<a type="button" class="btn-floating btn-yt mt-0 mx-1" data-toggle="modal" data-target="#tenantDeletionModal">
 					<i class="fas fa-trash-alt"></i>
 				</a>
 			</div>
@@ -64,14 +64,101 @@
 				&nbsp;{{ tenant.address }}
 			</p>
 
-			<button class="btn btn-indigo btn-rounded btn-md">A venir</button>
-
+			<button class="btn btn-danger" data-toggle="modal" data-target="#tenantDeletionModal">
+				<i class="fas fa-trash-alt"></i>
+				&nbsp;Supprimer</button>
 		</div>
 	</div>
 	<!-- Card -->
 
-	<!-- Central Modal Medium Danger -->
-	<div class="modal fade" id="centralModalDanger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="container">
+		{% if filesNotAdded %}
+			<div class="col-md-12 document-list-card" id="missed-documents">
+				<ul class="list-group list-group-flush">
+					<ul class="list-group">
+						<li class="list-group-item">
+							<h5>
+								<i class="fas fa-exclamation-circle"></i>
+								&nbsp;Pièces manquantes
+							</h5>
+						</li>
+
+						{% for file in filesNotAdded %}
+							<li class="list-group-item">
+								<p class="document-name absent">
+									{{ file }}
+								</p>
+								<div class="buttons">
+									<div class="button-wrapper">
+										<a name="identityCard" class="text-white btn-floating btn-fb btn-sm add-doc-modal-button" data-toggle="modal" data-target="#documentAdditionModal">
+											<i class="fas fa-file-import"></i>
+										</a>
+										<span class="tooltip">Importer</span>
+									</div>
+								</div>
+							</li>
+						{% endfor %}
+
+					</ul>
+				</ul>
+			</div>
+		{% endif %}
+
+		<div class="col-md-12 document-list-card" id="imported-documents">
+			<ul class="list-group list-group-flush">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<h5>
+							<i class="fas fa-check-circle"></i>
+							&nbsp;Pièces importées
+						</h5>
+					</li>
+
+					{% if files %}
+						{% for file in files %}
+							<li class="list-group-item">
+								<p class="document-name">
+									{{ file }}
+								</p>
+								<div class="buttons">
+									<div class="button-wrapper">
+										<a name="{{ file }}" class="text-white btn-floating btn-yt btn-sm del-doc-modal-button" data-toggle="modal" data-target="#documentDeletionModal">
+											<i class="fas fa-trash-alt"></i>
+										</a>
+										<span class="tooltip">Supprimer</span>
+									</div>
+
+									<div class="button-wrapper">
+										<a name="{{ file }}" class="text-white btn-floating btn-fb btn-sm get-doc-btn">
+											<i class="fas fa-cloud-download-alt"></i>
+										</a>
+										<span class="tooltip">Télécharger</span>
+									</div>
+								</div>
+							</li>
+						{% endfor %}
+
+					{% else %}
+
+
+						<li class="list-group-item">
+							<p class="no-document-warning">
+								Aucun fichier n'a encore été importé
+							</p>
+						</li>
+
+					{% endif %}
+
+					<li class="list-group-item">
+						<button class="btn btn-indigo btn-rounded btn-md" data-toggle="modal" data-target="#documentAdditionModal">Ajouter un nouveau document</button>
+					</li>
+				</ul>
+			</ul>
+		</div>
+	</div>
+
+	<!-- Tenant deletion modal -->
+	<div class="modal fade" id="tenantDeletionModal" tabindex="-1" role="dialog">
 		<div
 			class="modal-dialog modal-notify modal-danger" role="document">
 			<!--Content-->
@@ -90,7 +177,7 @@
 				<div class="modal-body">
 					<div class="text-center">
 						<i class="fas fa-exclamation-triangle fa-4x mb-3 animated rotateIn"></i>
-						<p>Attention, la suppression d'un locataire est définitive et supprimera tous les dossiers associés.<br>En poursuivant, vous acceptez et comprenez les risques.</p>
+						<p>Attention, la suppression d'un locataire est définitive et supprimera tous les contrats de location associés.<br>En poursuivant, vous acceptez et comprenez les risques.</p>
 					</div>
 				</div>
 
@@ -103,16 +190,83 @@
 			<!--/.Content-->
 		</div>
 	</div>
-	<!-- Central Modal Medium Danger-->
+	<!-- Tenant deletion modal-->
+
+	<!-- Doccument addition modal -->
+	<div class="modal fade" id="documentAdditionModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header text-center">
+					<h4 class="modal-title w-100 font-weight-bold">Ajout de document</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body mx-3">
+					<div class="md-form mb-5">
+						<div class="file-field">
+							<div class="btn btn-outline-info waves-effect btn-sm float-left">
+								<span>Choisir un fichier</span>
+								<input id="file-input" type="file">
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path" type="text" placeholder="En attente d'un fichier" disabled>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer d-flex justify-content-center">
+					<button id="add-doc-btn" type="button" class="btn btn-outline-secondary waves-effect">OK !</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Doccument addition modal -->
+
+	<!-- Doccument deletion modal -->
+	<div class="modal fade" id="documentDeletionModal" tabindex="-1" role="dialog">
+		<div
+			class="modal-dialog modal-notify modal-danger" role="document">
+			<!--Content-->
+			<div
+				class="modal-content text-center">
+				<!--Header-->
+				<div class="modal-header d-flex justify-content-center">
+					<p class="heading">Souhaitez-vous réellement supprimer ce document ?</p>
+				</div>
+
+				<!--Body-->
+				<div class="modal-body">
+					<div class="text-center">
+						<i class="fas fa-times fa-4x mb-3 animated rotateIn"></i>
+						<p>Attention ! Le document sélectionné ne pourra pas être récupéré après la suppression, celle-ci est donc irréversible.</p>
+					</div>
+				</div>
+
+				<!--Footer-->
+				<div class="modal-footer flex-center">
+					<a id="del-doc-btn" type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Oui, je veux le supprimer</a>
+					<a class="btn btn-outline-danger" data-dismiss="modal">Non, je préfère le conserver</a>
+				</div>
+			</div>
+			<!--/.Content-->
+		</div>
+	</div>
+	<!-- Doccument deletion modal -->
 
 {% endblock %}
-
 
 {% block js %}
 	<!-- Variables obtained by TWIG and transferred to javascript code -->
 	<span id='js-passthrough-delete-tenant-url' style="display:none">{{ path('deleteTenant', {'id': tenant.id}) }}</span>
 	<span id='js-passthrough-index-url' style="display:none">{{ path('websiteIndex') }}</span>
+	<span id='js-passthrough-add-document-url' style="display:none">{{ path('addDocumentTenant', {'id': tenant.id}) }}</span>
+	<span id='js-passthrough-del-document-url' style="display:none">{{ path('removeDocumentTenant', {'id': tenant.id}) }}</span>
+	<span id='js-passthrough-get-document-url' style="display:none">{{ path('getDocumentTenant', {'id': tenant.id}) }}</span>
 
 	<!-- Custom JS scripts -->
+	<script type="text/javascript" src="{{ asset('ressources/js/frenchUI.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('ressources/js/tenant/getTenant.js') }}"></script>
 {% endblock %}
