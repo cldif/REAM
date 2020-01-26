@@ -1,8 +1,19 @@
-function translateHTML() {
-  document.body.innerHTML = document.body.innerHTML.replace(
-    "identityCard",
-    "Carte d'identité"
-  );
+function getNodesThatContain(text) {
+  var textNodes = $(document)
+    .find(":not(iframe, script)")
+    .contents()
+    .filter(function() {
+      return this.nodeType == 3 && this.textContent.indexOf(text) > -1;
+    });
+  return textNodes.parent();
 }
 
-translateHTML();
+function replaceInDocument(oldString, newString) {
+  getNodesThatContain(oldString).each(function() {
+    var oldText = $(this).text();
+    newText = oldText.replace(oldString, newString);
+    $(this).text(newText);
+  });
+}
+
+replaceInDocument("identityCard", "Carte d'identité");
