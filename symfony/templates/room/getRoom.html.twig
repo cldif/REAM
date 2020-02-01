@@ -88,7 +88,7 @@
 								</p>
 								<div class="buttons">
 									<div class="button-wrapper">
-										<a name="{{ file }}" class="text-white btn-floating btn-yt btn-sm doc-delete-button" data-toggle="modal" data-target="#documentDeletionModal">
+										<a name="{{ file }}" class="text-white btn-floating btn-yt btn-sm del-doc-modal-button" data-toggle="modal" data-target="#documentDeletionModal">
 											<i class="fas fa-trash-alt"></i>
 										</a>
 										<span class="tooltip">Supprimer</span>
@@ -227,12 +227,12 @@
 
 {% block js %}
 	<!-- Variables obtained by TWIG and transferred to javascript code -->
-	<span id='js-passthrough-delete-room-url' style="display:none">{{ path('deleteRoom', {'id': room.id}) }}</span>
+	<span id='js-passthrough-delete-entity-url' style="display:none">{{ path('deleteRoom', {'id': room.id}) }}</span>
 	<span id='js-passthrough-index-url' style="display:none">{{ path('websiteIndex') }}</span>
-	<span id='js-passthrough-add-document-room-url' style="display:none">{{ path('addDocumentRoom', {'id': room.id}) }}</span>
-	<span id='js-passthrough-del-document-room-url' style="display:none">{{ path('removeDocumentRoom', {'id': room.id}) }}</span>
-	<span id='js-passthrough-get-document-room-url' style="display:none">{{ path('getDocumentRoom', {'id': room.id}) }}</span>
+	<span id='js-passthrough-add-document-url' style="display:none">{{ path('addDocumentRoom', {'id': room.id}) }}</span>
+	<span id='js-passthrough-del-document-url' style="display:none">{{ path('removeDocumentRoom', {'id': room.id}) }}</span>
+	<span id='js-passthrough-get-document-url' style="display:none">{{ path('getDocumentRoom', {'id': room.id}) }}</span>
 
 	<!-- Custom JS scripts -->
-	<script type="text/javascript" src="{{ asset('ressources/js/room/getRoom.js') }}"></script>
+	<script type="module" src="{{ asset('ressources/js/room/getRoom.js') }}"></script>
 {% endblock %}

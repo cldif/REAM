@@ -183,7 +183,7 @@
 
 				<!--Footer-->
 				<div class="modal-footer justify-content-center">
-					<a id="delete-tenant-button" type="button" class="btn btn-danger">Confirmer la suppression</a>
+					<a id="del-tenant-btn" type="button" class="btn btn-danger">Confirmer la suppression</a>
 					<a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Annuler l'opération</a>
 				</div>
 			</div>
@@ -260,7 +260,7 @@
 
 {% block js %}
 	<!-- Variables obtained by TWIG and transferred to javascript code -->
-	<span id='js-passthrough-delete-tenant-url' style="display:none">{{ path('deleteTenant', {'id': tenant.id}) }}</span>
+	<span id='js-passthrough-delete-entity-url' style="display:none">{{ path('deleteTenant', {'id': tenant.id}) }}</span>
 	<span id='js-passthrough-index-url' style="display:none">{{ path('websiteIndex') }}</span>
 	<span id='js-passthrough-add-document-url' style="display:none">{{ path('addDocumentTenant', {'id': tenant.id}) }}</span>
 	<span id='js-passthrough-del-document-url' style="display:none">{{ path('removeDocumentTenant', {'id': tenant.id}) }}</span>
@@ -268,5 +268,5 @@
 
 	<!-- Custom JS scripts -->
 	<script type="text/javascript" src="{{ asset('ressources/js/frenchUI.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('ressources/js/tenant/getTenant.js') }}"></script>
+	<script type="module" src="{{ asset('ressources/js/tenant/getTenant.js') }}"></script>
 {% endblock %}
