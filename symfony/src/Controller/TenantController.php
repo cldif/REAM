@@ -249,7 +249,7 @@ class TenantController extends AbstractController
 
         if($res->getStatusCode() == Response::HTTP_OK)
         {
-            if($request->headers->get("documentType") == "identityCard")
+            if($request->headers->get("documentName") == $tenant->getIdentityCard())
             {
                 $tenant->setIdentityCard(NULL);
                 $entityManager->flush();
