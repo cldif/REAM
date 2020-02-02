@@ -25,7 +25,7 @@
 				class="social-reveal">
 
 				<!-- Modify -->
-				<a type="button" class="btn-floating btn-tw mt-0 mx-1">
+				<a type="button" class="btn-floating btn-tw mt-0 mx-1" href="{{ path('modifyRoom', {'id': room.id} ) }}">
 					<i class="fas fa-pencil-alt"></i>
 				</a>
 				<!-- Delete -->
@@ -62,6 +62,10 @@
 				<i class="fas fa-home"></i>
 				&nbsp;{{ room.type }}<br>
 			</p>
+
+			<a class="btn btn-info" href=" {{ path('modifyRoom', {'id': room.id} ) }}">
+				<i class="fas fa-trash-alt"></i>
+				&nbsp;Modifier</a>
 
 			<button class="btn btn-danger" data-toggle="modal" data-target="#roomDeletionModal">
 				<i class="fas fa-trash-alt"></i>
