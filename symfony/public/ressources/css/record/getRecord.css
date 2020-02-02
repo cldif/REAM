@@ -1,0 +1,66 @@
+/* Display the room card and the user files as a flexbox */
+main {
+  display: flex;
+}
+
+/* Set up the background color of the documents list
+  + display the document name on the left and the buttons on the right*/
+.list-group-item {
+  background-color: #27293d;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Document name color + override MDB margin which is not useful since it creates an offset */
+.document-name,
+.no-document-warning {
+  margin: 0px !important;
+  color: #bbbbbb;
+}
+
+/* Remove MDB padding since the main tag already provides a margin */
+.col-md-12 {
+  padding: 0px !important;
+}
+.container {
+  padding-right: 0px !important;
+}
+
+/* Declare overflow visible to be able to display a tooltip */
+.button-wrapper {
+  overflow: visible !important;
+  display: inline-block;
+}
+
+/* Tooltip rules */
+.button-wrapper .tooltip {
+  position: absolute;
+  margin-left: -21px; /* Arbitratry value, it could be nice to find a better solution*/
+  color: rgb(255, 255, 255);
+  background: rgba(0, 0, 0, 0.9);
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  transform: scale(0) rotate(-12deg);
+  transition: all 0.25s;
+  opacity: 0 !important;
+  z-index: 50;
+}
+
+/* Tooltip pseudo-class rules */
+.button-wrapper:hover .tooltip,
+.button-wrapper:focus .tooltip {
+  transform: scale(1) rotate(0);
+  opacity: 0.8 !important;
+}
+
+/* The modal title should be displayed in gray since the modal background is white */
+.modal-title {
+  color: gray;
+}
+
+/* Links towards other entities like tenants or rooms */
+.entity-link {
+  color: #747373;
+}

@@ -1,32 +1,160 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello recordController!{% endblock %}
+{% block css %}
+	<!-- Custom styles -->
+	<link href="{{ asset('ressources/css/record/getRecord.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block page_title %}
+	<p>Consulation de contrat</p>
+{% endblock %}
 
 {% block main %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<div class="card">
+		<div class="view overlay">
+			<img class="card-img-top" src="{{ asset('/ressources/img/header-background.png') }}" alt="Card image cap">
+		</div>
 
-<div class="example-wrapper">
-	Page du dossier :<br> 
-	id : {{ record.id }}<br>
-	entry date : {{ record.entryDate | date("m/d/Y") }}<br>
-	rent : {{ record.rent }}<br>
-	fixed charge : {{ record.fixedCharge }}<br>
-	periodicity : {{ record.periodicity }}<br>
-	revision index : {{ record.revisionIndex }}<br>
-	release date : {{ record.releaseDate | date("m/d/Y") }}<br>
-	additional Information : {{ record.additionalInformation }}<br>
-	tenant : {{ record.tenant.id }}<br>
-	room : {{ record.room.name }}<br>
-	guarantor : {{ record.guarantor.id }}<br>
+		<div class="card-share">
+			<div
+				class="social-reveal">
+				<!-- Delete -->
+				<a type="button" class="btn-floating btn-yt mt-0 mx-1" data-toggle="modal" data-target="#entityDeletionModal">
+					<i class="fas fa-trash-alt"></i>
+				</a>
+			</div>
 
-	Fichier associés : 
-    {% for file in files %}
-		{{ file }}
-    {% endfor %}
+			<!-- Options -->
+			<a class="btn-floating btn-action share-toggle indigo ml-auto mr-4 float-right">
+				<i class="fas fa-tools"></i>
+			</a>
+		</div>
 
+		<div class="card-body">
 
-</div>
+			<h4 class="card-title">Identifiant du contrat :
+				{{ record.id }}</h4>
+			<hr>
+			<p class="card-text">
+				<i class="fas fa-user-alt"></i>
+				&nbsp;<a class="entity-link" href="{{ path('getTenant', {'id': record.tenant.id} ) }}">{{ record.tenant.firstName }}
+					{{ record.tenant.name }}
+				</a><br>
+
+				<i class="fas fa-home"></i>
+				&nbsp;<a class="entity-link" href="{{ path('getRoom', {'id': record.room.id} ) }}">{{ record.room.name }}</a><br>
+
+				<i class="fas fa-user-shield"></i>
+				&nbsp;{{ record.guarantor.firstName }}
+				{{ record.guarantor.name }}<br>
+			</p>
+
+			<button class="btn btn-danger" data-toggle="modal" data-target="#entityDeletionModal">
+				<i class="fas fa-trash-alt"></i>
+				&nbsp;Supprimer</button>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="col-md-12">
+			<ul class="list-group list-group-flush">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<h5>
+							Doccuments générés relatifs au contrat
+						</h5>
+					</li>
+
+					{% if files %}
+						{% for file in files %}
+							<li class="list-group-item">
+								<p class="document-name">
+									{{ file }}
+								</p>
+								<div class="buttons">
+									<div class="button-wrapper">
+										<a name="{{ file }}" class="text-white btn-floating btn-fb btn-sm get-doc-btn">
+											<i class="fas fa-cloud-download-alt"></i>
+										</a>
+										<span class="tooltip">Télécharger</span>
+									</div>
+								</div>
+							</li>
+						{% endfor %}
+
+					{% else %}
+						<li class="list-group-item">
+							<p class="no-document-warning">
+								Aucun fichier généré&nbsp;
+								<a class="text-white btn-floating btn-fb btn-sm" data-toggle="modal" data-target="#docGenModal">
+									<i class="fas fa-info-circle"></i>
+								</a>
+							</p>
+						</li>
+					{% endif %}
+
+				</ul>
+			</ul>
+		</div>
+	</div>
+
+	<!-- Entity deletion modal -->
+	<div class="modal fade" id="entityDeletionModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-notify modal-danger" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p class="heading lead">Suppression de local</p>
+
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true" class="white-text">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body">
+					<div class="text-center">
+						<i class="fas fa-exclamation-triangle fa-4x mb-3 animated rotateIn"></i>
+						<p>Attention, la suppression d'un contrat est définitive.<br>En poursuivant, vous acceptez et comprenez les risques.</p>
+					</div>
+				</div>
+
+				<div class="modal-footer justify-content-center">
+					<a id="del-entity-btn" type="button" class="btn btn-danger">Confirmer la suppression</a>
+					<a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Annuler l'opération</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Entity deletion modal -->
+
+	<!-- Document generation modal-->
+	<div class="modal fade" id="docGenModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-notify modal-info" role="document">
+			<div class="modal-content text-center">
+				<div class="modal-header d-flex justify-content-center">
+					<p class="heading">Génération automatique</p>
+				</div>
+
+				<div class="modal-body">
+					<i class="fas fa-info-circle fa-4x animated rotateIn mb-4"></i>
+
+					<p>Vous semblez ne pas être dans la possibilité de générer des documents pour le contrat sélectionné.<br><br>
+						Pour rappel, les documents peuvent être créés et remplis à partir de patrons relatifs au local, au type de contrat ou à l'ensemble des contrats.<br><br>
+						Afin de retenter une génération, vous pouvez vérifier le présence et l'exactitude des patrons.</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- Document generation modal-->
+
+{% endblock %}
+
+{% block js %}
+	<!-- Variables obtained by TWIG and passed on to javascript code -->
+	<span id='js-passthrough-delete-entity-url' style="display:none">{{ path('deleteRecord', {'id': record.id}) }}</span>
+	<span id='js-passthrough-index-url' style="display:none">{{ path('websiteIndex') }}</span>
+	<span id='js-passthrough-get-document-url' style="display:none">{{ path('getDocumentRecord', {'id': record.id}) }}</span>
+
+	<!-- Custom JS scripts -->
+	<script type="module" src="{{ asset('ressources/js/record/getRecord.js') }}"></script>
 {% endblock %}
