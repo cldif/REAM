@@ -10,11 +10,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Room;
 use App\Entity\Record;
 use App\Form\RoomType;
-
 use App\Service\FileManager;
 
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\Swift_Mailer;
 
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
@@ -25,37 +25,36 @@ class RoomController extends AbstractController
     /**
      * @Route("/", name="roomIndex" , methods={"GET"})
      */
-    public function index(\Swift_Mailer $mailer)
+    public function index()
     {
     	$repository = $this->getDoctrine()->getRepository(Room::class);
     	$rooms = $repository->findAll();
 
-
        /*
 		Code to fill a docx file and save as pdf
-
 		$checked = '☑'; 
         $unChecked = '☐';
         $keys = array('name', 'prenom', "toto");
         $values = array("toto", "titi", $unChecked);
 
        FileManager::fillTemplate($keys, $values, "template.docx", "result.pdf");
-
        */
 
-		/*$message = (new \Swift_Message('Hello Email, this is a test'))
-	        ->setFrom('test@wallofnames.com')
-	        ->setTo('sylvain.bessonneau@outlook.fr')
-	        ->setBody(
-	            $this->renderView(
-	                // templates/emails/registration.html.twig
-	                'emails/test.html.twig',
-	                ['name' => "tatatattadelfnkj"]
-	            ),
-	            'text/html'
-	        );
+        // Create the Transport
+        /*$transport = new Swift_SendmailTransport('/usr/sbin/sendmail -bs');
 
-    	$mailer->send($message);*/
+        // Create the Mailer using your created Transport
+        $mailer = new Swift_Mailer($transport);
+
+        // Create a message
+        $message = (new Swift_Message('mon sujet'))
+          ->setFrom(['toto@example.com' => 'mon envoyeur'])
+          ->setTo(['sylvain.bessonneau@outlook.fr' => 'mon receveur'])
+          ->setBody('Here is my body')
+          ;
+
+        // Send the message
+        $result = $mailer->send($message);*/
 
         return $this->render('room/index.html.twig', [
             'rooms' => $rooms,
