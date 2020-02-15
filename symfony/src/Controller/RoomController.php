@@ -30,16 +30,6 @@ class RoomController extends AbstractController
     	$repository = $this->getDoctrine()->getRepository(Room::class);
     	$rooms = $repository->findAll();
 
-       /*
-		Code to fill a docx file and save as pdf
-		$checked = '☑'; 
-        $unChecked = '☐';
-        $keys = array('name', 'prenom', "toto");
-        $values = array("toto", "titi", $unChecked);
-
-       FileManager::fillTemplate($keys, $values, "template.docx", "result.pdf");
-       */
-
         // Create the Transport
         /*$transport = new Swift_SendmailTransport('/usr/sbin/sendmail -bs');
 

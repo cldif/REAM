@@ -105,9 +105,24 @@ class RecordController extends AbstractController
 
                 $recordPath = $this->getParameter('app.recordPath');
                 $recordFolder = $recordPath.$record->getId();
+                $roomTemplatePath = $this->getParameter('app.roomTemplatesPath');
+                $roomTemplateFolder = $roomTemplatePath.$record->getRoom()->getId();
 
                 FileManager::verificationStructure($params);
                 FileManager::createFolder($recordFolder);
+
+                // Code to fill room template
+                //$checked = '☑'; 
+                //$unChecked = '☐';
+                $keys = array('/locataire/nom', 
+                              '/locataire/prenom', 
+                              '/locataire/dateNaissance');
+
+                $values = array($record->getTenant()->getName(), 
+                                $record->getTenant()->getFirstName(), 
+                                $record->getTenant()->getDateOfBirth()->format('d m Y'));
+
+                FileManager::fillTemplate($keys, $values, $roomTemplateFolder."/t1.docx", $recordFolder."/t1.pdf");
 
                 return $this->redirectToRoute('getRecord', array("id" => $record->getId()));
             }
