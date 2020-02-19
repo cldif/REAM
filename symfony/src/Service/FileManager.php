@@ -10,6 +10,8 @@ use Alchemy\Zippy\Zippy;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
+use App\Service\FileManager;
+
 class FileManager
 {
 	//verifie la structure des dossiers pour le stockage des documents 
@@ -82,6 +84,18 @@ class FileManager
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save($name.'docx');
     }
+
+
+    public function fillAllTemplates($folderStart, $folderEnd, $keys, $values)
+    {
+        $files = FileManager::getFilesInFolder($folderStart);
+
+        foreach ($files as $file) 
+        {
+            FileManager::fillTemplate($keys, $values, $folderStart."/".$file, $folderEnd."/".strstr($file, ".", true).".pdf");
+        }
+    }
+
 
     //remplit un template docx
     public function fillTemplate($keys, $values, $templateToFill, $finalName)

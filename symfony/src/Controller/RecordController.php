@@ -5,7 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Annotation\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 use App\Entity\Record;
 use App\Entity\Tenant;
@@ -104,9 +104,20 @@ class RecordController extends AbstractController
                 $entityManager->flush();
 
                 $recordPath = $this->getParameter('app.recordPath');
-                $recordFolder = $recordPath.$record->getId();
+                $recordFolder = $recordPath.$record->getId()."/";
                 $roomTemplatePath = $this->getParameter('app.roomTemplatesPath');
-                $roomTemplateFolder = $roomTemplatePath.$record->getRoom()->getId();
+                $roomFolder = $roomTemplatePath.$record->getRoom()->getId()."/";
+                $generalTemplatePath = $this->getParameter('app.generalTemplatesPath');
+
+                if($record->getRoom()->getType() === "Hangar")
+                {
+                	$typedTemplatePath = $this->getParameter('app.hangarsTemplatesPath');
+                }
+                else
+                {
+					$typedTemplatePath = $this->getParameter('app.apartmentsTemplatesPath');
+                }
+
 
                 FileManager::verificationStructure($params);
                 FileManager::createFolder($recordFolder);
@@ -115,14 +126,40 @@ class RecordController extends AbstractController
                 //$checked = '☑'; 
                 //$unChecked = '☐';
                 $keys = array('/locataire/nom', 
-                              '/locataire/prenom', 
-                              '/locataire/dateNaissance');
+                              '/locataire/prenom',
+                              '/locataire/adresse',
+                              '/locataire/dateNaissance',
+                              '/locataire/lieuNaissance',
+                              '/locataire/telFixe',
+                              '/locataire/telMobile',
+                              '/room/nom',
+                              '/room/surface',
+                              '/record/dateContrat',
+                              '/record/duree',
+                              '/record/loyer',
+                              '/record/charge',
+                              'jour'
+                            );
 
                 $values = array($record->getTenant()->getName(), 
                                 $record->getTenant()->getFirstName(), 
-                                $record->getTenant()->getDateOfBirth()->format('d m Y'));
+                                $record->getTenant()->getAddress(),
+                                strftime("%e %B %G", $record->getTenant()->getDateOfBirth()->getTimestamp()),
+                                $record->getTenant()->getBirthPlace(),
+                                $record->getTenant()->getPhone(),
+                                $record->getTenant()->getMobilePhone(),
+                                $record->getRoom()->getName(),
+                                $record->getRoom()->getSurface(),
+                                strftime("%e %B %G", $record->getEntryDate()->getTimestamp()),
+                                (date_diff($record->getReleaseDate(), $record->getEntryDate())->format('%Y années %M mois')),
+                                $record->getRent(),
+                                $record->getFixedCharge(),
+                                date('d m Y')
+                            );
 
-                FileManager::fillTemplate($keys, $values, $roomTemplateFolder."/t1.docx", $recordFolder."/t1.pdf");
+            	FileManager::fillAllTemplates($roomFolder, $recordFolder, $keys, $values);
+            	FileManager::fillAllTemplates($generalTemplatePath, $recordFolder, $keys, $values);
+            	FileManager::fillAllTemplates($typedTemplatePath, $recordFolder, $keys, $values);
 
                 return $this->redirectToRoute('getRecord', array("id" => $record->getId()));
             }

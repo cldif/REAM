@@ -9,9 +9,9 @@ parameters:
     app.roomTemplatesFolder: '../users/default/templates/unique/'
     app.recordPath: '../users/default/generated/record'
     app.roomTemplatesPath: '../users/default/templates/unique/room'
-    app.generalTemplatesPath: '../users/default/templates/general'
-    app.apartmentsTemplatesPath: '../users/default/templates/typed/apartments'
-    app.hangarsTemplatesPath: '../users/default/templates/typed/hangars'
+    app.generalTemplatesPath: '../users/default/templates/general/'
+    app.apartmentsTemplatesPath: '../users/default/templates/typed/apartments/'
+    app.hangarsTemplatesPath: '../users/default/templates/typed/hangars/'
     app.tenantPath: '../users/default/tenants/tenant'
     app.tenantFolder: '../users/default/tenants/'
 
