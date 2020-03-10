@@ -30,22 +30,6 @@ class RoomController extends AbstractController
     	$repository = $this->getDoctrine()->getRepository(Room::class);
     	$rooms = $repository->findAll();
 
-        // Create the Transport
-        /*$transport = new Swift_SendmailTransport('/usr/sbin/sendmail -bs');
-
-        // Create the Mailer using your created Transport
-        $mailer = new Swift_Mailer($transport);
-
-        // Create a message
-        $message = (new Swift_Message('mon sujet'))
-          ->setFrom(['toto@example.com' => 'mon envoyeur'])
-          ->setTo(['sylvain.bessonneau@outlook.fr' => 'mon receveur'])
-          ->setBody('Here is my body')
-          ;
-
-        // Send the message
-        $result = $mailer->send($message);*/
-
         return $this->render('room/index.html.twig', [
             'rooms' => $rooms,
         ]);
